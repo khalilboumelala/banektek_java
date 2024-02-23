@@ -1,0 +1,361 @@
+{% extends 'base_client.html.twig' %}
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo3 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block tableau_active %}{% endblock %}
+{% block tableau_compte %}{% endblock %}
+{% block compte_active %}active{% endblock %}
+{% block tableau_credit %}{% endblock %}
+{% block tableau_cheque %}{% endblock %}
+{% block tableau_virement %}{% endblock %}
+{% block autre_stylesheet %}
+<link rel="stylesheet" href="../dist/css/courbe.css">
+{% endblock %}
+{% block body %}
+<link href="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.css" rel="stylesheet">
+
+<h1>
+Comptes
+<small>-</small>
+</h1>
+<ol class="breadcrumb">
+<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+<li class="active">Compte</li>
+<li class="mescomptes"> <a style="color:black!important;">Compte 1</a></li>
+<li class="mescomptes"> <a style="color:black!important;">Compte 2</a></li>
+<li class="mescomptes"> <a style="color:black!important;">Compte 3</a></li>
+
+</ol>
+</section>
+
+<section class="content">
+
+<!-- contenu de la page -->
+<div class="">
+
+<div class="info-box bg-blue">
+<span class="info-box-icon" style="height:146px;"><i class="fa fa-dollar"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Compte tawfir</span>
+<span class="info-box-number">Hamza Nasr</span>
+
+<span class="info-box-number">{{comptes[0].solde}}</span>
+<div class="">
+<button type="button" class="btn btn-info"><i class="fa fa-download" style="margin-right:10px;"></i> Telecharger RIB</button>
+<button type="button" class="btn btn-info"><i class="fa fa-exchange" ></i>  Virements</button>
+<button type="button" class="btn btn-info"><i class="fa fa-file-text-o"></i>  Relevé</button>
+</div><div class="progress">
+<div class="progress-bar" style="width: 70%"></div>
+</div>
+<span class="progress-description">
+Num Compte : {{comptes[0].rib}}
+</span>
+</div>
+
+</div>
+</div>
+<!--mes activités-->
+<!-- contenu de la page -->
+<div class="">
+
+  <!-- First Chart -->
+  <div class="col-md-4">
+  <div class="box box-info">
+
+<div class="box-body chart-responsive">
+
+<div class="container-graph">
+<div class="card-graph">
+    <h2 style="color:black; font-family:SF Pro Display Bold;font-size:18px; ">Mes activités</h2>
+    <p  style="color:grey;">By Month</p>
+    <div class="pulse"></div>
+    <div class="chart-area"></div>
+  </div>
+  </div>
+  
+</div>
+
+
+</div>
+  </div>
+
+  <!-- Second Chart -->
+  <div class="col-md-4">
+    <div class="box box-info">
+       <div class="blocksRow">
+    <div class="col">
+      
+      <div class="block spendingBlock">
+        <div class="titleWrap">
+          <div class="title">Mes dépenses</div>
+          <a href="#" class="calendarTrigger"></a>
+        </div>
+        <div class="spendingWrap">
+          <div class="graphWrap">
+            <div class="graph">
+              <svg width="232" height="232" viewBox="0 0 232 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M72.4125 19.3004C84.4065 13.7076 97.3496 10.4324 110.56 9.64758L111.806 30.6106C101.237 31.2385 90.8826 33.8586 81.2875 38.3329L72.4125 19.3004Z" fill="#FFF8B4"></path>
+                <path d="M28.0663 57.5654C37.6988 42.7326 50.922 30.5732 66.5089 22.2156L76.4324 40.723C63.963 47.4091 53.3844 57.1366 45.6784 69.0028L28.0663 57.5654Z" fill="#EBFCC7"></path>
+                <path d="M14.8361 139.923C8.37522 114.009 12.0313 86.6081 25.0603 63.2955L43.3917 73.5405C32.9685 92.1906 30.0436 114.112 35.2123 134.842L14.8361 139.923Z" fill="#D5EFFF"></path>
+                <path d="M91.3154 216.36C74.1546 212.082 58.3526 203.538 45.3758 191.521C32.399 179.504 22.6678 164.404 17.0852 147.622L37.0116 140.994C41.4777 154.419 49.2626 166.499 59.6441 176.113C70.0256 185.726 82.6671 192.561 96.3957 195.984L91.3154 216.36Z" fill="#E7EBFF"></path>
+                <path d="M210.213 166.828C199.72 186.563 183.248 202.469 163.159 212.267C143.07 222.065 120.395 225.252 98.3832 221.371L102.967 195.372C119.489 198.285 136.508 195.893 151.586 188.539C166.664 181.185 179.027 169.246 186.903 154.434L210.213 166.828Z" fill="#FF614B"></path>
+                <path d="M116 10C133.407 10 150.541 14.3276 165.86 22.5934C181.179 30.8591 194.203 42.8038 203.76 57.3526C213.317 71.9014 219.106 88.5979 220.608 105.94C222.11 123.282 219.277 140.725 212.364 156.701L193.091 148.36C198.622 135.58 200.888 121.626 199.687 107.752C198.485 93.8784 193.853 80.5211 186.208 68.8821C178.562 57.243 168.143 47.6873 155.888 41.0747C143.633 34.4621 129.926 31 116 31V10Z" fill="#FFD9BE"></path>
+              </svg>
+            </div>
+            <div class="spendingSummary">
+              <div class="period">August</div>
+              <div class="spent">$1,749.50</div>
+            </div>
+          </div>
+          <div class="selectedCategoryInfo row">
+            <div class="categoryName orange">Food and supermarkets</div>
+            <div class="categorySummary row">
+              <div class="price">$367.41</div>
+              /
+              <div class="percentage">
+                21%
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+      
+    </div>
+  </div>
+ <!-- stat-->
+  <div class="col-md-4">
+   <div class="box box-info">
+       <div class="blocksRow">
+    <div class="col">
+      <div class="block statBlock">
+        <div class="titleWrap">
+          <div class="title">Statistics</div>
+          <div class="rightTitle">
+            <span class="blue">Spent</span>
+            <span class="orange">Income</span>
+          </div>
+        </div>
+        <div class="statWrap">
+          <div class="statRow">
+            <div class="statBlock">
+              <div class="statInfoTooltip tooltip">
+                <span class="blue">$400.43</span>
+                <span class="orange">$148.11</span>
+              </div>
+              <div class="statLine blue" style="height: 72%"></div>
+              <div class="statLine orange" style="height: 50%"></div>
+              <div class="statDay">Mon 24</div>
+            </div>
+            <div class="statBlock tapped">
+              <div class="statInfoTooltip tooltip">
+                <span class="blue">$400.43</span>
+                <span class="orange">$148.11</span>
+              </div>
+              <div class="statLine blue" style="height: 63.85%"></div>
+              <div class="statLine orange" style="height: 31.5%"></div>
+              <div class="statDay">Tue 25</div>
+            </div>
+            <div class="statBlock">
+              <div class="statInfoTooltip tooltip">
+                <span class="blue">$400.43</span>
+                <span class="orange">$148.11</span>
+              </div>
+              <div class="statLine blue" style="height: 21.5%"></div>
+              <div class="statLine orange" style="height: 76.9%"></div>
+              <div class="statDay">Wed 26</div>
+            </div>
+            <div class="statBlock">
+              <div class="statInfoTooltip tooltip">
+                <span class="blue">$400.43</span>
+                <span class="orange">$148.11</span>
+              </div>
+              <div class="statLine blue" style="height: 83.05%"></div>
+              <div class="statLine orange" style="height: 70.76%"></div>
+              <div class="statDay">Thu 27</div>
+            </div>
+          </div>
+        </div>
+        </div>
+  </div> </div> </div>
+</div>
+
+    
+
+<!-- contenu de la page -->
+<!--mes activités-->
+<!--bouttons-->
+
+<div class=""style="margin-top:100px;">
+<div class="container" >
+  
+</div>
+</div>
+<!--bouttons-->
+<!-- historique -->
+<br><br>
+<div class="box">
+<div class="box-header">
+   <div class="row">
+    <h3 class="title_tab col-sm-4">Mon historique</h3>
+       
+                  <div class="col-sm-4" style="margin-top:30px;" >
+                         <button type="button" class="btn btn-block btn-primary btn-sm">
+                          <i class="fa fa-file-pdf-o"></i> PDF
+                        </button>
+             </div>
+    <div class="col-sm-4" style="margin-top:30px;">
+                            <button type="button" class="btn btn-block btn-primary btn-sm">
+                              <i class="fa fa-file-excel-o"></i> Excel
+                            </button>
+    </div>
+   
+  </div>
+ 
+</div>
+
+    <div class="box-body">
+        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                        aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-sort="ascending"
+                                    aria-label="Date d'operation: activate to sort column descending"
+                                    style="width: 212.012px;">Date d'operation</th>
+                              
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="Type d'operation: activate to sort column ascending"
+                                    style="width: 245.913px;">Type d'opération</th>
+                                
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="Montant: activate to sort column ascending"
+                                    style="width: 135.788px;">Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         {% for transaction in comptes[0].getTransactions %}
+                          
+                        
+                            <tr role="row" class="odd">
+                                <td class="sorting_1">{{transaction.dateTransaction|date('Y-m-d H:i:s')}}</td>
+                                {% if transaction.type == "Versement" %}
+                                <td style="color:green;">{{transaction.type}}</td>
+                                {% else %}
+                                  <td style="color:red;">{{transaction.type}}</td>
+                              {% endif %}
+                                <td>{{transaction.montant}}</td>
+                            </tr>
+                          {% endfor %}
+                            <!-- Ajoutez d'autres lignes de transactions au besoin -->
+                        </tbody>
+                    
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10
+                        of 57 entries</div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button previous disabled" id="example1_previous"><a href="#"
+                                    aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>
+                            <li class="paginate_button active"><a href="#" aria-controls="example1"
+                                    data-dt-idx="1" tabindex="0">1</a></li>
+                            <li class="paginate_button "><a href="#" aria-controls="example1"
+                                    data-dt-idx="2" tabindex="0">2</a></li>
+                            <li class="paginate_button "><a href="#" aria-controls="example1"
+                                    data-dt-idx="3" tabindex="0">3</a></li>
+                            <li class="paginate_button "><a href="#" aria-controls="example1"
+                                    data-dt-idx="4" tabindex="0">4</a></li>
+                            <li class="paginate_button "><a href="#" aria-controls="example1"
+                                    data-dt-idx="5" tabindex="0">5</a></li>
+                            <li class="paginate_button "><a href="#" aria-controls="example1"
+                                    data-dt-idx="6" tabindex="0">6</a></li>
+                            <li class="paginate_button next" id="example1_next"><a href="#"
+                                    aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fin historique -->
+ 
+<!-- contenu de la page -->
+
+</div>
+<!-- contenu de la page -->
+
+{% endblock %}
+{% block autre_script %}
+ 
+<script src="
+https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.js
+"></script>
+  <script>
+  {% for historique1 in historiqueSoldes %}
+                console.log({{ historique1.historique }});
+            {% endfor %}
+  const chartOptions = {
+  chart: {
+    type: "area",
+    height: 180,
+    toolbar: {show: false},
+    zoom: {enabled: false}  
+  },
+  colors: ["#003883"],
+  
+series: [
+    {
+        name: "Measurable stuff",
+        data: [
+  {% for historique1 in historiqueSoldes|reverse %}
+    {{ historique1.historique }},
+{% endfor %}
+
+            {{ comptes[0].solde }}
+        ]
+    }
+],
+
+  dataLabels: {enabled: false},
+  stroke: {width: 3, curve: "smooth"},
+  fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      opacityFrom: 0.7,
+      opacityTo: 0,
+      stops: [0, 90, 100]
+    }
+  },
+  xaxis: {
+    categories: ["Feb", "Apr", "Jun", "Aug", "Oct", "Dec"],
+    axisBorder: {show: false},
+    labels: {style: {colors: "#a7a7a7", fontFamily: "Poppins"}}
+  },
+  yaxis: {
+    show: false
+  },
+  grid: {borderColor: "rgba(0, 0, 0, 0, 0)", padding: {top: -30, bottom: -8, left: 12, right: 12}},
+  tooltip: {
+    enabled: true,
+    y: {formatter: value => `${value}K`},
+    style: {fontFamily: "Poppins"}
+  },
+  markers: {show: false}
+}
+
+const chart = new ApexCharts(document.querySelector(".chart-area"), chartOptions)
+chart.render()</script>
+{% endblock %}

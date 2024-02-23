@@ -1,0 +1,103 @@
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements (tnajm tfasakh zeydin li mouch active)#} 
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}active{% endblock %}
+{% block gestion_comptes_active %}{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}{% endblock %}
+{% block gestion_operations_active %}{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo1 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{# agent-username#}
+{% block username %}Hamza Nasr{% endblock %}
+{% block username2 %}Hamza Nasr{% endblock %}
+{% block username3 %}Hamza Nasr{% endblock %}
+
+{% block gestion %}Gestion des comptes{% endblock %}
+{% block gestion2 %}Gestion des comptes{% endblock %}
+
+{#mon code#}
+{% block my_interface %} 
+<div class="container">
+    <nav class="menu">
+        <ul class="main-menu">
+        <li id="ajouter"><i class="fa fa-plus"></i>Ajouter</li>
+           
+            <li class="active"><i class="fa fa-user"></i>Liste</li>
+        </ul>
+    </nav>
+
+    <article>
+    <div class="row">
+				<div class="col-md-12">
+                <div class="box box-danger">
+                <div class="box-header"><div class="row">
+            <div class="col-md-6">
+<h3 class="box-title">Nos Clients</h3>            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button type="button" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search" style="color:#003883"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div></div>
+
+{% block body %}
+    <h1>Compte</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ compte.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ compte.type }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ compte.solde }}</td>
+            </tr>
+            <tr>
+                <th>Date_creation</th>
+                <td>{{ compte.dateCreation ? compte.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_fermeture</th>
+                <td>{{ compte.dateFermeture ? compte.dateFermeture|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ compte.etat }}</td>
+            </tr>
+            <tr>
+                <th>Rib</th>
+                <td>{{ compte.rib }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_compte_index') }}">back to list</a>
+
+    <a href="{{ path('app_compte_edit', {'id': compte.id}) }}">edit</a>
+
+    {{ include('compte/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %} 

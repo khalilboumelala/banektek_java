@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Virement{% endblock %}
+
+{% block body %}
+    <h1>Virement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ virement.id }}</td>
+            </tr>
+            <tr>
+                <th>Cin_emetteur</th>
+                <td>{{ virement.cinEmetteur }}</td>
+            </tr>
+            <tr>
+                <th>Photo_cin</th>
+                <td>{{ virement.photoCin }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ virement.montant }}</td>
+            </tr>
+            <tr>
+                <th>Date_emission</th>
+                <td>{{ virement.dateEmission ? virement.dateEmission|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_approbation</th>
+                <td>{{ virement.dateApprobation ? virement.dateApprobation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ virement.etat }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ virement.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_virement_index') }}">back to list</a>
+
+    <a href="{{ path('app_virement_edit', {'id': virement.id}) }}">edit</a>
+
+    {{ include('virement/_delete_form.html.twig') }}
+{% endblock %}

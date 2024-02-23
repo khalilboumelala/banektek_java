@@ -1,0 +1,474 @@
+
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements (tnajm tfasakh zeydin li mouch active)#} 
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}active{% endblock %}
+{% block gestion_comptes_active %}{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}{% endblock %}
+{% block gestion_operations_active %}{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+
+{% block photo %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo1 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo2 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{# agent-username#}
+{% block username %}{{agent_connecter.nom}}{% endblock %}
+{% block username2 %}{{agent_connecter.nom}}{% endblock %}
+{% block username3 %}{{agent_connecter.nom}}{% endblock %}
+
+{% block gestion %}Gestion des clients{% endblock %}
+{% block gestion2 %}Gestion des clients{% endblock %}
+
+{#mon code#}
+{% block autre_stylesheet %}
+<link rel="stylesheet" href="../dist/css/new.css">
+<style>
+.notifgreen{
+    background-color:#1fa750!important;
+     color:white;
+     border-color:black!important;
+     width:100%;
+     margin-top:10px;
+     
+}
+.notifyellow{
+    background-color:#ffc107!important;
+     color:black!important;
+     border-color:black!important;
+     width:100%;
+     margin-top:10px;
+     
+}
+.btn_confirm:hover{
+    color: white!important;
+    background-color:green!important;
+    border-radius: 20px!important;
+    margin:2px;
+     border-radius: 20px!important;
+  width:20px!important;
+}
+.btn_delete:hover{
+       color: white!important;
+    background-color:red!important;
+    margin:2px;
+      border-radius: 20px!important;
+      width:20px!important;
+}
+</style>
+{% endblock %}
+{% block my_interface %} 
+<div class="container">
+    <nav class="menu">
+        <ul class="main-menu">
+        <li id="ajouter"><i class="fa fa-plus"></i>Ajouter</li>
+           
+            <li class="active"><i class="fa fa-user"></i>Liste</li>
+        </ul>
+    </nav>
+
+    <article>
+    <div class="row">
+				<div class="col-md-12">
+                <div class="box box-danger">
+                <div class="box-header"><div class="row">
+            <div class="col-md-6">
+<h3 class="box-title">Nos Clients</h3>           
+
+ </div>
+ 
+            <div class="col-md-6">
+                <div class="input-group">
+                
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                    
+                    <span class="input-group-btn">
+                        <button type="button" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search" style="color:#003883"></i>
+                        </button>
+                        
+                    </span>
+                    
+                </div>
+                {% if nombreDemandesEnAttente == 0 %}
+                                       <a data-toggle="modal" data-target="#liste_demandes" class="notifgreen btn"  >
+
+Demandes des modifications</a>
+            
+                {% else %}
+                   <a data-toggle="modal" data-target="#liste_demandes" class="notifyellow btn"  >
+
+Demandes des modifications  (+{{nombreDemandesEnAttente}})</a>
+{% endif %}
+            </div>
+        </div></div>
+     
+					<div class="table-wrap">
+						<table class="table table-responsive-xl" id="clients-table">
+						  <thead>
+          
+						    <tr>
+						    	<th>&nbsp;</th>
+						    	<th >Nom et Prenom</th>
+						      <th >Carte d'identité nationale</th>
+            <th >Numero tel</th>
+						      <th >Status</th>
+						 						      <th >Action </th>
+
+						    </tr>
+						  </thead>
+						  <tbody >
+         {% for client in clients %}
+  <tr>
+  
+    <td></td>
+    <td class="d-flex  column-centered">
+<div class="img" style="background-image: url('{{ asset(client.photo) }}');"></div>
+      <div class="pl-3 email">
+<a href="#" style="" data-toggle="modal" data-target="#modal-{{ client.id }}">
+  <span style="color:black;font-size:13px; ">{{ client.nom ~ " " ~ client.prenom  }} <small style="color:#003883;">{{"( "~client.username ~ " ) " }}</small></span>
+</a>
+        <span>Added:{{ client.dateCreation.format('Y-m-d') }}
+      </span>
+      </div>
+    </td>
+    <td class="column-centered">{{ client.cin }}</td>
+    <td class="column-centered">{{ client.numTel }}</td>
+    <td class="status column-centered">
+{% if client.etat == "activer" %}
+    <span class="active">Active</span>
+{% else %}
+    <span class="waiting">En attente</span>
+{% endif %}
+
+    </td>
+    <td class="column-centered">
+    <div class="row">
+    <div class="col-md-6" style="width:25%">
+{% if client.etat == "activer" %}
+    <label class="switch active" onclick="toggleAccess(this,'{{ client.id }}')">
+        <input checked="" type="checkbox">
+        <div class="slider">    
+            <div class="circle">
+                       <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                </g>
+            </svg>
+               <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                </g>
+            </svg>
+            </div>
+        </div>
+    </label>
+{% else %}
+    <label class="switch inactive" onclick="toggleAccess(this,'{{ client.id }}')">
+        <input type="checkbox">
+        <div class="slider">
+            <div class="circle">
+                       <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                </g>
+            </svg>
+             <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                </g>
+            </svg>
+            </div>
+        </div>
+    </label>
+{% endif %}
+
+
+</div>
+
+
+    <div class="col-md-6" style="width:25%">
+<button class="bin-button" data-toggle="modal" data-target="#modal-sup-{{ client.id }}">
+  <svg
+    class="bin-top"
+    viewBox="0 0 39 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+    <line
+      x1="12"
+      y1="1.5"
+      x2="26.0357"
+      y2="1.5"
+      stroke="white"
+      stroke-width="3"
+    ></line>
+  </svg>
+  <svg
+    class="bin-bottom"
+    viewBox="0 0 33 39"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask id="path-1-inside-1_8_19" fill="white">
+      <path
+        d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+      ></path>
+    </mask>
+    <path
+      d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+      fill="white"
+      mask="url(#path-1-inside-1_8_19)"
+    ></path>
+    <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+    <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+  </svg>
+</button>
+
+    </div>
+</div>
+    </td>
+
+  </tr>
+
+  {% else %}
+  <tr>
+      <td colspan="19">no records found</td>
+  </tr>
+  {% endfor %}
+  <!-- Add more rows as needed -->
+</tbody>
+
+						</table>
+					</div>
+                    </div>
+				</div>
+			</div>
+    </article>
+</div>
+{% endblock %} {#endblock moncode#}
+
+{% block modals %}
+<!-- Modal -->
+{% for client in clients %}
+<div class="modal fade" id="modal-sup-{{ client.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ path('app_client_delete', {'id': client.id}) }}">
+                <div class="card2">
+                    <div class="card2-content  text-center">
+    <p class="card2-heading">Êtes-vous sûr de vouloir supprimer ce client ?</p>
+    <p class="card2-description">
+        <strong>Nom du Client :</strong> {{ client.nom ~ client.prenom }}<br>
+        <strong>Numero CIN :</strong> {{ client.cin }}<br>
+        <strong>Adresse :</strong> {{ client.adresse }}<br>
+        <!-- Ajoutez d'autres informations du client selon vos besoins -->
+    </p>
+</div>
+
+                    <div class="card2-button-wrapper">
+                        <button class="card2-button secondary" data-dismiss="modal">Annuler</button>
+                        <button class="card2-button primary">Confirmer la Suppression</button>
+                    </div>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.id) }}">
+            </form>
+        </div>
+    </div>
+</div>
+{# -------------------------------------------------------------------- #}
+    {% set form = forms[loop.index0] %}
+
+    <div class="modal fade" id="modal-{{client.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+      <div class="box-header">
+                    <h3 class="box-title">Formulaire De Modification / Affichage</h3>
+                </div>                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true"><i style="color:red; font-size: 20px;" class="fa fa-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ include('client/_form_edit.html.twig', {'button_label': 'Update'}) }}
+
+                  
+
+                    <!-- Formulaire pour la modification du client -->
+                    
+                </div>
+                <div class="modal-footer">
+                     <div class="alert alert-warning" role="alert">
+                        <strong>Attention :</strong> La modification des informations du client est irréversible. Assurez-vous de vérifier attentivement avant de procéder.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+    
+
+<div class="modal " role="dialog" tabindex="-1" id="liste_demandes" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Liste des demandes de modification</h5>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="color:red;font-size:20px;">×</span></button>
+            </div>
+            <!-- Vous pouvez ajouter le contenu ici -->
+            <div class="modal-body">
+                <hr>
+           
+                <div class="card-hover-shadow-2x mb-3 card">
+
+<div class="">
+<div class="scrollbar-container ps">
+<div class="p-2">
+<ul class="todo-list-wrapper list-group list-group-flush">
+
+
+{% for demande in demandes | reverse %}
+              <!--xxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<li class="list-group-item">
+
+<div class="todo-indicator bg-success"></div>
+<div class="widget-content p-0">
+<div class="widget-content-wrapper">
+<div class="widget-content-left mr-2">
+
+</div>
+<div class="widget-content-left mr-3">
+<div class="widget-content-left row">
+<div class="col-md-6" style="width: 30%;">
+<img width="42" class="rounded" src="../{{demande.client.photo}}" alt=""></div>
+<div class="widget-subheading col-md-6">
+<a href="#" style=""id="lien-modal" data-toggle="modal" data-target="#modal-{{ demande.client.id }}">
+ {{ demande.client.nom ~ " " ~ demande.client.prenom}}
+</a>
+</div>
+</div>
+</div>
+<div class="widget-content-left flex2">
+<div class="widget-heading" style="width: 300px; height:30px; overflow: auto;">
+    {{ demande.description }}
+</div>
+
+<div class="widget-subheading"> {{ demande.date|date('Y-m-d H:i') }}
+</div>
+
+</div>
+<div class="widget-content-right">
+{% if demande.etat == "valider" %}
+
+<div class="badge badge-pill badge-success">CONFIRMER</div>
+
+{% else %}
+<div class="badge badge-pill badge-warning">EN ATTENTE</div>
+{% endif %}
+</div>
+<div class="widget-content-right">
+<a href="#" onclick="validateDemande({{ demande.id }})" class="btn_confirm" style="color: green;">
+    <i class="fa fa-check"style="width:30px;text-align:center;"></i>
+</a>
+
+<form id="delete-form-{{ demande.id }}" action="{{ path('app_demande_delete', {'id': demande.id}) }}" method="POST" style="display: none;">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.id) }}">
+</form>
+<form id="valid-form-{{ demande.id }}" action="{{ path('app_valid_delete', {'id': demande.id}) }}" method="POST" style="display: none;">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('valid' ~ demande.id) }}">
+</form>
+
+<a href="#" onclick="deleteDemande({{ demande.id }})"  class="btn_delete" style="color: red;">
+    <i class="fa fa-trash" style="width:30px;text-align:center;"></i>
+</a>
+</div>
+</div>
+</div>
+<h2></h2>
+                </li>
+
+
+              <!--xxxxxxxxxxxxxxxxxxxxxxxxxx-->
+{% endfor %}
+
+
+
+</ul>
+</div>
+<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 400px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+</div>
+
+</div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block autre_script%}
+<script>  // Récupérer l'élément <li> par son ID
+  var liAjouter = document.getElementById("ajouter");
+  // Ajouter un gestionnaire d'événements de clic
+  liAjouter.addEventListener("click", function() {
+    // Rediriger l'utilisateur vers admin.php
+    window.location.href = "{{ ('new') }}";
+  });</script>
+
+    <script>
+    function toggleAccess(element,clientId) {
+        var isChecked = element.querySelector('input').checked;
+        var path = isChecked ? "{{ path('client_activer', {'id': 'clientId'}) }}" : "{{ path('client_desactiver', {'id': 'clientId'}) }}";
+        window.location.href = path.replace('clientId', clientId);
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Sélectionner le lien dans le modal actuel
+        var lienModal = document.getElementById('lien-modal');
+        
+        // Ajouter un gestionnaire d'événements pour le clic sur le lien
+        lienModal.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Fermer le modal actuel
+            $('#liste_demandes').modal('hide');
+            
+            // Supprimer la classe modal-backdrop
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+            // Ouvrir le nouveau modal en utilisant l'attribut data-target du lien
+            var nouveauModalId = lienModal.getAttribute('data-target');
+            $(nouveauModalId).modal('show');
+        });
+    });
+</script>
+<script>
+    function deleteDemande(id) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+</script>
+<script>
+    function validateDemande(id) {
+        if (confirm('Êtes-vous sûr de vouloir valider cette demande ?')) {
+            document.getElementById('valid-form-' + id).submit();
+        }
+    }
+</script>
+{% endblock %}

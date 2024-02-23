@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Creative Studio landing page.">
+    <meta name="author" content="Devcrud">
+    <title>Creative Studio | Free Bootstrap 4.3.x template</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{{ asset('assets/vendors/themify-icons/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('loginform/login2.css') }}">
+    <!-- Bootstrap + Creative Studio main styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/creative-studio.css') }}">
+
+
+
+ <link rel="stylesheet" href="{{ asset('css/converter.css') }}">
+ <link rel="stylesheet" href="{{ asset('css/converter2.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/convertertable.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+
+	<link rel="stylesheet" media="all" href="{{ asset('sticky/css/zitouna.css')}}" >
+    
+<link rel="stylesheet" href="{{ asset('sticky/css/style.css')}}">
+
+    <style>
+      a.nav-link:hover {
+        color: #ff214f !important;
+        transition: 0.3s;
+      }
+      .form-container {
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+}
+@media screen and (max-width: 600px) {
+  .form-container {
+    width: 95%;
+    max-width: 400px; /* Cette règle assure que la largeur maximale reste de 400px même si l'écran est plus petit */
+  }
+}
+
+/* Pour les écrans de plus de 600px de largeur */
+@media screen and (min-width: 601px) {
+  .form-container {
+    width: 400px;
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.form-container button:active {
+  scale: 0.95;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #717171;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.form-container .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.form-container .form-group textarea   {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.form-container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container .form-group input:focus  {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-group textarea:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-submit-btn {
+  
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: flex-start;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 40%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.form-container .form-submit-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+
+
+
+    </style>
+  </head>
+  <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    <!-- Page Navigation -->
+    <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
+      <div class="container">
+        <a class="navbar-brand" href="{{ asset('#') }}">
+          <img id="navbarImage" src="{{ asset('assets/imgs/logo.png') }}" alt="Description de l'image">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#testimonial">Testimonial</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#blog">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <div id="mainButton">
+                <a class="nav-link" onclick="openForm()" href="#">Login</a>    
+                <div class="modal header">
+                                  <div class="close-button" onclick="closeForm()">x</div>
+<div class="form-container">
+    <img src="{{ asset('assets/imgs/logo.png') }}" alt="Logo">
+    <form action="{{ path('app_login') }}" method="post">
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input required="" name="username" id="username" type="text">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input required="" name="password" id="password" type="password">
+        </div>
+        <button type="submit" class="form-submit-btn">Submit</button>
+    </form>
+</div>
+
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+	
+	<div class="sticky-menu nav-down">
+		<ul>
+		<li>
+  <a href="{{path('app_convertisseur')}}" class="convertisseur" style="color:white!important;">Convertisseur</a>
+		</li>
+	<li>
+  <a href="simulateur.html" class="simulateur" style="color:white!important;" >Simulateur</a>
+		</li>
+	<li>
+  <a href="fr/particuliers/nos-agences.html" class="nos-agences" style="color:white!important;" >Nos Agences</a>
+		</li>
+  </ul>
+  </div>
+    <!-- End Of Page Navigation -->
+    <!-- Page Header -->
+    <header class="header">
+      <div class="overlay">
+        <h6 class="subtitle">بانكتك</h6>
+        <h1 class="title">B A N E K T E K</h1>
+        <div class="buttons text-center">
+          <a href="{{ asset('#service') }}" class="btn btn-primary rounded w-lg btn-lg my-1">Our Service</a>
+          <a href="{{ asset('#contact') }}" class="btn btn-outline-light rounded w-lg btn-lg my-1">Contact Us</a>
+        </div>
+      </div>
+    </header>
+    <!-- End Of Page Header -->
+    <!-- Box -->
+    <!-- End of Box -->
+    <!-- Blog Section -->
+    <section id="blog">
+      
+	<div id="block-convertisseur">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-lg-8 col-xl-6 mx-auto">
+					<div class="converter-form" style="margin-top:100px;">
+						<form>
+							<input autocomplete="off"
+								data-drupal-selector="form-6kjivhusyv7m9myxj3zbgxqvnim-sj7ced6zkb6h9ho" type="hidden"
+								name="form_build_id" value="form-6KJIVhuSyV7M9MyXj3zbgxqvnIm_SJ7ceD6zkb6h9ho" />
+							<input data-drupal-selector="edit-zitouna-converter-form" type="hidden" name="form_id"
+								value="zitouna_converter_form" />
+							<div
+								class="js-form-item form-item js-form-type-number form-item-amount js-form-item-amount">
+								<label for="edit-amount" class="js-form-required form-required">Montant</label>
+								<input class="form-control form-number required" placeholder="0"
+									data-drupal-selector="edit-amount" type="number" id="edit-amount" name="amount"
+									value="" step="1" min="0" required="required" aria-required="true" />
+							</div>
+							<div class="converter-box" id="d-converter">
+								<div class="b-currencyFrom" data-label="de">
+									<div
+										class="js-form-item form-item js-form-type-textfield form-item-currencyfrom js-form-item-currencyfrom form-no-label form-disabled">
+										<input class="form-control form-text required"
+											data-drupal-selector="edit-currencyfrom" disabled="disabled" type="text"
+											id="edit-currencyfrom" name="currencyfrom" value="TND" size="60"
+											maxlength="128" required="required" aria-required="true" />
+									</div>
+								</div>
+								<div class="btn-switch">
+									<input  data-drupal-selector="edit-switch-button"
+										type="submit" id="edit-switch-button" name="op" value="switch"
+										class="button js-form-submit form-submit" />
+								</div>
+								<div class="b-currencyTo">
+									<div class="js-form-item form-item js-form-type-select form-item-currencyto js-form-item-currencyto form-no-label">
+										<select class="form-control form-select" data-drupal-selector="edit-currencyto" id="edit-currencyto" name="currencyto">
+											<option value="EUR">EUR</option>
+											<option value="USD">USD</option>
+											<option value="QAR">QAR</option>
+											<option value="SAR">SAR</option>
+											<option value="GBP">GBP</option>
+											<option value="CAD">CAD</option>
+											<option value="CHF">CHF</option>
+											<option value="AED">AED</option>
+											<option value="KWD">KWD</option>
+											<option value="BHD">BHD</option>
+											<option value="JPY">JPY</option>
+											<option value="SEK">SEK</option>
+											<option value="DKK">DKK</option>
+											<option value="NOK">NOK</option>
+											<option value="CNY">CNY</option>
+										</select>
+                                        <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: 152px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-edit-currencyto-container"><span class="select2-selection__rendered" id="select2-edit-currencyto-container" role="textbox" aria-readonly="true" title="EUR"><img class="currency-flag" src="{{asset('css/zitouna_exchange/img/eur.png')}}" alt="EUR"><span class="currency-text">EUR</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+									</div>
+								</div>
+							</div>
+							<input class="btn input-primary button js-form-submit form-submit"
+								style="background:linear-gradient(140deg, #306ee8 0%, #3038e8 100%);"
+								 id="edit-submit-button"
+								name="op" value="Convertir" />
+							<input id="edit-operation" data-drupal-selector="edit-operation" type="hidden"
+								name="operation" value="sell" />
+						</form>
+						<div class="converter-result" dir="ltr"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+        </section>
+    
+	<div id="block-zitounaexchange">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
+					<h2 class="exchange-title"> Tableau de change <span class="exchange-date"> Vendredi 26 janvier 2024
+						</span>
+					</h2>
+					<div class="b-exchange-table">
+						<div class="tbody">
+							<div class="tr thead">
+								<div class="td">Monnaie</div>
+								<div class="td">Devise</div>
+								<div class="td">Unité</div>
+								<div class="td br">Achat</div>
+								<div class="td br">Vente</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/eur.png')}}" alt="EURO">
+									<span class="hide-mobile">EURO</span>
+								</div>
+								<div class="td court-devise">EUR</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">3,355</div>
+								<div class="td br taux-vente">3,435</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/usd.png')}}" alt="DOLLAR AMERICAN">
+									<span class="hide-mobile">DOLLAR AMERICAN</span>
+								</div>
+								<div class="td court-devise">USD</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">3,100</div>
+								<div class="td br taux-vente">3,150</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/qar.png')}}" alt="RYAL QATARI">
+									<span class="hide-mobile">RYAL QATARI</span>
+								</div>
+								<div class="td court-devise">QAR</div>
+								<div class="td unit-devise">10</div>
+								<div class="td br taux-achat">8,413</div>
+								<div class="td br taux-vente">8,691</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/sar.png')}}" alt="RYAL SAOUDIEN">
+									<span class="hide-mobile">RYAL SAOUDIEN</span>
+								</div>
+								<div class="td court-devise">SAR</div>
+								<div class="td unit-devise">10</div>
+								<div class="td br taux-achat">8,270</div>
+								<div class="td br taux-vente">8,570</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/gbp.png')}}" alt="LIVRE STERLING">
+									<span class="hide-mobile">LIVRE STERLING</span>
+								</div>
+								<div class="td court-devise">GBP</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">3,900</div>
+								<div class="td br taux-vente">4,009</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/cad.png')}}" alt="DOLLAR CANADIAN">
+									<span class="hide-mobile">DOLLAR CANADIAN</span>
+								</div>
+								<div class="td court-devise">CAD</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">2,295</div>
+								<div class="td br taux-vente">2,365</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/chf.png')}}" alt="FRANC SUISSE">
+									<span class="hide-mobile">FRANC SUISSE</span>
+								</div>
+								<div class="td court-devise">CHF</div>
+								<div class="td unit-devise">10</div>
+								<div class="td br taux-achat">35,450</div>
+								<div class="td br taux-vente">36,439</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/aed.png')}}" alt="DIRHAM E.A.U.">
+									<span class="hide-mobile">DIRHAM E.A.U.</span>
+								</div>
+								<div class="td court-devise">AED</div>
+								<div class="td unit-devise">10</div>
+								<div class="td br taux-achat">8,362</div>
+								<div class="td br taux-vente">8,613</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/kwd.png')}}" alt="DINAR KOWEITIEN">
+									<span class="hide-mobile">DINAR KOWEITIEN</span>
+								</div>
+								<div class="td court-devise">KWD</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">9,968</div>
+								<div class="td br taux-vente">10,287</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/bhd.png')}}" alt="DINAR BAHREINI">
+									<span class="hide-mobile">DINAR BAHREINI</span>
+								</div>
+								<div class="td court-devise">BHD</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">8,156</div>
+								<div class="td br taux-vente">8,383</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/jpy.png')}}" alt="YEN JAPONAIS">
+									<span class="hide-mobile">YEN JAPONAIS</span>
+								</div>
+								<div class="td court-devise">JPY</div>
+								<div class="td unit-devise">1000</div>
+								<div class="td br taux-achat">20,753</div>
+								<div class="td br taux-vente">21,418</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/sek.png')}}" alt="COURONNE SUEDOISE">
+									<span class="hide-mobile">COURONNE SUEDOISE</span>
+								</div>
+								<div class="td court-devise">SEK</div>
+								<div class="td unit-devise">10</div>
+								<div class="td br taux-achat">2,932</div>
+								<div class="td br taux-vente">3,026</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/dkk.png')}}" alt="COURONNE DANOISE">
+									<span class="hide-mobile">COURONNE DANOISE</span>
+								</div>
+								<div class="td court-devise">DKK</div>
+								<div class="td unit-devise">100</div>
+								<div class="td br taux-achat">44,439</div>
+								<div class="td br taux-vente">46,045</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/nok.png')}}" alt="COURONNE NORVEGIENNE">
+									<span class="hide-mobile">COURONNE NORVEGIENNE</span>
+								</div>
+								<div class="td court-devise">NOK</div>
+								<div class="td unit-devise">100</div>
+								<div class="td br taux-achat">29,218</div>
+								<div class="td br taux-vente">30,274</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr">
+								<div class="td">
+									<img src="{{asset('css/zitouna_exchange/img/cny.png')}}" alt="YUAN CHINOIS">
+									<span class="hide-mobile">YUAN CHINOIS</span>
+								</div>
+								<div class="td court-devise">CNY</div>
+								<div class="td unit-devise">1</div>
+								<div class="td br taux-achat">0,425</div>
+								<div class="td br taux-vente">0,442</div>
+								<div class="td">&nbsp;</div>
+							</div>
+							<div class="tr tfoot">
+								<div class="td">&nbsp;</div>
+								<div class="td">&nbsp;</div>
+								<div class="td">&nbsp;</div>
+								<div class="td br">&nbsp;</div>
+								<div class="td br">&nbsp;</div>
+								<div class="td">&nbsp;</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <!-- End of Blog Section -->
+    <section class="has-bg-img py-0">
+      <div class="container">
+        <div class="footer">
+          <div class="footer-lists">
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">ABOUT US</h6>
+              </li>
+              <li class="list-body">
+                <a href="#" class="logo">
+                  <img src="{{ asset('assets/imgs/logo.png') }}" width="35" height="13" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                  <h6>Creative Studio</h6>
+                </a>
+                <p>Hexadev Bank, votre partenaire de confiance dans le monde bancaire. Nous nous engageons à offrir des services financiers fiables et transparents pour construire un avenir financier solide.</p>
+                <p class="mt-3"> Copyright <script>
+                    document.write(new Date().getFullYear())
+                  </script> &copy; <a class="d-inline text-primary" href="http://www.devcrud.com">Hexadev</a>
+                </p>
+              </li>
+            </ul>
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">USEFUL LINKS</h6>
+              </li>
+              <li class="list-body">
+                <div class="row">
+                  <div class="col">
+                    <a href="#about">About</a>
+                    <a href="#service">Service</a>
+                    <a href="#portfolio">Portfolio</a>
+                    <a href="#testmonail">Testimonial</a>
+                  </div>
+                  <div class="col">
+                    <a href="#team">Team</a>
+                    <a href="#blog">Blog</a>
+                    <a href="#">Faq</a>
+                    <a href="#">Privacy Policy</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">CONTACT INFO</h6>
+              </li>
+              <li class="list-body">
+                <p>Contact us and we'll get back to you within 24 hours.</p>
+                <p>
+                  <i class="ti-location-pin"></i> 15 Pôle technologique El Ghazela, Esprit
+                </p>
+                <p>
+                  <i class="ti-email"></i> hexadev@esprit.tn
+                </p>
+                <div class="social-links">
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-facebook"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-twitter-alt"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-google"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-pinterest-alt"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-instagram"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-rss"></i>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- core  -->
+    <script src="{{ asset('assets/vendors/jquery/jquery-3.4.1.js') }}"></script>
+    <script src="{{ asset('assets/vendors/bootstrap/bootstrap.bundle.js') }}"></script>
+    <!-- bootstrap affix -->
+    <script src="{{ asset('assets/vendors/bootstrap/bootstrap.affix.js') }}"></script>
+    <!-- Creative Studio js -->
+    <script src="{{ asset('assets/js/creative-studio.js') }}"></script>
+       <script src="{{ asset('loginform/login2.js') }}"></script>
+       <script>
+       document.addEventListener("DOMContentLoaded", function() {
+    // Fetch the JSON data
+    fetch('https://v6.exchangerate-api.com/v6/af05f542d22f61006a55ead9/latest/USD')
+    .then(response => response.json())
+    .then(data => {
+        // Extract conversion rates from the JSON data
+        const conversionRates = data.conversion_rates;
+
+        // Function to convert amount from TND to selected currency
+       function convertCurrency() {
+    const amount = parseFloat(document.getElementById('edit-amount').value);
+    const currencyTo = document.getElementById('edit-currencyto').value;
+
+    // Check if the selected currency is TND
+    if (currencyTo === 'TND') {
+        // If converting to TND, the result is the same as the input amount
+        const convertedAmount = amount;
+        // Update the result in the div
+        const resultDiv = document.querySelector('.converter-result');
+        resultDiv.innerHTML = `<div class="result"><div>${convertedAmount.toFixed(2)} <span class="currency">TND</span></div></div>`;
+    } else {
+        // Convert amount from TND to selected currency
+        const exchangeRate = conversionRates[currencyTo];
+        if (exchangeRate) {
+            const tndExchangeRate = 1 / conversionRates['TND']; // Get the exchange rate for TND
+            const convertedAmount = amount * tndExchangeRate * exchangeRate;
+            // Update the result in the div
+            const resultDiv = document.querySelector('.converter-result');
+            resultDiv.innerHTML = `<div class="result"><div>${convertedAmount.toFixed(2)} <span class="currency">${currencyTo}</span></div></div>`;
+        } else {
+            console.error('Exchange rate not available for selected currency');
+        }
+    }
+}
+
+          // Event listener for form submission
+          document.getElementById('edit-submit-button').addEventListener('click', function(event) {
+              event.preventDefault(); // Prevent default form submission
+              convertCurrency(); // Call the conversion function
+          });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch the JSON data
+    fetch('https://v6.exchangerate-api.com/v6/af05f542d22f61006a55ead9/latest/USD')
+    .then(response => response.json())
+    .then(data => {
+        // Extract conversion rates from the JSON data
+        const conversionRates = data.conversion_rates;
+
+        function updateExchangeRates(conversionRates) {
+    // Select all elements with the class .court-devise
+    const currencyElements = document.querySelectorAll('.court-devise');
+ const tndExchangeRate = conversionRates['TND']; // Get the exchange rate for TND
+    // Iterate over each currency element
+    currencyElements.forEach(row => {
+        // Get the currency code from the element
+        const currencyCode = row.textContent.trim();
+
+        // Check if the currency code exists in the conversion rates data
+        if (conversionRates[currencyCode]) {
+            // Update the exchange rate for the currency
+            const exchangeRateElement = row.nextElementSibling.nextElementSibling;
+             const exchangeRateElementsell = row.nextElementSibling.nextElementSibling.nextElementSibling;
+            exchangeRateElement.textContent = (conversionRates[currencyCode] * tndExchangeRate).toFixed(3);
+             exchangeRateElementsell.textContent = (conversionRates[currencyCode] * tndExchangeRate * 1.02581).toFixed(3);
+        } else {
+            console.error('Exchange rate not available for currency:', currencyCode);
+        }
+    });
+}
+
+// Example usage:
+
+
+updateExchangeRates(conversionRates);
+
+        // Optionally, you can set up a timer to periodically update the exchange rates
+        // setInterval(updateExchangeRates, 60000); // Update every minute
+    })
+    .catch(error => console.error('Error fetching data:', error));
+});</script>
+  </body>
+</html>

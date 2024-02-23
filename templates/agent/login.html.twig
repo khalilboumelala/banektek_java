@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Creative Studio landing page.">
+    <meta name="author" content="Devcrud">
+    <title>Creative Studio | Free Bootstrap 4.3.x template</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{{ asset('assets/vendors/themify-icons/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('loginform/login2.css') }}">
+    <!-- Bootstrap + Creative Studio main styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/creative-studio.css') }}">
+
+ <link rel="stylesheet" href="{{ asset('articles/articles.css') }}">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+
+	<link rel="stylesheet" media="all" href="{{ asset('sticky/css/zitouna.css')}}" >
+<link rel="stylesheet" href="{{ asset('sticky/css/style.css')}}">
+<style>
+.hidden-when-camera-active {
+  display: none;
+  
+}
+
+</style>
+    <style>
+      a.nav-link:hover {
+        color: #ff214f !important;
+        transition: 0.3s;
+      }
+      .form-container {
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+}
+@media screen and (max-width: 600px) {
+  .form-container {
+    width: 95%;
+    max-width: 400px; /* Cette règle assure que la largeur maximale reste de 400px même si l'écran est plus petit */
+  }
+}
+
+/* Pour les écrans de plus de 600px de largeur */
+@media screen and (min-width: 601px) {
+  .form-container {
+    width: 400px;
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.form-container button:active {
+  scale: 0.95;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #717171;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.form-container .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.form-container .form-group textarea   {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.form-container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container .form-group input:focus  {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-group textarea:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.form-container .form-submit-btn {
+  
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: flex-start;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 40%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.form-container .form-submit-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+
+
+
+    </style>
+  </head>
+  <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    <!-- Page Navigation -->
+    <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
+      <div class="container">
+        <a class="navbar-brand" href="{{ asset('#') }}">
+          <img id="navbarImage" src="{{ asset('assets/imgs/logo.png') }}" alt="Description de l'image">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#testimonial">Testimonial</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#blog">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <div id="mainButton">
+                <a class="nav-link" onclick="openForm()" href="#">Login</a>    
+                <div class="modal header">
+                                  <div class="close-button" onclick="closeForm()">x</div>
+<div class="form-container" id="modal_login">
+    <div id="faceio-modal"></div>
+    <img src="{{ asset('assets/imgs/logo.png') }}" alt="Logo">
+    <form action="{{ path('app_login_admin') }}" method="post">
+        <div class="form-group">
+            <label for="username">Matricule</label>
+            <input required="" name="matricule" id="matricule" type="text">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input required="" name="password" id="password" type="password">
+        </div>
+        <button type="submit" class="form-submit-btn">Submit</button>
+
+    </form>
+ <div class="form-group" style="display:none;">
+            <label for="username">Matricule</label>
+            <input required="" name="agent_faceid" id="agent_faceid" type="text">
+        </div>
+                                  <button onclick="authenticateUser()" class="form-submit-btn">FACE - ID</button>
+
+</div>
+
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+	
+	<div class="sticky-menu nav-down">
+		<ul>
+		<li>
+  <a href="{{path('app_convertisseur')}}" class="convertisseur" style="color:white!important;">Convertisseur</a>
+		</li>
+	<li>
+  <a href="simulateur.html" class="simulateur" style="color:white!important;" >Simulateur</a>
+		</li>
+	<li>
+  <a href="fr/particuliers/nos-agences.html" class="nos-agences" style="color:white!important;" >Nos Agences</a>
+		</li>
+  </ul>
+  </div>
+    <!-- End Of Page Navigation -->
+    <!-- Page Header -->
+    <header class="header">
+      <div class="overlay">
+        <h6 class="subtitle">بانكتك</h6>
+        <h1 class="title">B A N E K T E K</h1>
+        <div class="buttons text-center">
+          <a href="{{ asset('#service') }}" class="btn btn-primary rounded w-lg btn-lg my-1">Our Service</a>
+          <a href="{{ asset('#contact') }}" class="btn btn-outline-light rounded w-lg btn-lg my-1">Contact Us</a>
+        </div>
+      </div>
+    </header>
+    <!-- End Of Page Header -->
+    <!-- Box -->
+    <!-- End of Box -->
+    <!-- Blog Section -->
+    <section id="blog">
+      
+<div class="container">
+
+
+	
+
+</div>
+    </section>
+    <!-- End of Blog Section -->
+    <section class="has-bg-img py-0">
+      <div class="container">
+        <div class="footer">
+          <div class="footer-lists">
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">ABOUT US</h6>
+              </li>
+              <li class="list-body">
+                <a href="#" class="logo">
+                  <img src="{{ asset('assets/imgs/logo.png') }}" width="35" height="13" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Creative studio Landing page">
+                  <h6>Creative Studio</h6>
+                </a>
+                <p>Hexadev Bank, votre partenaire de confiance dans le monde bancaire. Nous nous engageons à offrir des services financiers fiables et transparents pour construire un avenir financier solide.</p>
+                <p class="mt-3"> Copyright <script>
+                    document.write(new Date().getFullYear())
+                  </script> &copy; <a class="d-inline text-primary" href="http://www.devcrud.com">Hexadev</a>
+                </p>
+              </li>
+            </ul>
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">USEFUL LINKS</h6>
+              </li>
+              <li class="list-body">
+                <div class="row">
+                  <div class="col">
+                    <a href="#about">About</a>
+                    <a href="#service">Service</a>
+                    <a href="#portfolio">Portfolio</a>
+                    <a href="#testmonail">Testimonial</a>
+                  </div>
+                  <div class="col">
+                    <a href="#team">Team</a>
+                    <a href="#blog">Blog</a>
+                    <a href="#">Faq</a>
+                    <a href="#">Privacy Policy</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ul class="list">
+              <li class="list-head">
+                <h6 class="font-weight-bold">CONTACT INFO</h6>
+              </li>
+              <li class="list-body">
+                <p>Contact us and we'll get back to you within 24 hours.</p>
+                <p>
+                  <i class="ti-location-pin"></i> 15 Pôle technologique El Ghazela, Esprit
+                </p>
+                <p>
+                  <i class="ti-email"></i> hexadev@esprit.tn
+                </p>
+                <div class="social-links">
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-facebook"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-twitter-alt"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-google"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-pinterest-alt"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-instagram"></i>
+                  </a>
+                  <a href="javascript:void(0)" class="link">
+                    <i class="ti-rss"></i>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- core  -->
+    <script src="{{ asset('assets/vendors/jquery/jquery-3.4.1.js') }}"></script>
+    <script src="{{ asset('assets/vendors/bootstrap/bootstrap.bundle.js') }}"></script>
+    <!-- bootstrap affix -->
+    <script src="{{ asset('assets/vendors/bootstrap/bootstrap.affix.js') }}"></script>
+    <!-- Creative Studio js -->
+    <script src="{{ asset('assets/js/creative-studio.js') }}"></script>
+       <script src="{{ asset('loginform/login2.js') }}"></script>
+       <script src="{{ asset('js/faceid.js') }}"></script>
+       <script>  
+       ///////////////////////////:
+  var liAjouter = document.getElementById("liste");
+
+
+  liAjouter.addEventListener("click", function() {
+    window.location.href = "{{ ('/agent') }}";
+  });</script>
+
+   <script src="https://cdn.faceio.net/fio.js"></script>
+    <script type="text/javascript">
+        // Instantiate fio.js with your application Public ID
+        const faceio = new faceIO("fioabb3e");
+        function enrollNewUser(){
+                                      document.getElementById("modal_login").classList.add("hidden-when-camera-active");
+    var faceidInput = document.getElementById("agent_faceid");
+
+           // Start the facial enrollment process
+           faceio.enroll({
+                "locale": "auto", // Default user locale
+                "payload": {
+                /* The payload we want to associate with this user
+                * which is forwarded back to us upon future
+                * authentication of this particular user.*/
+                "whoami": 123456, // Example of dummy ID linked to this particular user
+                "email": "john.doe@example.com"
+                }
+            }).then(userInfo => {
+                // User Successfully Enrolled!
+                alert(
+                    `User Successfully Enrolled! Details:
+                    Unique Facial ID: ${userInfo.facialId}
+                    Enrollment Date: ${userInfo.timestamp}
+                    Gender: ${userInfo.details.gender}
+                    Age Approximation: ${userInfo.details.age}`
+                )
+                console.log(userInfo)
+                faceidInput.value =userInfo.facialId;
+                // handle success, save the facial ID, redirect to dashboard...
+            }).catch(errCode => {
+                // handle enrollment failure. Visit:
+                // https://faceio.net/integration-guide#error-codes
+                // for the list of all possible error codes
+            }).finally(() => {
+        // Masquer le formulaire à nouveau après l'authentification (ou en cas d'échec)
+        setTimeout(() => {
+            document.getElementById("modal_login").classList.remove("hidden-when-camera-active");
+        }, 1000); // Définissez le délai en millisecondes (1000 ms = 1 seconde)
+    });
+        }
+        
+      function authenticateUser() {
+    document.getElementById("modal_login").classList.add("hidden-when-camera-active");
+    var faceidInput = document.getElementById("agent_faceid");
+
+    // Authenticate a previously enrolled user
+    faceio.authenticate({
+        "locale": "auto" // Default user locale
+    }).then(userData => {
+        console.log("Success, user identified")
+        faceidInput.value = userData.facialId;
+
+        // Grab the facial ID linked to this particular user which will be same
+        // for each of his successful future authentication. FACEIO recommend 
+        // that you rely on this Facial ID if you plan to uniquely identify 
+        // all enrolled users on your backend for example.
+        console.log("Linked facial Id: " + userData.facialId);
+        
+        // Grab the arbitrary data you have already linked (if any) to this particular user
+        // during his enrollment via the payload parameter of the enroll() method.
+        console.log("Payload: " + JSON.stringify(userData.payload)) 
+               window.location.href = "/loginadminfaceid/" + userData.facialId;
+
+        // {"whoami": 123456, "email": "john.doe@example.com"} set via enroll()
+    }).catch(errCode => {
+        // handle authentication failure. Visit:
+        // https://faceio.net/integration-guide#error-codes
+        // for the list of all possible error codes
+    }).finally(() => {
+      
+
+    });
+}
+
+    </script>
+  </body>
+</html>

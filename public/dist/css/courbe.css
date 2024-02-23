@@ -1,0 +1,1190 @@
+/*** graph*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+container-graph {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #003883 ;
+}
+
+.card-graph {
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.08);
+}
+
+.card-graph h2 {
+  color: #f8f8f8;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.card-graph p {
+  color: #ccc;
+  font-size: 12px;
+  margin: 0 0 16px;
+}
+
+.card-graph .pulse {
+  position: absolute;
+  background: #003883 ;
+  width: 14px;
+  height: 14px;
+  right: 31px;
+  top: 35px;
+  border-radius: 50%;
+}
+
+.card-graph .pulse::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: -1px;
+  top: -1px;
+  border-radius: 50%;
+  border: 0.1px solid #003883 ;
+  transform-origin: center;
+  opacity: 0.8;
+  scale: 0;
+  animation: pulse 3s linear infinite;
+}
+
+@keyframes pulse {
+  70% {
+    scale: 0;
+    opacity: 0.8;
+  }
+  100% {
+    scale: 3;
+    opacity: 0;
+  }
+}
+
+.card-graph .chart-area {
+  position: relative;
+}
+
+container-graph .apexcharts-tooltip.apexcharts-theme-light {
+  color: #e2dede;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  box-shadow: none;
+  padding: 4px 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border: 0;
+}
+
+.apexcharts-tooltip-title, .apexcharts-xaxistooltip-bottom.apexcharts-theme-light {
+  display: none;
+}
+
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background: #e8f6ff;
+  font-family: "SF Pro Display";
+  color: #333;
+}
+.wrapper .blocksRow {
+  flex-wrap: wrap;
+  justify-content: center;
+ 
+}
+.wrapper .row {
+  display: flex;
+  flex-direction: row;
+}
+.wrapper .col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 100%;
+  
+  margin: 15px;
+}
+.wrapper .col .block {
+  background: #fff;
+  /*padding: 24px 0;
+   overflow: hidden;*/
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.05);
+ 
+}
+.wrapper .col .block + .block {
+  margin-top: 28px;
+}
+.wrapper .col .block.stockBlock {
+  height: 338px;
+  overflow: hidden;
+}
+.wrapper .col .block.limitBlock {
+  padding: 26px 0;
+}
+.wrapper .col .block.spendingBlock {
+  padding-top: 21px;
+  padding-bottom: 20px;
+}
+.wrapper .col .block.spendingBlock .titleWrap .calendarTrigger {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/calendar_icon.svg") no-repeat center/contain;
+}
+.wrapper .col .block.spendingBlock .spendingWrap {
+  margin-top: 8px;
+  padding: 0 20px;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .graphWrap {
+  position: relative;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .graphWrap .graph {
+  max-width: 232px;
+  width: 100%;
+  margin: 0 auto;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .graphWrap .spendingSummary {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -2px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .graphWrap .spendingSummary .period {
+  font-size: 16px;
+  line-height: 14px;
+  color: #adadad;
+  margin-bottom: 8px;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .graphWrap .spendingSummary .spent {
+  font-family: "SF Pro Display Medium";
+  font-size: 20px;
+  line-height: 20px;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo {
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo .categoryName {
+  font-size: 16px;
+  line-height: 14px;
+  color: #adadad;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo .categoryName:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: -1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background: #ff614b;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo .categorySummary {
+  justify-content: flex-end;
+  font-family: "SF Pro Display Medium";
+  font-size: 14px;
+  line-height: 12px;
+  color: #adadad;
+  text-align: right;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo .categorySummary .price {
+  color: #333;
+  margin-right: 8px;
+}
+.wrapper .col .block.spendingBlock .spendingWrap .selectedCategoryInfo .categorySummary .percentage {
+  margin-left: 8px;
+}
+.wrapper .col .block.setLimitBlock {
+  padding: 20px 20px 15px;
+}
+.wrapper .col .block.setLimitBlock .titleWrap {
+  padding: 0;
+}
+.wrapper .col .block.setLimitBlock .currentLimit {
+  background: #ff614b;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-family: "SF Pro Display Medium";
+  color: #fff;
+  font-size: 13px;
+  line-height: 21px;
+}
+.wrapper .col .block.calendarBlock {
+  padding-bottom: 32px;
+}
+.wrapper .col .block.calendarBlock .calendarHead {
+  padding: 0 20px 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #ebebeb;
+  font-size: 16px;
+  line-height: 20px;
+}
+.wrapper .col .block.calendarBlock .calendarHead .arrowButton {
+  height: 20px;
+  width: 20px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/arrow_left.svg") no-repeat center left/7px;
+}
+.wrapper .col .block.calendarBlock .calendarHead .arrowButton.nextButton {
+  transform: scaleX(-1);
+}
+.wrapper .col .block.calendarBlock .calendarHead .year {
+  color: #adadad;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block.calendarBlock .calendarHead .month {
+  color: #333;
+  padding-right: 6px;
+  font-family: "SF Pro Display Bold";
+}
+.wrapper .col .block.calendarBlock .calendarWrap {
+  padding: 24px 20px 0;
+  overflow: hidden;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week.calendarTableHead {
+  margin-bottom: 18px;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week.calendarTableHead span {
+  font-family: "SF Pro Display Medium";
+  color: #333;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week.calendarTableHead span.unactive {
+  color: #adadad;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week + .week {
+  margin-top: 16px;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span {
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  line-height: 20px;
+  color: #adadad;
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span:first-child.selected:before {
+  left: inherit;
+  right: -7px;
+  width: 200%;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span:last-child.selected:before {
+  width: 200%;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.active {
+  color: #333;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.event {
+  color: #333;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.event:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -8px;
+  background: #ff614b;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.selected.startPoint:before {
+  border-radius: 40px 0 0 40px;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.selected.endPoint:before {
+  border-radius: 0 40px 40px 0;
+}
+.wrapper .col .block.calendarBlock .calendarWrap .weeks .week span.selected:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  display: block;
+  height: 40px;
+  top: -10px;
+  left: -7px;
+  background: #e3f4ff;
+  width: 46px;
+}
+.wrapper .col .block.paymentsBlock {
+  height: 348px;
+  overflow: hidden;
+}
+.wrapper .col .block.statBlock {
+  /*overflow: hidden;*/
+  padding-top: 20px;
+  min-height:340px;
+}
+.wrapper .col .block.statBlock .titleWrap .rightTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.wrapper .col .block.statBlock .titleWrap .rightTitle span {
+  display: block;
+  margin-left: 20px;
+}
+.wrapper .col .block.statBlock .titleWrap .rightTitle span.blue:before {
+  background: #73caff;
+}
+.wrapper .col .block.statBlock .titleWrap .rightTitle span.orange:before {
+  background: #ff614b;
+}
+.wrapper .col .block.statBlock .titleWrap .rightTitle span:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: -1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.wrapper .col .block.graphBlock {
+  padding-top: 24px;
+  padding-bottom: 20px;
+}
+.wrapper .col .block.graphBlock .titleWrap {
+  padding-right: 13px;
+}
+.wrapper .col .block.graphBlock .titleWrap .rightTitle .graphFilter {
+  line-height: 21px;
+  padding: 0 7px;
+  color: #adadad;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.wrapper .col .block.graphBlock .titleWrap .rightTitle .graphFilter.active {
+  background: #ff614b;
+  font-weight: bold;
+  color: #fff;
+}
+.wrapper .col .block.graphBlock .titleWrap .rightTitle .graphFilter + .graphFilter {
+  margin-left: 13px;
+}
+.wrapper .col .block.graphBlock .statWrap {
+  height: 98px;
+  margin-top: 32px;
+}
+.wrapper .col .block.graphBlock .statWrap .statRow {
+  padding: 0;
+}
+.wrapper .col .block.graphBlock .statWrap .statRow .graphLine {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/graph_line.svg") no-repeat;
+  background-size: contain;
+  background-position: center 4px;
+}
+.wrapper .col .block.graphBlock .statWrap .statRow .tappedWrap {
+  position: absolute;
+  right: 78px;
+  top: -20px;
+}
+.wrapper .col .block.graphBlock .statWrap .statRow .tappedWrap .thumb {
+  z-index: 3;
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 5px auto 0;
+}
+.wrapper .col .block.graphBlock .statWrap .statRow .tappedWrap .tooltip {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  display: block;
+  color: #fff;
+  padding: 4px 5px;
+  font-size: 13px;
+  line-height: 21px;
+}
+.wrapper .col .block.graphBlock .statWrap .statDays {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: relative;
+  left: -15px;
+}
+.wrapper .col .block.graphBlock .statWrap .statDays span {
+  display: block;
+  flex-shrink: 0;
+  width: 44px;
+  color: #adadad;
+  font-size: 13px;
+  line-height: 20px;
+}
+.wrapper .col .block.graphBlock .statWrap .statDays span.active {
+  color: #333;
+  font-family: "SF Pro Display";
+  font-weight: bold;
+}
+.wrapper .col .block.graphBlock .statWrap .statDays span + span {
+  margin-left: 13px;
+}
+.wrapper .col .block .titleWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 20px;
+  padding: 0 20px;
+}
+.wrapper .col .block .titleWrap .title {
+  color: #333;
+  font-size: 18px;
+  font-family: "SF Pro Display Bold";
+}
+.wrapper .col .block .titleWrap .rightTitle {
+  font-size: 16px;
+  color: #adadad;
+}
+.wrapper .col .block .paymentsWrap {
+  padding: 0 20px;
+  margin-top: 8px;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 84px;
+  padding: 14px 0;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.refundPayment .paymentIcon:after {
+  content: "";
+  opacity: 1;
+  visibility: visible;
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: -4px;
+  right: -4px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/refund.svg") no-repeat center/contain;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.refundPayment .paymentPrice {
+  color: #2acc6b;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.sentPayment .paymentIcon, .wrapper .col .block .paymentsWrap .paymentBlock.receivePayment .paymentIcon {
+  overflow: hidden;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.sentPayment .paymentIcon img, .wrapper .col .block .paymentsWrap .paymentBlock.receivePayment .paymentIcon img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.sentPayment .paymentPrice:after, .wrapper .col .block .paymentsWrap .paymentBlock.receivePayment .paymentPrice:after {
+  content: "";
+  position: relative;
+  top: -1px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: url("https://raw.githubusercontent.com/EugeneYakovlev/BankingUIKit/2180731820c883dece60f3e80a313bdfee1fca5a/images/icons/angle_arrow.svg") no-repeat center/8px;
+  margin-left: 10px;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.sentPayment .paymentPrice:after {
+  background-color: #f0523c;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.receivePayment .paymentPrice {
+  color: #2acc6b;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock.receivePayment .paymentPrice:after {
+  transform: rotate(180deg);
+  background-color: #2acc6b;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentIcon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: rgba(51, 51, 51, 0.04);
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentIcon img {
+  width: 32px;
+  height: 32px;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentName {
+  font-size: 15px;
+  line-height: 15px;
+  width: 100%;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentName .company {
+  font-family: "SF Pro Display Medium";
+  margin-bottom: 2px;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentName .category {
+  color: #adadad;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock .paymentPrice {
+  margin-left: 16px;
+  font-size: 14px;
+  line-height: 14px;
+  font-family: "SF Pro Display Medium";
+  text-align: right;
+  white-space: nowrap;
+}
+.wrapper .col .block .paymentsWrap .paymentBlock + .paymentBlock {
+  border-top: 1px solid #ebebeb;
+}
+.wrapper .col .block .cardsWrap {
+  margin-top: 20px;
+}
+.wrapper .col .block .cardsWrap .cardsRow {
+  width: 100%;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 112px;
+  width: 100%;
+  padding: 16px 20px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  background: no-repeat bottom right/contain;
+  height: 30px;
+  width: 60px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row + .row {
+  align-items: flex-end;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row .cardBankIcon img {
+  width: auto;
+  height: 18px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row .cardNum {
+  text-align: right;
+  font-size: 16px;
+  line-height: 12px;
+  letter-spacing: 1px;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row .cardNum:before {
+  content: "";
+  position: relative;
+  top: -1px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  width: 28px;
+  height: 4px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/card_number_dot.svg") no-repeat center/contain;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row .cardBalanceWrap .label {
+  display: block;
+  color: #adadad;
+  font-size: 14px;
+  line-height: 14px;
+  margin-bottom: 5px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock .row .cardBalanceWrap .value {
+  font-family: "SF Pro Display Bold";
+  font-size: 18px;
+  line-height: 18px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock + .cardBlock {
+  margin-top: 8px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock.visa {
+  background: #f1faff;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock.visa:after {
+  background-image: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/visa_logo.svg");
+  background-size: 60px;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock.mc {
+  background: #fff7f2;
+}
+.wrapper .col .block .cardsWrap .cardsRow .cardBlock.mc:after {
+  background-image: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/master_card_logo.svg");
+  background-size: 46px;
+}
+.wrapper .col .block .cardsWrap .addButton {
+  display: block;
+  max-width: 84px;
+  width: 100%;
+  height: 44px;
+  background: #73caff url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/plus.svg") no-repeat center/14px;
+  margin: 25px auto 0;
+  border-radius: 8px;
+}
+.wrapper .col .block .exchangeWrap {
+  margin-top: 24px;
+  padding: 0 20px;
+}
+.wrapper .col .block .exchangeWrap .inputWrap + .inputWrap {
+  margin-top: 24px;
+}
+.wrapper .col .block .exchangeWrap .inputWrap .label {
+  display: block;
+  font-size: 14px;
+  color: #adadad;
+}
+.wrapper .col .block .exchangeWrap .inputWrap .input {
+  width: 100%;
+  position: relative;
+ /* Chrome, Safari, Edge, Opera */
+ /* Firefox */
+}
+.wrapper .col .block .exchangeWrap .inputWrap .input select {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background: transparent;
+  border: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: "SF Pro Display";
+  font-weight: bold;
+  width: 54px;
+}
+.wrapper .col .block .exchangeWrap .inputWrap .input select:disabled {
+  opacity: 1;
+}
+.wrapper .col .block .exchangeWrap .inputWrap .input input::-webkit-outer-spin-button, .wrapper .col .block .exchangeWrap .inputWrap .input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.wrapper .col .block .exchangeWrap .inputWrap .input input[type="number"] {
+  -moz-appearance: textfield;
+}
+.wrapper .col .block .exchangeWrap .inputWrap input {
+  border: 0;
+  border-bottom: 1px solid #ebebeb;
+  box-shadow: none;
+  outline: none;
+  padding: 8px 56px 8px 0;
+  width: 100%;
+  height: auto;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block .exchangeWrap .exchangeBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 21px;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .valueIcons {
+  position: relative;
+  width: 66px;
+  height: 42px;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .valueIcons .icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  width: 42px;
+  height: 42px;
+  padding: 3px;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .valueIcons .icon img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .valueIcons .icon.from {
+  left: 0;
+  z-index: 2;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .valueIcons .icon.to {
+  right: 0;
+  z-index: 1;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .exchangeInfo {
+  font-size: 15px;
+  line-height: 15px;
+  color: #adadad;
+  margin-left: 12px;
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .exchangeInfo .currency {
+  margin-bottom: 6px;
+  color: #333;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block .exchangeWrap .exchangeBar .exchangeButton {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/exchange.png") no-repeat center/contain;
+}
+.wrapper .col .block .exchangeWrap .convertButton {
+  display: block;
+  margin-top: 25px;
+  border-radius: 8px;
+  background: #73caff;
+  height: 60px;
+  line-height: 60px;
+  font-size: 16px;
+  font-family: "SF Pro Display Bold";
+  text-align: center;
+  width: 100%;
+  color: #fff;
+}
+.wrapper .col .block .limitsRow {
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.wrapper .col .block .limitsRow .limitBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: calc((100% - 15px) / 2);
+  width: 100%;
+}
+.wrapper .col .block .limitsRow .limitBlock.credit .limitInfo .priceRange .price {
+  color: #73caff;
+}
+.wrapper .col .block .limitsRow .limitBlock.online .limitInfo .priceRange .price {
+  color: #ff614b;
+}
+.wrapper .col .block .limitsRow .limitBlock .limitIcon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+.wrapper .col .block .limitsRow .limitBlock .limitInfo {
+  margin-left: 12px;
+}
+.wrapper .col .block .limitsRow .limitBlock .limitInfo .name {
+  font-size: 14px;
+  line-height: 12px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.wrapper .col .block .limitsRow .limitBlock .limitInfo .priceRange {
+  align-items: flex-end;
+}
+.wrapper .col .block .limitsRow .limitBlock .limitInfo .priceRange .price {
+  font-size: 14px;
+  line-height: 12px;
+  font-family: "SF Pro Display Bold";
+}
+.wrapper .col .block .limitsRow .limitBlock .limitInfo .priceRange .range {
+  margin-left: 2px;
+  font-size: 11px;
+  line-height: 11px;
+  color: #adadad;
+}
+.wrapper .col .block .statWrap {
+  position: relative;
+  margin-top: 20px;
+  height: 130px;
+  margin-bottom: 32px;
+}
+.wrapper .col .block .statWrap:before, .wrapper .col .block .statWrap:after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/dotted.svg") repeat-x left center/contain;
+}
+.wrapper .col .block .statWrap:after {
+  bottom: 0;
+}
+.wrapper .col .block .statWrap .statRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0 27px;
+}
+.wrapper .col .block .statWrap .statRow:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/dotted.svg") repeat-x left center/contain;
+}
+.wrapper .col .block .statWrap .statRow .statBlock {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 100%;
+}
+.wrapper .col .block .statWrap .statRow .statBlock.tapped .statLine.blue {
+  background: #73caff;
+}
+.wrapper .col .block .statWrap .statRow .statBlock.tapped .statLine.orange {
+  background: #ff614b;
+}
+.wrapper .col .block .statWrap .statRow .statBlock.tapped .statInfoTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.wrapper .col .block .statWrap .statRow .statBlock.tapped .statDay {
+  color: #333;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip {
+  top: 3px;
+  left: 50%;
+  padding: 0 8px;
+  transform: translateX(-50%);
+  min-width: 130px;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip span {
+  flex-shrink: 0;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip span + span {
+  margin-left: 8px;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip span.blue:before {
+  background: #73caff;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip span.orange:before {
+  background: #ff614b;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statInfoTooltip span:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: -1px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statLine {
+  width: 24px;
+  height: 0;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statLine + .statLine {
+  margin-left: 4px;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statLine.blue {
+  background: #c7eaff;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statLine.orange {
+  background: #ffc7c0;
+}
+.wrapper .col .block .statWrap .statRow .statBlock .statDay {
+  position: absolute;
+  width: 100%;
+  color: #adadad;
+  font-family: "SF Pro Display";
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  bottom: -36px;
+}
+.wrapper .col .block .setLimitWrap {
+  margin: 25px 0 0;
+}
+.wrapper .col .block .setLimitWrap .priceRangeLine {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 6px;
+  background: #d5efff;
+  border-radius: 80px;
+}
+.wrapper .col .block .setLimitWrap .priceRangeLine .priceRangeFill {
+  background: #73caff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  border-radius: 80px;
+}
+.wrapper .col .block .setLimitWrap .priceRangeNumbers {
+  margin-top: 8px;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block .stockWrap {
+  margin-top: 24px;
+  padding: 0 20px;
+}
+.wrapper .col .block .stockWrap .stockRow {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #ebebeb;
+  align-items: center;
+}
+.wrapper .col .block .stockWrap .stockRow + .stockRow {
+  padding-top: 22px;
+}
+.wrapper .col .block .stockWrap .stockRow .stockName {
+  margin-right: 18px;
+  max-width: calc(100% - 82px - 20px - 18px - 62px);
+  width: 100%;
+}
+.wrapper .col .block .stockWrap .stockRow .stockName .name {
+  font-size: 15px;
+  line-height: 12px;
+  text-transform: uppercase;
+  font-family: "SF Pro Display Medium";
+}
+.wrapper .col .block .stockWrap .stockRow .stockName .label {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 12px;
+  color: #adadad;
+  white-space: nowrap;
+}
+.wrapper .col .block .stockWrap .stockRow .stockGraph {
+  max-width: 82px;
+  width: 100%;
+  height: 32px;
+  margin-right: 20px;
+}
+.wrapper .col .block .stockWrap .stockPrice {
+  width: 62px;
+}
+.wrapper .col .block .stockWrap .stockPrice .price {
+  font-size: 14px;
+  line-height: 12px;
+  font-family: "SF Pro Display Medium";
+  margin-bottom: 7px;
+  text-align: right;
+}
+.wrapper .col .block .stockWrap .stockPrice .coef {
+  font-size: 12px;
+  line-height: 10px;
+  font-family: "SF Pro Display Bold";
+  white-space: nowrap;
+}
+.wrapper .col .block .stockWrap .stockPrice .coef.up {
+  color: #2acc6b;
+}
+.wrapper .col .block .stockWrap .stockPrice .coef.up:after {
+  background-color: rgba(42, 204, 107, 0.25);
+}
+.wrapper .col .block .stockWrap .stockPrice .coef.down {
+  color: #f0523c;
+}
+.wrapper .col .block .stockWrap .stockPrice .coef.down:after {
+  background-color: rgba(240, 82, 60, 0.25);
+  background-image: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/decrease.svg");
+}
+.wrapper .col .block .stockWrap .stockPrice .coef:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  margin-left: 6px;
+  border-radius: 2px;
+  background: url("https://eugeneyakovlev.github.io/BankingUIKit/images/icons/increase.svg") no-repeat center/8px;
+}
+.wrapper .col .block .thumb {
+  cursor: pointer;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -11px;
+  right: -11px;
+  border-radius: 50%;
+  background: #fff;
+}
+.wrapper .col .block .thumb:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  background: #ff614b;
+  border-radius: 50%;
+}
+.wrapper .col .block .thumb:before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
+.wrapper .col .block .tooltip {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #444;
+  border-radius: 5px;
+  height: 28px;
+}
+.wrapper .col .block .tooltip:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: #444 transparent transparent transparent;
+}
+.wrapper .col .block .tooltip span {
+  font-family: "SF Pro Display Medium";
+  font-size: 11px;
+  line-height: 20px;
+  color: #fff;
+}
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.eot?#iefix) format("embedded-opentype"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2) format("woff2"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff) format("woff"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.ttf) format("truetype"), url("fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.svg#San Francisco Display Ultralight") format("svg");
+}
+@font-face {
+  font-family: "SF Pro Display Medium";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.eot?#iefix) format("embedded-opentype"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff2) format("woff2"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff) format("woff"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.ttf) format("truetype"), url("fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.svg#San Francisco Display Semibold") format("svg");
+}
+@font-face {
+  font-family: "SF Pro Display Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.eot?#iefix) format("embedded-opentype"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2) format("woff2"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff) format("woff"), url(https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.ttf) format("truetype"), url("fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.svg#San Francisco Display Bold") format("svg");
+}
+/* ////////////////////////////:*/
+
+.mescomptes {
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  margin: 10px;
+  width: 100px;
+  text-align: center;
+  perspective: 30rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.308);
+}
+
+.mescomptes::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background:linear-gradient(320deg, #00388394, #d9017ab8);
+  z-index: 1;
+  transition: background 3s;
+}
+
+.mescomptes:hover::before {
+  animation: rotate 1s;
+  transition: all .5s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}

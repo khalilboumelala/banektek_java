@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+
+body {
+
+    background: linear-gradient(
+        #243545,
+        #243545 var(--line-offset),
+        #dedede var(--line-offset)
+    );
+  
+    font-family: 'Lexend Deca', sans-serif;
+    color: #878787;
+
+    --menu-item-size: 50px;
+    --green-color: #2f08787a;
+    --blue-color:  #D9017A;
+    --dark-green-color: #175b52;
+    --white-color: #FFF;
+    --gray-color: #EDEDED;
+    --container-width: 900px;
+    --container-height: 400px;
+    --line-offset: calc((100% - var(--container-height))/ 2 + var(--menu-item-size) + 0.6em);
+}
+
+
+.container {
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+.main-menu {
+ display: flex;
+ flex-wrap: wrap;  /* Ajout de cette ligne pour permettre le réarrangement sur plusieurs lignes */
+ list-style: none;
+ margin: auto 0;
+ padding: 0.6em 0 0 0;
+}
+.main-menu li {
+ flex: 1;  /* Assure que chaque élément li occupe une partie égale de l'espace disponible */
+ text-align: center;  /* Centre le texte dans chaque bouton */
+ padding: 0.5em;
+ border: 1px solid #ccc;  /* Ajoute une bordure pour séparer les boutons (facultatif) */
+}
+
+.main-menu > li {
+    box-sizing: border-box;
+    height: var(--menu-item-size);
+    width: calc(3.5 * var(--menu-item-size));  
+    line-height: var(--menu-item-size);
+    padding: 0 2em;
+    margin: 1px;
+    transition: 0.5s linear all;
+    background: var(--green-color);
+    color: var(--dark-green-color);
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+.main-menu > li:not(.with-submenu) {
+    clip-path: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+}
+
+.main-menu > li:nth-child(2) {
+    transform: translateX(-5%);
+}
+
+.main-menu > li:nth-child(3) {
+    transform: translateX(-10%)
+}
+
+.main-menu > li:nth-child(4) {
+    transform: translateX(-15%)
+}
+
+
+.main-menu > li:hover:not(.active) {
+    background: linear-gradient(to right, var(--green-color), var(--blue-color));
+    color: var(--white-color);
+}
+
+.main-menu > li:active:not(.active),
+.main-menu > li:active:not(.with-submenu){
+    background: var(--blue-color);
+    color: var(--white-color);
+}
+
+.main-menu > li:hover i:not(li.active) {
+    color: #175c58;
+}
+
+.main-menu .active {
+    color: var(--white-color);
+    background: var(--blue-color);
+    cursor: default;
+    text-shadow: 1px 1px 1px var(--dark-green-color);
+    font-size: 18px;
+}
+
+article {
+   background: var(--gray-color);
+   padding: 1em;
+   border-radius: 0 0 5px 5px;
+   box-shadow: 6px 0px 5px #CCC;
+   position: relative;
+   z-index: -1;
+}
+
+h1 {
+    font-size: 115%;
+    margin: 1em 2em;
+    padding: 0;
+    position: relative;
+    color: #777;
+}
+
+.content {
+    padding: 0 0 0 0em;
+    font-size: 16px;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    list-style: none;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    min-width: calc(3.5 * var(--menu-item-size) - 5%);
+    box-shadow: 5px 5px 5px #CCC;
+}
+
+.with-submenu {
+    position: relative;
+    display: inline-block;
+    clip-path: polygon(10% 0%, 0% 100%, 0% 500%, 95% 500%, 95% 100%, 100% 50%, 95% 0%);
+    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+}
+
+.with-submenu:hover .submenu {
+    display: block;
+}
+
+.submenu > li {
+    background: #dedede;
+    border-bottom: 1px solid var(--gray-color); 
+    color: #777;
+    padding: 1.2em 1em;
+    transition: 0.3s all linear;
+    display: block;
+    line-height: 0%;
+}
+
+.submenu > li:hover {
+    background: var(--gray-color)
+}
+
+.submenu > li:active {
+    background: var(--white-color);
+}
+
+/* Style pour les petits écrans */
+@media only screen and (max-width: 600px) {
+ .main-menu li {
+     text-align: center;
+     overflow: hidden;  /* Masque le texte dépassant de la boîte */
+ }
+
+ .main-menu li i {
+     display: inline-block;
+ }
+
+
+ 
+ .main-menu li span {
+     display: none;  /* Masque le texte */
+ }
+}
+.submitadd:hover{
+    background-color: #2f08787a;
+    color: #FFF;
+    border: 1px solid #2f08787a;
+    transition: 0.5s linear all;    
+
+}
+.box-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #2f08787a;
+    margin: 10px;
+    text-align: center;
+}
+.box-header{
+    margin-left: 20px;
+}
+
+  /* Gradient background for the sidebar */
+  .main-sidebar {
+    background: linear-gradient(to bottom,#D9017A ,#003883 );
+}
+
+
+
+/* Styling for the active link in the sidebar */
+.sidebar-menu .active > a {
+    background-color: #D9017A; /* Highlight color for the active link */
+}
+
+/* Styling for the sidebar links */
+.sidebar-menu a {
+    color: #fff; /* Text color for the links */
+}
+
+/* Styling for the header and labels in the sidebar */
+.sidebar-menu .header,
+.sidebar-menu .label {
+    color: #fff; /* Text color for headers and labels */
+}
+
+/* Styling for the icons in the sidebar */
+.sidebar-menu .fa {
+    color: #fff; /* Text color for icons */
+}
+
+/* Styling for the search input */
+.sidebar-form input {
+    background-color: #fff; /* Background color for the search input */
+    color: #000; /* Text color for the search input */
+}
+
+/* Styling for the search button */
+.sidebar-form button {
+    background-color: #D9017A; /* Background color for the search button */
+    color: #fff; /* Text color for the search button */
+}
+button{
+color: white;
+}
+.submitbtn{
+    color: var(--white-color);
+    background: var(--blue-color);
+    cursor: default;
+    text-shadow: 1px 1px 1px var(--dark-green-color);
+    font-size: 18px;
+    clip-path: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+    width:100%;
+    height: 50px;
+}
+.submitbtn:hover{
+    background: linear-gradient(to right, var(--green-color), var(--blue-color));
+    color: var(--white-color);
+}

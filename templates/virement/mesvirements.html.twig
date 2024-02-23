@@ -1,0 +1,110 @@
+{% extends 'base_client.html.twig' %}
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo3 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block tableau_active %}{% endblock %}
+{% block tableau_compte %}{% endblock %}
+{% block tableau_carte %}{% endblock %}
+{% block tableau_credit %}{% endblock %}
+{% block tableau_cheque %}{% endblock %}
+{% block virement_active  %}active{% endblock %}
+
+{% block body %}
+<div class="box">
+    <div class="box-header">
+        <div class="row">
+            <h3 class="title_tab col-sm-4">Mes virements</h3>
+        </div>
+    </div>
+
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+               aria-describedby="example1_info">
+            <thead>
+            <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-sort="ascending"
+                    aria-label="Date d'operation: activate to sort column descending"
+                    style="width: 212.012px;">Date de virement
+                </th>
+
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="Type d'operation: activate to sort column ascending"
+                    style="width: 245.913px;">Type de virement
+                </th>
+
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="Montant: activate to sort column ascending"
+                    style="width: 135.788px;">Montant
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for compte in comptes %}
+                {% for virement in compte.getVirements %}
+                    <tr>
+                        {#date#}
+                        <td>{{ virement.dateEmission ? virement.dateEmission|date('Y-m-d H:i') : '' }}</td>
+                        {# <td>{{ virement.dateApprobation ? virement.dateApprobation|date('Y-m-d H:i:s') : '' }}</td>#}
+                        <td>{{ virement.type.nom }}</td>
+                        <td>{{ virement.montant }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block autre_script %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.js"></script>
+<script>
+    const chartOptions = {
+        chart: {
+            type: "area",
+            height: 180,
+            toolbar: {show: false},
+            zoom: {enabled: false}
+        },
+        colors: ["#3498db"],
+        series: [
+            {
+                name: "Measurable stuff",
+                data: [
+                    {{ comptes[0].solde }}
+                ]
+            }
+        ],
+        dataLabels: {enabled: false},
+        stroke: {width: 3, curve: "smooth"},
+        fill: {
+            type: "gradient",
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0,
+                stops: [0, 90, 100]
+            }
+        },
+        xaxis: {
+            categories: ["Feb", "Apr", "Jun", "Aug", "Oct", "Dec"],
+            axisBorder: {show: false},
+            labels: {style: {colors: "#a7a7a7", fontFamily: "Poppins"}}
+        },
+        yaxis: {
+            show: false
+        },
+        grid: {borderColor: "rgba(0, 0, 0, 0, 0)", padding: {top: -30, bottom: -8, left: 12, right: 12}},
+        tooltip: {
+            enabled: true,
+            y: {formatter: value => `${value}K`},
+            style: {fontFamily: "Poppins"}
+        },
+        markers: {show: false}
+    };
+
+    const chart = new ApexCharts(document.querySelector(".chart-area"), chartOptions);
+    chart.render();
+</script>
+{% endblock %}

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Banektek - Agence{% endblock %}</title>
+
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+          
+<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="../dist/css/agent1.css">
+<link rel="stylesheet" href="../dist/css/table.css">
+<link rel="stylesheet" href="../dist/css/skins/agent2.css">
+<link rel="stylesheet" href="../bower_components/morris.js/morris.css">
+<link rel="stylesheet" href="../bower_components/jvectormap/jquery-jvectormap.css">
+<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+<link rel="stylesheet" href="../dist/css/liste_users.css">
+<link rel="stylesheet" href="../dist/css/credit.css">
+<!---->
+<style>
+.treeview.active {
+    background-color: white;
+}
+
+span:hover, span:focus {
+  color: #003883!important;
+}
+</style>
+<!---->
+        {% endblock %}
+{% block autre_stylesheet %}{% endblock %}
+    </head>
+    
+    <body class="hold-transition skin-blue sidebar-mini">
+        {% block body %}
+        <div class="wrapper">
+<header class="main-header">
+
+<a href="index2.html" class="logo"style="background-color:#D9017A" >
+<span class="logo-mini"><b>BN</b>K</span>
+
+<span class="logo-lg" ><b>BANEK</b>TEK</span>
+</a>
+
+<nav class="navbar navbar-static-top">
+
+<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+<span class="sr-only">Toggle navigation</span>
+</a>
+<div class="navbar-custom-menu">
+<ul class="nav navbar-nav">
+
+<li>
+    <a id="fullscreenButton" class="nav-link" data-widget="fullscreen" href="#" role="button">
+        <i class="fa fa-tv"></i>
+    </a>
+</li>
+<li class="dropdown notifications-menu">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<i class="fa fa-bell-o"></i>
+<span class="label label-warning">1</span>
+</a>
+<ul class="dropdown-menu">
+<li class="header">You have 1 notification</li>
+<li>
+
+<ul class="menu">
+
+<li>
+<a href="#">
+<i class="fa fa-users text-red"></i> example de notification
+</a>
+</li>
+
+</ul>
+</li>
+<li class="footer"><a href="#">View all</a></li>
+</ul>
+</li>
+
+<li class="dropdown user user-menu">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<img {% block photo1 %}{% endblock %} class="user-image" alt="User Image">
+<span class="hidden-xs">{% block username %}{% endblock %}</span>
+</a>
+<ul class="dropdown-menu">
+
+<li class="user-header">
+<img {% block photo2 %}{% endblock %} class="img-circle" alt="User Image">
+<p>
+{% block username2 %}{% endblock %}
+<small>autre infos</small>
+</p>
+</li>
+
+<li class="user-body">
+<div class="row">
+<div class="col-xs-4 text-center">
+<a href="#">info1</a>
+</div>
+<div class="col-xs-4 text-center">
+<a href="#">info2</a>
+</div>
+<div class="col-xs-4 text-center">
+<a href="#">info3</a>
+</div>
+</div>
+
+</li>
+
+<li class="user-footer">
+<div class="pull-left">
+<a href="#" class="btn btn-default btn-flat">Profile</a>
+</div>
+<div class="pull-right">
+<a href="#" class="btn btn-default btn-flat">Deconnecté</a>
+</div>
+</li>
+</ul>
+</li>
+
+
+</ul>
+</div>
+</nav>
+</header>
+
+<aside class="main-sidebar">
+
+<section class="sidebar">
+
+<div class="user-panel">
+<div class="pull-left image">
+<img {% block photo %}{% endblock %} class="img-circle" alt="User Image">
+</div>
+<div class="pull-left info">
+<p>{% block username3 %}{% endblock %}</p>
+<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+</div>
+</div>
+
+
+
+
+<ul class="sidebar-menu" data-widget="tree">
+<div class="titremenu admin">
+  <span>Agent - Menu  <i class="fa fa-user-secret" style="vertical-align: middle; font-size: 1.2em;"></i>
+</span>
+</div>
+
+<li class={% block assistant_active %}{% endblock %}>
+  <a href="tableau.php">
+    <i class="fa fa-wechat"></i> <span>Assistant en ligne</span>
+    <span class="pull-right-container">
+      <small class="label pull-right bg-red">+2</small>
+    </span>
+  </a>
+</li>
+
+<li class={% block gestion_clients_active %}{% endblock %}>
+
+<a href="{{path('app_client_index')}}">
+<i class="fa  fa-users"></i> <span >Clients</span>
+<span class="pull-right-container">
+<small class="label pull-right bg-green">new</small>
+</span>
+</a>
+</li>
+<li class={% block gestion_comptes_active %}{% endblock %}>
+<a href="{{path('app_compte_new')}}">
+<i class="fa fa-briefcase"></i>
+<span>Comptes</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li class={% block gestion_cartes_active %}{% endblock %}>
+
+<a href="{{path('app_carte_new')}}">
+<i class="fa fa-credit-card"></i>
+
+<span >Cartes</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li class="treeview"class={% block gestion_operations_active %}{% endblock %} >
+<a href="#">
+<i class="fa fa-calculator"></i> <span>Operations</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+
+<li class=""><a href="{{path('app_transaction_new')}}"><i class="fa fa-plus"></i><i class="fa fa-minus"></i>Versement/Retrait</a></li>
+<li class=""><a href="{{path('app_virement_new')}}"><i class="fa fa-exchange"></i>Virements</a></li> 
+</ul>
+</li>
+<li class={% block gestion_reclamations_active %}{% endblock %} >
+<a href="cheques.php">
+<i class="fa fa-exclamation-triangle"></i> <span>Reclamations</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+
+<li class={% block gestion_credits_active %}{% endblock %}>
+<a href="{{path('app_credit_index')}}">
+<i class="fa   fa-pencil-square-o"></i> <span >Credits</span>
+
+</a>
+</li>
+
+
+
+<div class="titremenu admin">
+  <span>Chef D'Agences - Menu <i class="fa fa-suitcase"></i></span>
+</div>
+<li class={% block gestion_agence_active %}{% endblock %}>
+<a href="{{path('app_agence_new')}}">
+<i class="fa fa-bank"></i> <span>Mon agence</span>
+
+</a>
+</li>
+<li class={% block gestion_agents_active %}{% endblock %} >
+<a href="{{path('app_agent_index')}}">
+<i class="fa fa-user-secret"></i> <span>Gestion Des Agents</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<div class="titremenu admin">
+
+  <span>Directeur - Menu <i class="fa fa-laptop"></i></span>
+</div>
+<li class={% block gestion_agences_active %}{% endblock %}>
+<a href="{{path('app_agence_new')}}">
+<i class="fa fa-bank"></i> <span>Agences</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li class={% block gestion_convertisseur_active %}{% endblock %}>
+<a href="convertisseur.php">
+<i class="fa  fa-fax"></i> <span>Reglage du Convertisseur</span>
+
+</a>
+</li>
+<li class={% block gestion_articles_active %}{% endblock %}>
+<a href="{{path('app_article_new')}}">
+<i class="fa  fa-newspaper-o"></i> <span>Articles</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+</section>
+
+</aside>
+
+<div class="content-wrapper">
+
+<section class="content-header">
+<h1>
+{% block gestion %}{% endblock %}
+<small>--</small>
+</h1>
+<ol class="breadcrumb">
+<li><a href="#"><i class="fa fa-dashboard"></i> Agent - Menu</a></li>
+<li >{% block gestion2 %}{% endblock %}</li>
+</ol>
+</section>
+
+<section class="content">
+<!-- contenu de la page -->
+{% block my_interface %}{% endblock %}
+<!-- contenu de la page -->
+</section>
+
+</div>
+
+<footer class="main-footer">
+<div class="pull-right hidden-xs">
+<b>Version</b> 2.4.13
+</div>
+<strong>Copyright &copy; 2024-2025 <a href=""> HexaDev</a>.</strong> All rights
+reserved.
+</footer>
+        {% endblock %}
+    </body>
+
+{#modals(ken testhaq#}
+{% block modals%}
+
+{% endblock %}
+    {# javascripts files#}
+            {% block javascripts %}
+          
+<script src="../table.js"></script>
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="../bower_components/raphael/raphael.min.js"></script>
+<script src="../bower_components/morris.js/morris.min.js"></script>
+
+<script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+
+<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+<script src="../bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+
+<script src="../bower_components/moment/min/moment.min.js"></script>
+<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+<script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="../bower_components/fastclick/lib/fastclick.js"></script>
+
+<script src="../dist/js/adminlte.min.js"></script>
+
+<script src="../dist/js/pages/dashboard.js"></script>
+
+<script src="../dist/js/demo.js"></script>
+<script src="../ad.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/chercher.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var fullscreenButton = document.getElementById('fullscreenButton');
+
+    fullscreenButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Vérifiez si le navigateur prend en charge le mode plein écran
+        if (document.fullscreenEnabled) {
+            // Activer le mode plein écran
+            document.documentElement.requestFullscreen();
+        } else if (document.webkitFullscreenEnabled) { // Pour les navigateurs basés sur WebKit (comme Safari)
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.msFullscreenEnabled) { // Pour Internet Explorer
+            document.documentElement.msRequestFullscreen();
+        } else {
+            // Le mode plein écran n'est pas pris en charge
+            console.error('Le mode plein écran n\'est pas pris en charge par ce navigateur.');
+        }
+    });
+});
+</script>
+{% endblock %}
+        
+{% block autre_script%}{% endblock %}
+</html>

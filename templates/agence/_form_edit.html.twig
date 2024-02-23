@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-danger">
+            <div class="box-body">
+                {# Start the form rendering #}
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.id_chef) }}
+                            {{ form_widget(form.id_chef, {'attr': {'class': 'form-control', 'placeholder': 'Chef d agence'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.adresse) }}
+                            {{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Exemple: Borj sedria'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.nom) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Exemple: Ariana 2'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.num_tel) }}
+                            {{ form_widget(form.num_tel, {'attr': {'class': 'form-control', 'placeholder': 'Exemple: 12345678'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="{{ button_css|default('submitbtn') }}">
+                    <i class="fa fa-plus"></i> {{ button_label|default('Ajouter'|trans) }}
+                </button>
+
+                {# End the form #}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

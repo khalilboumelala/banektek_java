@@ -1,0 +1,75 @@
+ <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+<article>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Formulaire D'ajout</h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
+
+                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.id_compte_beneficiaire) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    {{ form_widget(form.id_compte_beneficiaire, {'attr': {'class': 'form-control', 'placeholder': 'id_compte_beneficiaire'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-6" id="compte_emetteur" >
+                            <div class="form-group" >
+                                {{ form_label(form.id_compte_emetteur) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    {{ form_widget(form.id_compte_emetteur, {'attr': {'class': 'form-control', 'placeholder': 'id_compte_emetteur'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.type) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                 
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.montant) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                    {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'placeholder': 'montant'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                
+
+ <button type="submit" class="{{ button_css|default('submitbtn') }}">
+            <i class="fa fa-plus"></i> {{ button_label|default('Ajouter'|trans) }}
+        </button>
+                   
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

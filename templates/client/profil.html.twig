@@ -1,0 +1,137 @@
+{% extends 'base_client.html.twig' %}
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo3 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block tableau_active %}{% endblock %}
+{% block tableau_compte %}{% endblock %}
+{% block compte_active %}{% endblock %} 
+{% block profil_active %}active{% endblock %}
+{% block tableau_credit %}{% endblock %}
+{% block tableau_cheque %}{% endblock %}
+{% block tableau_virement %}{% endblock %}
+{% block autre_stylesheet %}
+<link rel="stylesheet" href="../dist/css/liste_users.css">
+<link rel="stylesheet" href="../dist/css/monprofil.css">
+
+<style>
+.titre_client{
+  font-family:bold;
+  font-size:20px;
+  color: #bab6e7;
+}
+small{
+  color:white;
+
+  
+}
+.inputpass{
+   background-color:#ffffff00;
+     border: 1px solid var(grey);
+    border-radius: 24px;
+    color:white;
+    font-size:20px;
+
+}
+</style>
+{% endblock %}
+{% block body %}
+  <article class="card">
+    <div class="media-object">
+    <div>
+     <h1 class="card__title">Informations du <mark>Client</mark> </h1>
+  <p class="card__description">Vos informations sont sécurisées selon les normes les plus strictes de sécurité bancaire, garantissant la confidentialité et l'intégrité de vos données personnelles.</p>
+         
+      <h2 class="media-object__title">Besoin de mettre à jour vos informations ?<br /> Cliquez ici pour nous envoyer votre demande en toute sécurité, vos informations resteront confidentielles.</h2>
+      <a data-toggle="modal" data-target="#modal-demande" target="_blank" class="media-object__button">
+        Demander
+      </a>
+    </div>
+
+<div class="media-object__thumbnail media-object" style="background-image: url('../dist/img/user2-160x160.jpg');"></div>
+  </div>
+ 
+             {{ include('client/_form_profil.html.twig') }}
+
+
+</article>
+
+
+{% endblock %}
+
+{% block modals %}
+<div class="modal" id="modal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius:3.3rem;background:linear-gradient(to bottom, #003883, #D9017A);">
+                <div class="modal-header">
+      <div class="box-header">
+                    <h3 class="box-title" style="color:white;">Modifer mot de passe</h3>
+                </div>                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true"><i style="color:red; font-size: 20px;" class="fa fa-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+    <div class="row">
+        <div class="col-md-12">             <div class=" box-danger">
+        <form action="{{ path('client_changement_mot_de_passe') }}" method="post">
+
+              
+                <div class="box-body" style="text-align:center;">
+
+          <h4 style="color:white;">Mot de passe actuel</h4>       
+            <input type="password" class="inputpass" name="ancien_mot_de_passe" required>
+
+           <h4 style="color:white;">Nouveau mot de passe</h4> 
+                   <input type="password" class="inputpass" name="nouveau_mot_de_passe" required>
+
+                  <h4 style="color:white;">Confirmation de nouveau mot de passe</h4> 
+                     <input class="inputpass"  type="password" name="confirmation_mot_de_passe" required>
+
+                </div>
+                  <button type="submit" style="width:100%;" class="media-object__button">
+          Changer 
+
+        </button>
+        </form>
+            </div>
+        </div>
+    </div>
+
+
+
+                  
+
+                    <!-- Formulaire pour la modification du client -->
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="modal" id="modal-demande" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius:3.3rem;background:linear-gradient(to bottom, #003883, #D9017A);">
+            <div class="modal-header">
+                <div class="box-header">
+                    <h3 class="box-title" style="color:white;">Modifier mot de passe</h3>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i style="color:red; font-size: 20px;" class="fa fa-close"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-danger">
+  {{ include('demande/_form.html.twig') }}                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

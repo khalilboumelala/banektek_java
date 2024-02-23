@@ -1,0 +1,78 @@
+{% extends 'base_client.html.twig' %}
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo3 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block tableau_active %}{% endblock %}
+{% block tableau_compte %}{% endblock %}
+{% block tableau_carte %}{% endblock %}
+{% block credit_active %}active{% endblock %}
+{% block tableau_cheque %}{% endblock %}
+{% block tableau_virement %}{% endblock %}
+{% block autre_stylesheet %}
+
+
+{% endblock %}
+{% block body %}
+
+
+ <section class="content">
+<!-- contenu de la page -->
+
+<div class="container">
+  
+  <article>
+    <div class="row">
+        {% for credit in credits %}
+        <div class="col-md-4"> <!-- Changer en col-md-3 pour afficher 4 par ligne -->
+            <div class="card-credit">
+                <div class="card-credit-header">
+                    <div class="card-credit-header-bar">
+                        <a class="btn-message" href="#"><svg viewBox="0 0 16 16" class="bi bi-chat-dots-fill" fill="white" height="16" width="16" xmlns="http://www.w3.org/2000/svg"></svg><span class="sr-only">Message</span></a>
+                        <a class="btn-menu" href="#"><svg viewBox="0 0 16 16" class="bi bi-list" fill="white" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" fill-rule="evenodd"></path>
+</svg><span class="sr-only">Menu</span>Echeances</a>
+                    </div>
+                    <span class="image_credit">Credit en cours...</span>  
+                    <div class="card-credit-header-slanted-edge"></div>
+                </div>
+                <div class="card-credit-body">
+                    <span class="name_credit">Montant total :  {{credit.montant-credit.getApportPropre}}</span><br>
+                    <span class="job-title"><u>N° Compte : {{credit.getIdCompte.rib}}</u></span>
+                    <div class="bio">Ce crédit est actif depuis le {{ credit.getDateDebut|date('d/m/Y') }}, avec un taux d'intérêt de {{credit.taux *100}}%."</div>
+                  
+                </div>
+                <div class="card-credit-footer">
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Echeance</span>
+                            <span class="value">{{credit.getMontantEcheance}} DT</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Jour</span>
+                            <span class="value">le {{credit.getDateEcheance}}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Restants</span>
+                            <span class="value">320</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if loop.index % 3 == 0 or loop.last %}
+    </div>
+    <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+</article>
+
+</div>
+<!-- contenu de la page -->
+</section>
+
+</div>
+
+
+ {% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Echeance index{% endblock %}
+
+{% block body %}
+    <h1>Echeance index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Mode_paiement</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for echeance in echeances %}
+            <tr>
+                <td>{{ echeance.id }}</td>
+                <td>{{ echeance.modePaiement }}</td>
+                <td>{{ echeance.etat }}</td>
+                <td>
+                    <a href="{{ path('app_echeance_show', {'id': echeance.id}) }}">show</a>
+                    <a href="{{ path('app_echeance_edit', {'id': echeance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_echeance_new') }}">Create new</a>
+{% endblock %}

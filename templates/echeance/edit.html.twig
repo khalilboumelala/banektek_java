@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Echeance{% endblock %}
+
+{% block body %}
+    <h1>Edit Echeance</h1>
+
+    {{ include('echeance/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_echeance_index') }}">back to list</a>
+
+    {{ include('echeance/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,305 @@
+
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements (tnajm tfasakh zeydin li mouch active)#} 
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}{% endblock %}
+{% block gestion_comptes_active %}{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}{% endblock %}
+{% block gestion_operations_active %}{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}active{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+{% block photo %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo1 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo2 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{# agent-username#}
+{% block username %}{{agent_connecter.nom}}{% endblock %}
+{% block username2 %}{{agent_connecter.nom}}{% endblock %}
+{% block username3 %}{{agent_connecter.nom}}{% endblock %}
+
+{% block gestion %}Gestion des agences{% endblock %}
+{% block gestion2 %}Gestion des agences{% endblock %}
+
+
+{% block my_interface %}
+<!-- contenu de la page -->
+
+<div class="container">
+    <nav class="menu">
+        <ul class="main-menu">
+        <li id="ajouter" onclick="window.location.href = '{{ ('new') }}';"><i class="fa fa-plus"></i>Ajouter</li>
+            
+            <li class="active"><i class="fa fa-user"></i>Liste</li>
+        </ul>
+    </nav>
+
+  <article>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="box-title">Total agences</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button type="button" id="search-btn" class="btn btn-flat">
+                                        <i class="fa fa-search" style="color:#003883"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="table table-responsive-xl" id="clients-table">
+                        <thead>
+                            <tr>
+                                <th>Chef d'agent</th>
+                                <th>Adresse</th>
+                                <th>Nom</th>
+                                <th>Num_tel</th>
+                                <th>État</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for agence in agences %}
+                                <tr>
+                                    <td class="d-flex  column-centered">
+      <div class="img" style="background-image: url(../dist/img/user1-128x128.jpg);"></div>
+      <div class="pl-3 email">
+<a href="#" style="color: blue;font-color:blue" data-toggle="modal" data-target="#modal-{{ agence.id }}">
+ 
+ {% if agence.getIdchef %}
+    <span style="color:black;font-size:13px; ">{{ agence.getIdChef.getnom ~ " " ~ agence.getIdChef.getprenom ~ " " ~ agence.getIdChef.getid }}</span>
+    {% else %}
+        <span style="color:black;font-size:13px; ">{{ "Agence sans chef"}}</span>
+        {% endif %} 
+
+
+</a>
+        <span> Added:{{ "2024/25/12" }}
+      </span>
+      </div>
+    </td>
+                                    <td class="column-centered">{{ agence.adresse }}</td>
+                                    <td class="column-centered">{{ agence.nom}}</td>
+                                     <td class="column-centered">{{ agence.numtel}}</td>
+                                       {% if agence.etat == "Normal" and  ( ((current_time >= "0800" and current_time <= "1600") and (current_day != "Sat" and current_day != "Sun")) or ((current_day == "Sat") and (current_time >= "0800" and current_time <= "1300")) ) %}
+                                    <td class="column-centered">Ouvert</td>
+                                    {% else  %}
+                                    <td class="column-centered">Ferme</td>
+                                    {% endif %}
+                                   
+                                   
+                                    <td >
+  
+{% if agence.etat == "Normal" %}
+    <label class="switch active" onclick="toggleAccess(this, '{{ agence.id }}')">
+       
+            <span>{{agence.getetat}}</span>
+            <input checked="" type="checkbox">
+            <div class="slider">
+                <div class="circle">
+                    <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                        </g>
+                    </svg>
+                    <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+       
+    </label>
+{% else %}
+    <label class="switch inactive" onclick="toggleAccess(this, '{{ agence.id }}')">
+        <span>{{ agence.getetat }}</span>
+        <input type="checkbox">
+        <div class="slider">
+            <div class="circle">
+                <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                    </g>
+                </svg>
+                <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </label>
+{% endif %}
+
+
+
+
+
+    </td>
+
+    <td><button
+   class="bin-button"
+   data-toggle="modal"
+   data-target="#modal-sup-{{
+   agence.id }}">
+   <svg
+      class="bin-top"
+      viewBox="0
+      0 39 7"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      >
+      <line
+         y1="5"
+         x2="39"
+         y2="5"
+         stroke="white"
+         stroke-width="4"></line>
+      <line
+         x1="12"
+         y1="1.5"
+         x2="26.0357"
+         y2="1.5"
+         stroke="white"
+         stroke-width="3"
+         ></line>
+   </svg>
+   <svg
+      class="bin-bottom"
+      viewBox="0
+      0 33 39"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      >
+      <mask
+         id="path-1-inside-1_8_19"
+         fill="white">
+         <path
+            d="M0
+            0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+            ></path>
+      </mask>
+      <path
+         d="M0
+         0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+         fill="white"
+         mask="url(#path-1-inside-1_8_19)"
+         ></path>
+      <path
+         d="M12
+         6L12 29"
+         stroke="white"
+         stroke-width="4"></path>
+      <path
+         d="M21
+         6V29"
+         stroke="white"
+         stroke-width="4"></path>
+   </svg>
+</button></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">No records found</td>
+                                </tr>
+                            {% endfor %}
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+</div>
+
+{% for agence in agences %}
+
+<div class="modal fade" id="modal-sup-{{ agence.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ path('app_agence_delete', {'id': agence.id}) }}">
+                <div class="card2">
+                    <div class="card2-content  text-center">
+    <p class="card2-heading">Êtes-vous sûr de vouloir supprimer cette agence ?</p>
+    <p class="card2-description">
+        <strong>Nom et adresse de lagence :</strong> {{ agence.adresse ~ '-' ~ agence.nom }}<br>
+       
+        <!-- Ajoutez d'autres informations du client selon vos besoins -->
+    </p>
+</div>
+
+                    <div class="card2-button-wrapper">
+                        <button class="card2-button secondary" data-dismiss="modal">Annuler</button>
+                        <button class="card2-button primary">Confirmer la Suppression</button>
+                    </div>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ agence.id) }}">
+            </form>
+        </div>
+    </div>
+</div>
+{# -------------------------------------------------------------------- #}
+    {% set form = forms[loop.index0] %}
+
+    <div class="modal fade" id="modal-{{ agence.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+      <div class="box-header">
+                    <h3 class="box-title">Formulaire De Modification / Affichage</h3>
+                </div>                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true"><i style="color:red; font-size: 20px;" class="fa fa-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ include('agence/_form_edit.html.twig', {'button_label': 'Update'}) }}
+
+                  
+
+                    <!-- Formulaire pour la modification du client -->
+                    
+                </div>
+                <div class="modal-footer">
+                     <div class="alert alert-warning" role="alert">
+                        <strong>Attention :</strong> La modification des informations de l est irréversible. Assurez-vous de vérifier attentivement avant de procéder.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block  autre_script %}
+<script>
+    function toggleAccess(element, agenceId) {
+        // Rediriger vers la route appropriée en fonction de l'état de la case à cocher
+        var isChecked = element.querySelector('input').checked;
+        var path = isChecked ? "{{ path('agence_activer', {'id': 'agenceId'}) }}" : "{{ path('agence_desactiver', {'id': 'agenceId'}) }}";
+        window.location.href = path.replace('agenceId', agenceId);
+    }
+</script>
+{% endblock %}
+
+

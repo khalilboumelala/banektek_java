@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypeVirement{% endblock %}
+
+{% block body %}
+    <h1>Edit TypeVirement</h1>
+
+    {{ include('type_virement/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_virement_index') }}">back to list</a>
+
+    {{ include('type_virement/_delete_form.html.twig') }}
+{% endblock %}

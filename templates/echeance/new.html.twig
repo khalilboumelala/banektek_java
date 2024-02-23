@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Echeance{% endblock %}
+
+{% block body %}
+    <h1>Create new Echeance</h1>
+
+    {{ include('echeance/_form.html.twig') }}
+
+    <a href="{{ path('app_echeance_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Echeance{% endblock %}
+
+{% block body %}
+    <h1>Echeance</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ echeance.id }}</td>
+            </tr>
+            <tr>
+                <th>Mode_paiement</th>
+                <td>{{ echeance.modePaiement }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ echeance.etat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_echeance_index') }}">back to list</a>
+
+    <a href="{{ path('app_echeance_edit', {'id': echeance.id}) }}">edit</a>
+
+    {{ include('echeance/_delete_form.html.twig') }}
+{% endblock %}

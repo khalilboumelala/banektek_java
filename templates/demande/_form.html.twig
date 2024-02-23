@@ -1,0 +1,13 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="box-body" style="text-align:center;">
+    <h4 style="color:white;">Votre demande</h4>
+    {{ form_widget(form.description, {'attr': {'class': 'inputpass', 'style' : 'text-align:center;','placeholder': 'Décrivez votre demande ici...'}}) }}
+       {% if form_errors(form.description) %}
+                                    <div class="alert alert-danger">
+                                        {{ form_errors(form.description) }}
+                                    </div>
+                                {% endif %}
+
+    <button type="submit" style="width:100%;" class="media-object__button">Envoyer demande</button>
+</div>
+{{ form_end(form) }}

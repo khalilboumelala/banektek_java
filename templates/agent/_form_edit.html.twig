@@ -1,0 +1,134 @@
+
+    <div class="row">
+        <div class="col-md-12"> {# Ajout d'une classe "col-md-12" pour occuper toute la largeur #}
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Formulaire D'ajout</h3>
+                </div>
+                                     <div id="faceio-modal"></div>
+
+                <div class="box-body" id="form_ajout">
+                    {# Render each form field manually #}
+                   
+                {{ form_start(form) }}
+                    <div class="row">
+                     <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.nom) }}    
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.prenom) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user "></i></span>
+                                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prenom'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                       <!--callmd6-->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.poste) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-briefcase"></i></span>
+                                    {{ form_widget(form.poste, {'attr': {'class': 'form-control', 'placeholder': 'XX'}}) }}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                               <label for="agent_nom" class="required">Agence</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-bank"></i></span>
+                                    {{ form_widget(form.id_agence, {'attr': {'class': 'form-control', 'placeholder': 'Date de naissance', 'type': 'date'}}) }}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                                       <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.num_tel) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    {{ form_widget(form.num_tel, {'attr': {'class': 'form-control', 'placeholder': 'XX'}}) }}
+                                </div>
+                                
+                            </div>
+                        </div>
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.photo) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-photo"></i></span>
+                                    {{ form_widget(form.photo, {'attr': {'class': 'form-control', 'placeholder': 'email'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+             <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.email) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'XX'}}) }}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <div class="form-group">
+                               <label for="agent_nom" class="required">FACEID</label>
+                                
+          <button class="button_faceid" onclick="enrollNewUser()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none" class="svg-icon"><g stroke-width="2" stroke-linecap="round" stroke="#fff" fill-rule="evenodd" clip-rule="evenodd"><path d="m4 9c0-1.10457.89543-2 2-2h2l.44721-.89443c.33879-.67757 1.03131-1.10557 1.78889-1.10557h3.5278c.7576 0 1.4501.428 1.7889 1.10557l.4472.89443h2c1.1046 0 2 .89543 2 2v8c0 1.1046-.8954 2-2 2h-12c-1.10457 0-2-.8954-2-2z"></path><path d="m15 13c0 1.6569-1.3431 3-3 3s-3-1.3431-3-3 1.3431-3 3-3 3 1.3431 3 3z"></path></g></svg>
+  <span class="lable">FACEID</span>
+</button>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+    <div class="col-md-6" style="display :none;">
+                            <div class="form-group">
+                               <label for="agent_nom" class="required">FACEID</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-photo"></i></span>
+                                    {{ form_widget(form.faceid ,{'attr': {'class': 'form-control', 'placeholder': 'FACEID'}}) }}
+
+                                </div>
+                            </div>
+                        </div>
+                                
+                       <!--<button onclick="authenticateUser()">Authenticate User</button>-->
+                      
+
+    
+        <button type="submit" class="{{ button_css|default('submitbtn') }}">
+            <i class="fa fa-plus"></i> {{ button_label|default('Ajouter'|trans) }}
+        </button>
+
+
+
+        
+       
+                    {# Ajout de la balise form_end pour terminer le formulaire #}
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>

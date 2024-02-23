@@ -1,0 +1,280 @@
+{# templates/admin.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Banektek | Agent Menu</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/agent1.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/skins/agent2.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/morris.js/morris.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="{{ asset('dist/css/table.css') }}">
+    <script nonce="a53678c7-3765-4f5f-84a1-26462e281814">
+        // Votre script JavaScript ici, s'il y en a un
+    </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+<header class="main-header">
+
+<a href="../index2.html" class="logo"style="background-color:#D9017A" >
+<span class="logo-mini"><b>BN</b>K</span>
+
+<span class="logo-lg" ><b>BANEK</b>TEK</span>
+</a>
+
+<nav class="navbar navbar-static-top">
+
+<a href="../#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+<span class="sr-only">Toggle navigation</span>
+</a>
+<div class="navbar-custom-menu">
+<ul class="nav navbar-nav">
+
+
+<li class="dropdown notifications-menu">
+<a href="../#" class="dropdown-toggle" data-toggle="dropdown">
+<i class="fa fa-bell-o"></i>
+<span class="label label-warning">1</span>
+</a>
+<ul class="dropdown-menu">
+<li class="header">You have 1 notification</li>
+<li>
+
+<ul class="menu">
+
+<li>
+<a href="../#">
+<i class="fa fa-users text-red"></i> example de notification
+</a>
+</li>
+
+</ul>
+</li>
+<li class="footer"><a href="../#">View all</a></li>
+</ul>
+</li>
+
+<li class="dropdown user user-menu">
+<a href="../#" class="dropdown-toggle" data-toggle="dropdown">
+<img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+<span class="hidden-xs">Username</span>
+</a>
+<ul class="dropdown-menu">
+
+<li class="user-header">
+<img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+<p>
+Username - [type de compte]
+<small>autre infos</small>
+</p>
+</li>
+
+<li class="user-body">
+<div class="row">
+<div class="col-xs-4 text-center">
+<a href="../#">info1</a>
+</div>
+<div class="col-xs-4 text-center">
+<a href="../#">info2</a>
+</div>
+<div class="col-xs-4 text-center">
+<a href="../#">info3</a>
+</div>
+</div>
+
+</li>
+
+<li class="user-footer">
+<div class="pull-left">
+<a href="../#" class="btn btn-default btn-flat">Profile</a>
+</div>
+<div class="pull-right">
+<a href="../#" class="btn btn-default btn-flat">Deconnecté</a>
+</div>
+</li>
+</ul>
+</li>
+
+<li>
+<a href="../#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+
+<aside class="main-sidebar">
+
+<section class="sidebar">
+
+<div class="user-panel">
+<div class="pull-left image">
+<img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+</div>
+<div class="pull-left info">
+<p>Username</p>
+<a href="../#"><i class="fa fa-circle text-success"></i> Online</a>
+</div>
+</div>
+
+
+
+
+<ul class="sidebar-menu" data-widget="tree">
+<div class="titremenu admin">
+  <span>Agent - Menu  <i class="fa fa-user-secret" style="vertical-align: middle; font-size: 1.2em;"></i>
+</span>
+</div>
+
+<li>
+  <a href="../tableau.php">
+    <i class="fa fa-wechat"></i> <span>Assistant en ligne</span>
+    <span class="pull-right-container">
+      <small class="label pull-right bg-red">+2</small>
+    </span>
+  </a>
+</li>
+
+<li class="active">
+
+<a href="../tableau.php">
+<i class="fa  fa-users"></i> <span >Clients</span>
+<span class="pull-right-container">
+<small class="label pull-right bg-green">new</small>
+</span>
+</a>
+</li>
+<li >
+<a href="../Comptes.php">
+<i class="fa fa-briefcase"></i>
+<span>Comptes</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li >
+
+<a href="../cartes.php">
+<i class="fa fa-credit-card"></i>
+
+<span >Cartes</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li class="treeview">
+<a href="../#">
+<i class="fa fa-calculator"></i> <span>Operations</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="../index.html"><i class="fa fa-plus"></i>Versements</a></li>
+<li class=""><a href="../index2.html"><i class="fa fa-minus"></i>Retraits</a></li>
+<li class=""><a href="../index2.html"><i class="fa fa-exchange"></i>Virements</a></li>
+
+</ul>
+</li>
+<li >
+<a href="../cheques.php">
+<i class="fa fa-exclamation-triangle"></i> <span>Reclamations</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+
+<li>
+<a href="../credit.php">
+<i class="fa   fa-pencil-square-o"></i> <span >Credits</span>
+
+</a>
+</li>
+
+
+
+<div class="titremenu admin">
+  <span>Chef D'Agences - Menu <i class="fa fa-suitcase"></i></span>
+</div>
+<li>
+<a href="../convertisseur.php">
+<i class="fa fa-bank"></i> <span>Mon agence</span>
+
+</a>
+</li>
+<li >
+<a href="../agences.php">
+<i class="fa fa-user-secret"></i> <span>Gestion Des Agents</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<div class="titremenu admin">
+
+  <span>Directeur - Menu <i class="fa fa-laptop"></i></span>
+</div>
+<li >
+<a href="../agences.php">
+<i class="fa fa-bank"></i> <span>Agences</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+<li>
+<a href="../convertisseur.php">
+<i class="fa  fa-fax"></i> <span>Reglage du Convertisseur</span>
+
+</a>
+</li>
+<li >
+<a href="../agences.php">
+<i class="fa  fa-newspaper-o"></i> <span>Articles</span>
+<span class="pull-right-container">
+
+</span>
+</a>
+
+</li>
+</section>
+
+</aside>
+<div class="content-wrapper">
+<!--contenu de la page (vide!) -->
+
+<!-- /.contenu de la page (vide!) -->
+</div>
+
+<footer class="main-footer">
+<div class="pull-right hidden-xs">
+<b>Version</b> 2.4.13
+</div>
+<strong>Copyright &copy; 2024-2025 <a href="../"> HexaDev</a>.</strong> All rights
+reserved.
+</footer>
+
+</body>
+</html>

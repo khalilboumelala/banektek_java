@@ -1,0 +1,77 @@
+       <article>
+                 
+    <div class="row">
+        <div class="">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Formulaire D'ajout</h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
+                    <!-- Date de Publication -->
+                    <div class="row">
+                       
+                        <!-- Contenu -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.titre) }}
+                                 <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-align-justify"></i></span>
+                                    {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.contenu) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-align-justify"></i></span>
+                                    {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.image) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-image"></i></span>
+                                    {{ form_widget(form.image, {'attr': {'class': 'form-control', 'id': 'fileInput', 'accept': '.jpg, .jpeg, .png'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Id_agent -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.id_agent) }}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-id-card"></i></span>
+                                    {{ form_widget(form.id_agent, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Other form fields... -->
+
+                    <!-- Submit button -->
+                 <div class="row">
+<button type="submit" class="{{ button_css|default('submitbtn') }}">
+            <i class="fa fa-plus"></i> {{ button_label|default('Ajouter'|trans) }}
+        </button>
+</div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+                    </article>

@@ -1,0 +1,60 @@
+
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements#}
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}{% endblock %}
+{% block gestion_comptes_active %}active{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}{% endblock %}
+{% block gestion_operations_active %}{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo1 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{# agent-username#}
+{% block username %}Hamza Nasr{% endblock %}
+{% block username2 %}Hamza Nasr{% endblock %}
+{% block username3 %}Hamza Nasr{% endblock %}
+
+{% block gestion %}Gestion des comptes{% endblock %}
+{% block gestion2 %}Gestion des comptes{% endblock %}
+
+{#mon code#}
+{% block my_interface %}   
+<div class="container"> 
+<nav class="menu">
+        <ul class="main-menu">
+            <li class="active"><i class="fa fa-plus"></i>Ajouter</li>
+           
+            <li id="liste"><i class="fa fa-user"></i>Liste des comptes</li>
+        </ul>
+    </nav>
+    <div class="container">
+            {{ include('compte/_form.html.twig') }}
+           
+      </div>
+
+      
+{% endblock %}
+
+{#autre scripts !#}
+
+{% block autre_script%}
+
+<script>  
+  var liAjouter = document.getElementById("liste");
+
+  liAjouter.addEventListener("click", function() {
+    window.location.href = "{{ ('/compte') }}";
+  });</script>
+{% endblock %}

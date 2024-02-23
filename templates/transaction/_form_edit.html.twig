@@ -1,0 +1,68 @@
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+             
+                <div class="box-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-12">
+                          {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                            <div class="form-group">
+                                <label for="{{ form.id_compte.vars.id }}">{{ form_label(form.id_compte) }}</label>
+                                <div class="input-group" >
+                                {{ form_widget(form.id_compte, {'attr': {'style': 'text-align: center;', 'class': 'form-control', 'placeholder': 'id_compte', 'id': form.id_compte.vars.id}}) }}
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    </div>
+                                  {% if form_errors(form.id_compte) %}
+                                    <div class="alert alert-danger">
+                                        {{ form_errors(form.id_compte) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.type.vars.id }}">{{ form_label(form.type) }}</label>
+                                <div class="input-group">
+                                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.type) }}
+                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                </div>
+                                  {% if form_errors(form.type) %}
+                                    <div class="alert alert-danger">
+                                        {{ form_errors(form.type) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.montant.vars.id }}">{{ form_label(form.montant) }}</label>
+                                <div class="input-group">
+                                    {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'placeholder': 'XX XXX XXX'}}) }}
+                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                </div>
+                                 {% if form_errors(form.montant) %}
+                                    <div class="alert alert-danger">
+                                        {{ form_errors(form.montant) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="{{ button_css|default('submitbtn') }}">
+                                <i class="fa fa-plus"></i> {{ button_label|default('Ajouter'|trans) }}
+                            </button>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

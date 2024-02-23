@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Credit{% endblock %}
+
+{% block body %}
+    <h1>Credit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ credit.id }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ credit.montant }}</td>
+            </tr>
+            <tr>
+                <th>Taux</th>
+                <td>{{ credit.taux }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ credit.duree }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut</th>
+                <td>{{ credit.dateDebut ? credit.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ credit.type }}</td>
+            </tr>
+            <tr>
+                <th>Apport_propre</th>
+                <td>{{ credit.apportPropre }}</td>
+            </tr>
+            <tr>
+                <th>Revenu_propre</th>
+                <td>{{ credit.revenuPropre }}</td>
+            </tr>
+            <tr>
+                <th>Montant_echeance</th>
+                <td>{{ credit.montantEcheance }}</td>
+            </tr>
+            <tr>
+                <th>Date_echeance</th>
+                <td>{{ credit.dateEcheance ? credit.dateEcheance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ credit.etat }}</td>
+            </tr>
+            <tr>
+                <th>Nb_echeances_restants</th>
+                <td>{{ credit.nbEcheancesRestants }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_credit_index') }}">back to list</a>
+
+    <a href="{{ path('app_credit_edit', {'id': credit.id}) }}">edit</a>
+
+    {{ include('credit/_delete_form.html.twig') }}
+{% endblock %}

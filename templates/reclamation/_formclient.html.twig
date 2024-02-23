@@ -1,0 +1,24 @@
+  <!-- Contact Section -->
+ 
+  <section id="contact">
+   <div class="container">
+      
+         <div class="form">
+            <h6 class="section-title mb-4">Envoyer reclamation</h6>
+            {{ form_start(form) }}
+            <div class="form-group">
+               {{ form_widget(form.type, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Choisir type'}}) }}
+            </div>
+            <div class="form-group">
+               {{ form_widget(form.document, {'attr': {'class': 'form-control form-control-lg', 'accept': '.jpg, .jpeg, .png', 'placeholder': 'Document'}}) }}
+            </div>
+            <div class="form-group">
+               {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Description'}}) }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-3">Send Message</button>
+            {{ form_end(form) }}
+         </div>
+      </div>
+   </div>
+</section>
+<!-- Contact Section -->

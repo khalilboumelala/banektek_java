@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from adminlte.io/themes/AdminLTE/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 28 Jan 2024 09:59:17 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Dashboard</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('dist/css/agent1.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/table.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('dist/css/skins/agent2.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/morris.js/morris.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+
+    <style>
+        /* Gradient background for the sidebar */
+        .main-sidebar {
+            background: linear-gradient(to bottom, #D9017A, #003883);
+        }
+
+
+
+        /* Styling for the active link in the sidebar */
+        .sidebar-menu .active>a {
+            background-color: #D9017A;
+            /* Highlight color for the active link */
+        }
+
+        /* Styling for the sidebar links */
+        .sidebar-menu a {
+            color: #fff;
+            /* Text color for the links */
+        }
+
+        /* Styling for the header and labels in the sidebar */
+        .sidebar-menu .header,
+        .sidebar-menu .label {
+            color: #fff;
+            /* Text color for headers and labels */
+        }
+
+        /* Styling for the icons in the sidebar */
+        .sidebar-menu .fa {
+            color: #fff;
+            /* Text color for icons */
+        }
+
+        /* Styling for the search input */
+        .sidebar-form input {
+            background-color: #fff;
+            /* Background color for the search input */
+            color: #000;
+            /* Text color for the search input */
+        }
+
+        /* Styling for the search button */
+        .sidebar-form button {
+            background-color: #D9017A;
+            /* Background color for the search button */
+            color: #fff;
+            /* Text color for the search button */
+        }
+
+        button {
+            color: white;
+        }
+    </style>
+    <!--[if lt IE 9]>
+  <script src="{{ asset('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js') }}"></script>
+  <script src="{{ asset('https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }})"></script>
+  <![endif]-->
+
+    <link rel="stylesheet"
+        href="../../../fonts.googleapis.com/css5518.css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script nonce="a53678c7-3765-4f5f-84a1-26462e281814">try { (function (w, d) { !function (b$, ca, cb, cc) { b$[cb] = b$[cb] || {}; b$[cb].executed = []; b$.zaraz = { deferred: [], listeners: [] }; b$.zaraz.q = []; b$.zaraz._f = function (cd) { return async function () { var ce = Array.prototype.slice.call(arguments); b$.zaraz.q.push({ m: cd, a: ce }) } }; for (const cf of ["track", "set", "debug"]) b$.zaraz[cf] = b$.zaraz._f(cf); b$.zaraz.init = () => { var cg = ca.getElementsByTagName(cc)[0], ch = ca.createElement(cc), ci = ca.getElementsByTagName("title")[0]; ci && (b$[cb].t = ca.getElementsByTagName("title")[0].text); b$[cb].x = Math.random(); b$[cb].w = b$.screen.width; b$[cb].h = b$.screen.height; b$[cb].j = b$.innerHeight; b$[cb].e = b$.innerWidth; b$[cb].l = b$.location.href; b$[cb].r = ca.referrer; b$[cb].k = b$.screen.colorDepth; b$[cb].n = ca.characterSet; b$[cb].o = (new Date).getTimezoneOffset(); if (b$.dataLayer) for (const cm of Object.entries(Object.entries(dataLayer).reduce(((cn, co) => ({ ...cn[1], ...co[1] })), {}))) zaraz.set(cm[0], cm[1], { scope: "page" }); b$[cb].q = []; for (; b$.zaraz.q.length;) { const cp = b$.zaraz.q.shift(); b$[cb].q.push(cp) } ch.defer = !0; for (const cq of [localStorage, sessionStorage]) Object.keys(cq || {}).filter((cs => cs.startsWith("_zaraz_"))).forEach((cr => { try { b$[cb]["z_" + cr.slice(7)] = JSON.parse(cq.getItem(cr)) } catch { b$[cb]["z_" + cr.slice(7)] = cq.getItem(cr) } })); ch.referrerPolicy = "origin"; ch.src = "../../cdn-cgi/zaraz/sd0d9.js?z=" + btoa(encodeURIComponent(JSON.stringify(b$[cb]))); cg.parentNode.insertBefore(ch, cg) };["complete", "interactive"].includes(ca.readyState) ? zaraz.init() : b$.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document) } catch (err) {
+            console.error('Failed to run Cloudflare Zaraz: ', err)
+            fetch('/cdn-cgi/zaraz/t', {
+                credentials: 'include',
+                keepalive: true,
+                method: 'GET',
+            })
+        };</script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+
+            <a href="index2.html" class="logo" style="background-color:#D9017A">
+                <span class="logo-mini"><b>BN</b>K</span>
+
+                <span class="logo-lg"><b>BANEK</b>TEK</span>
+            </a>
+
+            <nav class="navbar navbar-static-top">
+
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">1</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 1 notification</li>
+                                <li>
+
+                                    <ul class="menu">
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-red"></i> example de notification
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">Username</span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li class="user-header">
+                                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                    <p>
+                                        Username - [type de compte]
+                                        <small>autre infos</small>
+                                    </p>
+                                </li>
+
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">info1</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">info2</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">info3</a>
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Deconnecté</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+
+            <section class="sidebar">
+
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>Username</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+
+
+
+
+                <ul class="sidebar-menu" data-widget="tree">
+                    <div class="titremenu admin">
+                        <span>Agent - Menu <i class="fa fa-user-secret"
+                                style="vertical-align: middle; font-size: 1.2em;"></i>
+                        </span>
+                    </div>
+
+                    <li>
+                        <a href="tableau.php">
+                            <i class="fa fa-wechat"></i> <span>Assistant en ligne</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">+2</small>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+
+                        <a href="tableau.php">
+                            <i class="fa  fa-users"></i> <span>Clients</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-green">new</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Comptes.php">
+                            <i class="fa fa-briefcase"></i>
+                            <span>Comptes</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <a href="cartes.php">
+                            <i class="fa fa-credit-card"></i>
+
+                            <span>Cartes</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-calculator"></i> <span>Operations</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="index.html"><i class="fa fa-plus"></i>Versements</a></li>
+                            <li class=""><a href="index2.html"><i class="fa fa-minus"></i>Retraits</a></li>
+                            <li class=""><a href="index2.html"><i class="fa fa-exchange"></i>Virements</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="cheques.php">
+                            <i class="fa fa-exclamation-triangle"></i> <span>Reclamations</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="credit.php">
+                            <i class="fa   fa-pencil-square-o"></i> <span>Credits</span>
+
+                        </a>
+                    </li>
+
+
+
+                    <div class="titremenu admin">
+                        <span>Chef D'Agences - Menu <i class="fa fa-suitcase"></i></span>
+                    </div>
+                    <li>
+                        <a href="convertisseur.php">
+                            <i class="fa fa-bank"></i> <span>Mon agence</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="agences.php">
+                            <i class="fa fa-user-secret"></i> <span>Gestion Des Agents</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+                    <div class="titremenu admin">
+
+                        <span>Directeur - Menu <i class="fa fa-laptop"></i></span>
+                    </div>
+                    <li>
+                        <a href="agences.php">
+                            <i class="fa fa-bank"></i> <span>Agences</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="convertisseur.php">
+                            <i class="fa  fa-fax"></i> <span>Reglage du Convertisseur</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="agences.php">
+                            <i class="fa  fa-newspaper-o"></i> <span>Articles</span>
+                            <span class="pull-right-container">
+
+                            </span>
+                        </a>
+
+                    </li>
+            </section>
+
+        </aside>
+
+        <div class="content-wrapper">
+
+            <section class="content-header">
+                <h1>
+                    Gestion des clients
+                    <small>--</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Agent - Menu</a></li>
+                    <li>Gestion des clients</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <!-- contenu de la page -->
+
+                <div class="container">
+                    <nav class="menu">
+                        <ul class="main-menu">
+                            <li class="active"><i class="fa fa-plus"></i>Ajouter</li>
+                           
+                            <li><i class="fa fa-user"></i>Liste</li>
+                        </ul>
+                    </nav>
+    {{ include('article/_form.html.twig') }}
+                </div>
+                <!-- contenu de la page -->
+            </section>
+
+        </div>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.4.13
+            </div>
+            <strong>Copyright &copy; 2024-2025 <a href=""> HexaDev</a>.</strong> All rights
+            reserved.
+        </footer>
+
+
+
+
+
+        <script src="{{ asset('table.js') }}"></script>
+        <script data-cfasync="false"
+            src="{{ asset('../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}"></script>
+        <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+
+        <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/raphael/raphael.min.js') }}"></script>
+        <script src="{{ asset('bower_components/morris.js/morris.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
+
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+        <script src="{{ asset('bower_components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
+        <script src="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+        <script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+        <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+        <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+
+        <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+        <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
+
+        <script src="{{ asset('dist/js/demo.js') }}"></script>
+        <script src="{{ asset('ad.js') }}"></script>
+        <script>
+            function fillCountryDropdown() {
+                // Faire une requête à l'API Restcountries
+                $.ajax({
+                    url: 'https://restcountries.com/v3.1/all',
+                    method: 'GET',
+                    success: function (data) {
+                        // Parcourir les données et ajouter chaque pays au menu déroulant
+                        data.forEach(function (country) {
+                            // Ignorer la Tunisie car elle est déjà la première option
+                            if (country.alpha2Code !== 'tn') {
+                                $('#countryDropdown').append('<option value="' + country.alpha2Code + '">' + country.name.common + '</option>');
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Erreur lors de la récupération des pays', error);
+                    }
+                });
+            }
+
+            // Appeler la fonction pour remplir le menu déroulant au chargement de la page
+            fillCountryDropdown();
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements#}
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}{% endblock %}
+{% block gestion_comptes_active %}{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}{% endblock %}
+{% block gestion_operations_active %}treeview menu-open{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+
+{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo1 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{# agent-username#}
+{% block username %}Hamza Nasr{% endblock %}
+{% block username2 %}Hamza Nasr{% endblock %}
+{% block username3 %}Hamza Nasr{% endblock %}
+
+{% block gestion %}Gestion des transactions{% endblock %}
+{% block gestion2 %}Gestion des transactions{% endblock %}
+
+{#mon code#}
+{% block my_interface %}  
+<!-- contenu de la page -->
+
+<div class="container">
+    <nav class="menu">
+        <ul class="main-menu">
+            <li id="ajouter"><i class="fa fa-plus"></i>Ajouter</li>
+           
+            
+         
+            <li id="liste"><i class="fa fa-user"></i>Liste</li>
+                                    <li id="types" class="active"><i class="fa fa-cog"></i>Gerer les types</li>
+
+        </ul>
+    </nav>
+
+<article>
+    <div class="row">
+    
+        <div class="col-md-6">
+            {{ include('type_virement/_form.html.twig') }}
+            </div>
+    
+                   <div class="col-md-6">
+                    <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Formulaire D'ajout</h3>
+                </div>
+                <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                            <tr role="row">
+                                <th >Type</th>
+                                <th>Frais bancaires</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                                
+                            {% for type in types %}
+                                
+                            
+                            <tr role="row" class="odd">
+                                <td class="sorting_1">{{type.nom}}</td>
+                             <td style="color:green;">{{type.frais}}</td>
+                             <td><a href="{{ path('app_type_virement_delete', {'id': type.id}) }}">supprimer</a></td>
+                                                                
+                            </tr>
+
+                                  {% endfor %}          
+                                         <!-- Ajoutez d'autres lignes de transactions au besoin -->
+                        </tbody>
+                    
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+                               </div>
+</div>
+</article>
+
+        
+            
+
+</div>
+{% endblock %}
+
+{#autre scripts !#}
+
+{% block autre_script%}
+
+<script>  
+  var liAjouter = document.getElementById("ajouter");
+  liAjouter.addEventListener("click", function() {
+    window.location.href = "{{ path('app_virement_new') }}";
+  });
+
+   var liliste = document.getElementById("liste");
+
+  liliste.addEventListener("click", function() {
+    window.location.href = "{{ path('app_virement_index') }}";
+  });
+  </script>
+
+{% endblock %}

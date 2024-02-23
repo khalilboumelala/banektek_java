@@ -1,0 +1,149 @@
+
+{% extends 'base_agence.html.twig' %}
+
+{# titre de le page#}
+{% block title %}Banektek - Agent Menu{% endblock %}
+{# activer sidebar elements#}
+{% block assistant_active %}{% endblock %}
+{% block gestion_clients_active %}{% endblock %}
+{% block gestion_comptes_active %}{% endblock %}
+{% block gestion_credits_active %}{% endblock %}
+{% block gestion_agence_active %}{% endblock %}
+{% block gestion_agents_active %}active{% endblock %}
+{% block gestion_operations_active %}{% endblock %}
+{% block gestion_reclamations_active %}{% endblock %}
+{% block gestion_agences_active %}{% endblock %}
+{% block gestion_convertisseur_active %}{% endblock %}
+{% block gestion_articles_active %}{% endblock %}
+{% block gestion_cartes_active %}{% endblock %}
+{# photos#}
+
+{% block photo %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo1 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{% block photo2 %}src="../{{agent_connecter.photo}}"{% endblock %}
+{# agent-username#}
+{% block username %}{{agent_connecter.nom}}{% endblock %}
+{% block username2 %}{{agent_connecter.nom}}{% endblock %}
+{% block username3 %}{{agent_connecter.nom}}{% endblock %}
+
+{% block gestion %}Gestion des comptes{% endblock %}
+{% block gestion2 %}Gestion des comptes{% endblock %}
+{% block autre_stylesheet %}
+<style>
+.hidden-when-camera-active {
+  display: none;
+  
+}
+
+
+</style>
+{% endblock %}
+
+{#mon code#}
+{% block my_interface %}   
+<div class="container"> 
+
+<nav class="menu">
+        <ul class="main-menu">
+            <li class="active"><i class="fa fa-plus"></i>Ajouter</li>
+           
+            <li id="liste"><i class="fa fa-user"></i>Liste</li>
+        </ul>
+    </nav>
+    <div class="container">
+    
+
+            {{ include('agent/_form.html.twig') }}
+      </div>
+
+      
+{% endblock %}
+
+{#autre scripts !#}
+
+{% block autre_script%}
+
+<script>  
+  var liAjouter = document.getElementById("liste");
+
+  liAjouter.addEventListener("click", function() {
+    window.location.href = "{{ ('/agent') }}";
+  });</script>
+
+   <script src="https://cdn.faceio.net/fio.js"></script>
+    <script type="text/javascript">
+        // Instantiate fio.js with your application Public ID
+        const faceio = new faceIO("fioabb3e");
+        function enrollNewUser(){
+                                      document.getElementById("form_ajout").classList.add("hidden-when-camera-active");
+    var faceidInput = document.getElementById("agent_faceid");
+
+           // Start the facial enrollment process
+           faceio.enroll({
+                "locale": "auto", // Default user locale
+                "payload": {
+                /* The payload we want to associate with this user
+                * which is forwarded back to us upon future
+                * authentication of this particular user.*/
+                "whoami": 123456, // Example of dummy ID linked to this particular user
+                "email": "john.doe@example.com"
+                }
+            }).then(userInfo => {
+                // User Successfully Enrolled!
+                alert(
+                    `User Successfully Enrolled! Details:
+                    Unique Facial ID: ${userInfo.facialId}
+                    Enrollment Date: ${userInfo.timestamp}
+                    Gender: ${userInfo.details.gender}
+                    Age Approximation: ${userInfo.details.age}`
+                )
+                console.log(userInfo)
+                faceidInput.value =userInfo.facialId;
+                // handle success, save the facial ID, redirect to dashboard...
+            }).catch(errCode => {
+                // handle enrollment failure. Visit:
+                // https://faceio.net/integration-guide#error-codes
+                // for the list of all possible error codes
+            }).finally(() => {
+        // Masquer le formulaire à nouveau après l'authentification (ou en cas d'échec)
+        setTimeout(() => {
+            document.getElementById("form_ajout").classList.remove("hidden-when-camera-active");
+        }, 3000); // Définissez le délai en millisecondes (1000 ms = 1 seconde)
+    });
+        }
+        
+      function authenticateUser() {
+    document.getElementById("form_ajout").classList.add("hidden-when-camera-active");
+    var faceidInput = document.getElementById("agent_FaceId");
+
+    // Authenticate a previously enrolled user
+    faceio.authenticate({
+        "locale": "auto" // Default user locale
+    }).then(userData => {
+        console.log("Success, user identified")
+        faceidInput.value = userData.facialId;
+
+        // Grab the facial ID linked to this particular user which will be same
+        // for each of his successful future authentication. FACEIO recommend 
+        // that you rely on this Facial ID if you plan to uniquely identify 
+        // all enrolled users on your backend for example.
+        console.log("Linked facial Id: " + userData.facialId);
+        
+        // Grab the arbitrary data you have already linked (if any) to this particular user
+        // during his enrollment via the payload parameter of the enroll() method.
+        console.log("Payload: " + JSON.stringify(userData.payload)) 
+        // {"whoami": 123456, "email": "john.doe@example.com"} set via enroll()
+    }).catch(errCode => {
+        // handle authentication failure. Visit:
+        // https://faceio.net/integration-guide#error-codes
+        // for the list of all possible error codes
+    }).finally(() => {
+        // Masquer le formulaire à nouveau après l'authentification (ou en cas d'échec)
+        setTimeout(() => {
+            document.getElementById("form_ajout").classList.remove("hidden-when-camera-active");
+        }, 3000); // Définissez le délai en millisecondes (1000 ms = 1 seconde)
+    });
+}
+
+    </script>
+{% endblock %}
