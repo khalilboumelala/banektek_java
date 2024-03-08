@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Agent;
 use App\Entity\Carte;
 use App\Entity\Client;
+use App\Entity\Compte;
 use App\Form\CarteType;
 use App\Repository\CarteRepository;
+use App\Service\TwilioService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class CarteController extends AbstractController
 {
     #[Route('/', name: 'app_carte_index', methods: ['GET'])]
-    public function index(CarteRepository $carteRepository,Request $request,EntityManagerInterface $entityManager): Response
-    { 
+    public function index(CarteRepository $carteRepository,Request $request,EntityManagerInterface $entityManager,SessionInterface $session): Response
+    {  if($session->get('id_agent')){
+        $id_agent_connecter = $session->get('id_agent');
+        $agent_connecter = $entityManager->getRepository(Agent::class)->find($id_agent_connecter);
         $cartes = $carteRepository->findAll();
         $forms = [];
     
@@ -40,8 +45,13 @@ class CarteController extends AbstractController
         return $this->render('carte/index.html.twig', [
             'cartes' => $cartes,
             'forms'=> $forms,
+            'agent_connecter' => $agent_connecter,
+
             
-        ]);
+        ]);}
+        else {
+            return $this->redirectToRoute('app_agent_login');
+        }
     }
     #[Route('/mycard', name: 'app_my_card', methods: ['GET'])]
 public function mycard(CarteRepository $carteRepository, EntityManagerInterface $entityManager, SessionInterface $session): Response
@@ -50,9 +60,11 @@ public function mycard(CarteRepository $carteRepository, EntityManagerInterface 
 
     // Récupérer l'utilisateur à partir de son ID
     $client = $entityManager->getRepository(Client::class)->find($userId);
-    
+    $comptes = $entityManager->getRepository(Compte::class)->findBy(['id_user' => $client]);
+   $cartes = $carteRepository->findBy(['num_compte' => $comptes]);
     return $this->render('carte/mycard.html.twig', [
         'client' => $client,
+        'cartes' => $cartes,
     ]);
 }
 
@@ -62,10 +74,12 @@ private function generateRandomCVV(): int
     return random_int(100, 999);
 }
     #[Route('/new', name: 'app_carte_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,TwilioService $twilio,SessionInterface $session): Response
     {
 
-
+        if($session->get('id_agent')){
+            $id_agent_connecter = $session->get('id_agent');
+            $agent_connecter = $entityManager->getRepository(Agent::class)->find($id_agent_connecter);
         ////////////
 
         ///////////
@@ -85,14 +99,18 @@ private function generateRandomCVV(): int
             $carte->setPlafond(500);
             $entityManager->persist($carte);
             $entityManager->flush();
-
+            $twilio->sendSMSOTP();
             return $this->redirectToRoute('app_carte_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('carte/new.html.twig', [
             'carte' => $carte,
             'form' => $form,
-        ]);
+            'agent_connecter' => $agent_connecter,
+        ]); } 
+        else {
+            return $this->redirectToRoute('app_agent_login');
+        }
     }
 
     #[Route('/{id}', name: 'app_carte_show', methods: ['GET'])]

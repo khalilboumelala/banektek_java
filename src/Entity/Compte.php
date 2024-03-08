@@ -284,6 +284,63 @@ class Compte
 
         return $this;
     }
+    public function getRevenu(): float
+    {
+        $revenu = 0.0;
 
-    
+        foreach ($this->getTransactions() as $transaction) {
+            if ($transaction->getType() === 'Retrait') {
+                $revenu -= $transaction->getMontant();
+            } elseif ($transaction->getType() === 'Versement') {
+                $revenu += $transaction->getMontant();
+            }
+        }
+
+        return $revenu;
+    }
+
+    public function getSommeRetraits(): float
+    {
+        $revenu = 0.0;
+
+        foreach ($this->getTransactions() as $transaction) {
+            if ($transaction->getType() === 'Retrait') {
+                $revenu += $transaction->getMontant();
+            } elseif ($transaction->getType() === 'Versement') {
+               
+            }
+        }
+
+        return $revenu;
+    }
+    public function getSommeVersements(): float
+    {
+        $revenu = 0.0;
+
+        foreach ($this->getTransactions() as $transaction) {
+            if ($transaction->getType() === 'Retrait') {
+            } elseif ($transaction->getType() === 'Versement') {
+                $revenu += $transaction->getMontant();
+            }
+        }
+
+        return $revenu;
+    }
+    public function getSommeTransactions(){
+        $revenu = 0.0;
+
+        foreach ($this->getTransactions() as $transaction) {
+            $revenu += $transaction->getMontant();
+        }
+
+        return $revenu;
+    }
+    public function getPourcentageVersement(){
+       
+      return $this->getSommeVersements() / $this->getSommeTransactions() * 100;
+    }
+    public function getPourcentageRetrait(){
+       
+        return $this->getSommeRetraits() / $this->getSommeTransactions() * 100;
+      }
 }

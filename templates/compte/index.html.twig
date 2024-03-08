@@ -47,7 +47,7 @@
                 <div class="box box-danger">
                 <div class="box-header"><div class="row">
             <div class="col-md-6">
-<h3 class="box-title">les comptes</h3>            </div>
+<h3 class="box-title">Liste des comptes</h3>            </div>
             <div class="col-md-6">
                 <div class="input-group">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search...">
@@ -68,7 +68,7 @@
                 <th>Type</th>
                 <th>Etat</th>
                 <th>Solde</th>
-                <th>Date_creation</th>
+                <th>Date de creation</th>
                  <th>Titulaire</th>
                 <th>Actions</th>
             </tr>
@@ -85,9 +85,21 @@
 
 </td>
                 <td>{{ compte.type }}</td>
-                 <td>{{ compte.etat }}</td>
-                <td>{{ compte.solde }}</td>
-                <td>{{ compte.dateCreation|date('Y-m-d H:i:s')  }}</td>
+                 <td class="status">{% if compte.etat == "Actif" %}
+    <span class="active">Actif</span>
+{% elseif (compte.etat == "Inactif")%}
+    <span class="suspendu">{{compte.etat}}</span>
+    {% elseif (compte.etat == "Bloqué ")%}
+    <span class="suspendu">{{compte.etat}}</span>
+        {% elseif (compte.etat == "Fermé")%}
+    <span class="suspendu">{{compte.etat}}</span>
+{% else %}
+    <span class="waiting">{{compte.etat}}</span>
+
+{% endif %}</td>
+                 
+                <td style="color : black">{{ compte.solde ~ " DT"}}</td>
+                <td>{{ compte.dateCreation|date('Y-m-d H:i')  }}</td>
                  <td style="color:black;font-size:14px;">
                  <a href="#" style="" data-toggle="modal" data-target="#modal-titulaire-{{ compte.id }}">
 
@@ -156,16 +168,9 @@
 
 {# -------------------------------------------------------------------- #}
    
-                  
-
                  
 
 {% endblock %}
-
-
-
-
-
 
 
 

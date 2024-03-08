@@ -14,12 +14,35 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use TCPDF;
 use Twilio\Rest\Proxy\V1\Service\SessionInstance;
 
 #[Route('/compte')]
 class CompteController extends AbstractController
-{
+{ 
  
+    #[Route('/bilansend', name: 'send_mail_bilan', methods: ['GET'])]
+    public function mailbilan(CompteRepository $compteRepository,SessionInterface $session,EntityManagerInterface $entityManager): Response
+    {
+        //Retrieve comptes from the database
+       $id_client_connecter = $session->get('id');
+        $client_connecter = $entityManager->getRepository(Client::class)->find($id_client_connecter);
+       #$client_connecter = $entityManager->getRepository(Client::class)->find($id_agent_connecter);
+       #$comptes=$client_connecter->getComptes();
+        $comptes = $entityManager->getRepository(Compte::class)->findBy(['id_user' => $client_connecter->getId()]);
+        $client2 = new Client();
+        $soldeFin = $this->calculerSoldeFinMois($compteRepository, $comptes[0]->getId());
+        $soldeInt = $this->calculerSoldeInt($compteRepository, $comptes[0]->getId());
+        $compte = new Compte();
+        $nom= $client_connecter->getUsername();
+        $prenom = $client_connecter->getPrenom();
+        $username = $nom." ".$prenom;
+        $usernameupper = strtoupper($username);
+        $client2->sendMailImen($usernameupper,"mohamedkhalil.boumelala@esprit.tn",$comptes[0]->getTransactions(),$comptes[0]->getSolde(),$soldeInt,$username,$comptes[0]->getRib(),$soldeFin);
+        return $this->redirectToRoute('mes_comptes');
+
+      
+    }
     #[Route('/', name: 'app_compte_index', methods: ['GET'])]
     public function index(compteRepository $compteRepository,Request $request,EntityManagerInterface $entityManager,SessionInterface $session): Response
     {    if($session->get('id_agent')){
@@ -125,6 +148,7 @@ foreach ($reversedTransactions as $transaction) {
                 ]; }
             }
             //////////////////////////////////////////
+        
         return $this->renderForm('compte/mescomptes.html.twig', [
          'client_connecter' => $client_connecter,
             'comptes' => $comptes,
@@ -144,6 +168,7 @@ foreach ($reversedTransactions as $transaction) {
             'compte' => $compte,
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_compte_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Compte $compte, EntityManagerInterface $entityManager): Response
@@ -197,4 +222,97 @@ foreach ($reversedTransactions as $transaction) {
                                     $code_24_chiffres2 = substr($code_24_chiffres2, 0,12); // Tronquer le code si plus long que 24 chiffres
                                 }     
                                 return   $code_24_chiffres.$code_24_chiffres2;       }   
+
+
+                                
+#[Route('/export/pdfrib', name: 'app_pdfrib', methods: ['GET'])]
+    public function exportcomptesToPdf(CompteRepository $compteRepository,SessionInterface $session,EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve comptes from the database
+         $id_client_connecter = $session->get('id');
+        $client_connecter = $entityManager->getRepository(Client::class)->find($id_client_connecter);
+       #$client_connecter = $entityManager->getRepository(Client::class)->find($id_agent_connecter);
+       #$comptes=$client_connecter->getComptes();
+        $comptes = $entityManager->getRepository(Compte::class)->findBy(['id_user' => $client_connecter->getId()]);
+       
+      
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf->SetCreator("Wael Salah");
+$pdf->SetAuthor('Wael Salah');
+$pdf->SetTitle('Demonstrating pdf with php');
+$pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH);
+$pdf->setFooterData(array(0,64,0), array(0,64,128));
+$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+// set default monospaced font
+$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+// set auto page breaks
+$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+// set image scale factor
+$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+// ---------------------------------------------------------
+// set default font subsetting mode
+$pdf->setFont('dejavusans', '', 14, '', true);
+$pdf->AddPage();
+$html = <<<EOD
+<img src="" alt="Your Logo">
+<p>In this simple example i show how to generate pdf documents using TCPDF</p>
+EOD;
+$pdf->writeHTML($this->renderView('pdff/index_rib.html.twig', [
+    'comptes' => $comptes,
+ 
+]));
+
+
+
+$response = new Response($pdf->Output('test.pdf', 'I'));
+        return $response;
+        
+    }
+ ///
+ public function calculerSoldeFinMois(CompteRepository $compteRepository, int $compteId): float
+ {
+ 
+     $compte = $compteRepository->find($compteId);
+ 
+    
+ 
+     $soldeFin = $compte->getSolde();
+ 
+     foreach ($compte->getTransactions() as $transaction) {
+         if ($transaction->getType() === 'retrait') {
+             $soldeFin -= $transaction->getMontant();
+         } elseif ($transaction->getType() === 'versement') {
+             $soldeFin += $transaction->getMontant();
+         }
+     }
+ 
+     return $soldeFin;
+ }
+ 
+     ///
+     ////
+     public function calculerSoldeInt(CompteRepository $compteRepository, int $compteId): float
+     {
+     
+         $compte = $compteRepository->find($compteId);
+     
+        
+     
+         $soldeInt = $compte->getSolde();
+     
+         foreach ($compte->getTransactions() as $transaction) {
+             if ($transaction->getType() === 'Retrait') {
+                 $soldeInt += $transaction->getMontant();
+             } elseif ($transaction->getType() === 'Versement') {
+                 $soldeInt -= $transaction->getMontant();
+             }
+         }
+     
+         return $soldeInt;
+     }
+     ///
 }

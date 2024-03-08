@@ -1,7 +1,10 @@
 {% extends 'base_client.html.twig' %}
-{% block photo %}src="../dist/img/user2-160x160.jpg"{% endblock %}
-{% block photo2 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
-{% block photo3 %}src="../dist/img/user2-160x160.jpg"{% endblock %}
+{% block photo %}src="../{{client_connecter.photo}}"{% endblock %}
+{% block photo2 %}src="../{{client_connecter.photo}}"{% endblock %}
+{% block photo3 %}src="../{{client_connecter.photo}}"{% endblock %}
+{% block username %}{{client_connecter.nom}}{% endblock %}
+{% block username2 %}{{client_connecter.nom}}{% endblock %}
+{% block username3 %}{{client_connecter.nom}}{% endblock %}
 {% block tableau_active %}{% endblock %}
 {% block tableau_compte %}{% endblock %}
 {% block compte_active %}active{% endblock %}
@@ -19,8 +22,8 @@ Comptes
 <small>-</small>
 </h1>
 <ol class="breadcrumb">
-<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-<li class="active">Compte</li>
+<li><a style="color:black!important;"href="#"><i class="fa fa-dashboard" style="color:black;"></i> Home</a></li>
+<li class="active"Compte</li>
 <li class="mescomptes"> <a style="color:black!important;">Compte 1</a></li>
 <li class="mescomptes"> <a style="color:black!important;">Compte 2</a></li>
 <li class="mescomptes"> <a style="color:black!important;">Compte 3</a></li>
@@ -41,9 +44,10 @@ Comptes
 
 <span class="info-box-number">{{comptes[0].solde}}</span>
 <div class="">
-<button type="button" class="btn btn-info"><i class="fa fa-download" style="margin-right:10px;"></i> Telecharger RIB</button>
-<button type="button" class="btn btn-info"><i class="fa fa-exchange" ></i>  Virements</button>
-<button type="button" class="btn btn-info"><i class="fa fa-file-text-o"></i>  Relevé</button>
+<a href="{{ path('app_pdfrib') }}" class="btn btn-info"><i class="fa fa-download" style="margin-right:10px;"></i> Télécharger RIB</a>
+
+
+
 </div><div class="progress">
 <div class="progress-bar" style="width: 70%"></div>
 </div>
@@ -95,20 +99,21 @@ Num Compte : {{comptes[0].rib}}
             <div class="graph">
               <svg width="232" height="232" viewBox="0 0 232 232" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72.4125 19.3004C84.4065 13.7076 97.3496 10.4324 110.56 9.64758L111.806 30.6106C101.237 31.2385 90.8826 33.8586 81.2875 38.3329L72.4125 19.3004Z" fill="#FFF8B4"></path>
-                <path d="M28.0663 57.5654C37.6988 42.7326 50.922 30.5732 66.5089 22.2156L76.4324 40.723C63.963 47.4091 53.3844 57.1366 45.6784 69.0028L28.0663 57.5654Z" fill="#EBFCC7"></path>
                 <path d="M14.8361 139.923C8.37522 114.009 12.0313 86.6081 25.0603 63.2955L43.3917 73.5405C32.9685 92.1906 30.0436 114.112 35.2123 134.842L14.8361 139.923Z" fill="#D5EFFF"></path>
                 <path d="M91.3154 216.36C74.1546 212.082 58.3526 203.538 45.3758 191.521C32.399 179.504 22.6678 164.404 17.0852 147.622L37.0116 140.994C41.4777 154.419 49.2626 166.499 59.6441 176.113C70.0256 185.726 82.6671 192.561 96.3957 195.984L91.3154 216.36Z" fill="#E7EBFF"></path>
                 <path d="M210.213 166.828C199.72 186.563 183.248 202.469 163.159 212.267C143.07 222.065 120.395 225.252 98.3832 221.371L102.967 195.372C119.489 198.285 136.508 195.893 151.586 188.539C166.664 181.185 179.027 169.246 186.903 154.434L210.213 166.828Z" fill="#FF614B"></path>
                 <path d="M116 10C133.407 10 150.541 14.3276 165.86 22.5934C181.179 30.8591 194.203 42.8038 203.76 57.3526C213.317 71.9014 219.106 88.5979 220.608 105.94C222.11 123.282 219.277 140.725 212.364 156.701L193.091 148.36C198.622 135.58 200.888 121.626 199.687 107.752C198.485 93.8784 193.853 80.5211 186.208 68.8821C178.562 57.243 168.143 47.6873 155.888 41.0747C143.633 34.4621 129.926 31 116 31V10Z" fill="#FFD9BE"></path>
+                             <path d="M28.0663 57.5654C37.6988 42.7326 50.922 30.5732 66.5089 22.2156L76.4324 40.723C63.963 47.4091 53.3844 57.1366 45.6784 69.0028L28.0663 57.5654Z" fill="#EBFCC7"></path>
+
               </svg>
             </div>
             <div class="spendingSummary">
               <div class="period">August</div>
-              <div class="spent">$1,749.50</div>
+              <div class="spent">{{comptes[0].getRevenu}}</div>
             </div>
           </div>
           <div class="selectedCategoryInfo row">
-            <div class="categoryName orange">Food and supermarkets</div>
+            <div class="categoryName orange">Dépenses</div>
             <div class="categorySummary row">
               <div class="price">$367.41</div>
               /
@@ -126,64 +131,77 @@ Num Compte : {{comptes[0].rib}}
     </div>
   </div>
  <!-- stat-->
-  <div class="col-md-4">
-   <div class="box box-info">
+ <div class="col-md-4">
+    <div class="box box-info">
        <div class="blocksRow">
     <div class="col">
-      <div class="block statBlock">
+      
+      <div class="block spendingBlock">
         <div class="titleWrap">
-          <div class="title">Statistics</div>
-          <div class="rightTitle">
-            <span class="blue">Spent</span>
-            <span class="orange">Income</span>
-          </div>
+          <div class="title">Statics</div>
+          <a href="#" class="calendarTrigger"></a>
         </div>
-        <div class="statWrap">
-          <div class="statRow">
-            <div class="statBlock">
-              <div class="statInfoTooltip tooltip">
-                <span class="blue">$400.43</span>
-                <span class="orange">$148.11</span>
-              </div>
-              <div class="statLine blue" style="height: 72%"></div>
-              <div class="statLine orange" style="height: 50%"></div>
-              <div class="statDay">Mon 24</div>
-            </div>
-            <div class="statBlock tapped">
-              <div class="statInfoTooltip tooltip">
-                <span class="blue">$400.43</span>
-                <span class="orange">$148.11</span>
-              </div>
-              <div class="statLine blue" style="height: 63.85%"></div>
-              <div class="statLine orange" style="height: 31.5%"></div>
-              <div class="statDay">Tue 25</div>
-            </div>
-            <div class="statBlock">
-              <div class="statInfoTooltip tooltip">
-                <span class="blue">$400.43</span>
-                <span class="orange">$148.11</span>
-              </div>
-              <div class="statLine blue" style="height: 21.5%"></div>
-              <div class="statLine orange" style="height: 76.9%"></div>
-              <div class="statDay">Wed 26</div>
-            </div>
-            <div class="statBlock">
-              <div class="statInfoTooltip tooltip">
-                <span class="blue">$400.43</span>
-                <span class="orange">$148.11</span>
-              </div>
-              <div class="statLine blue" style="height: 83.05%"></div>
-              <div class="statLine orange" style="height: 70.76%"></div>
-              <div class="statDay">Thu 27</div>
-            </div>
-          </div>
-        </div>
-        </div>
-  </div> </div> </div>
+        <div class="spendingWrap">
+                  <div class="box-body text-center">
+<div class="progress vertical">
+<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{comptes[0].getPourcentageRetrait|round}}%;background-color:rgb(255, 97, 75);"  >
+<span class="sr-only" >40%</span>
+</div>
+</div>
+<div class="progress vertical">
+<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{comptes[0].getPourcentageVersement|round}}%;background-color:#00a65a;"  >
+<span class="sr-only">20%</span>
+</div>
 </div>
 
-    
 
+
+
+</div>
+          <div class="selectedCategoryInfo row">
+            <div class="categoryNameGreen">Versements</div>
+            <div class="categorySummary row">
+<div class="price">{{comptes[0].getSommeVersements}} DT</div>
+              /
+              <div class="percentage">
+                {{comptes[0].getPourcentageVersement|round}}%
+              </div>
+            </div>
+           
+          </div>
+           <!---->
+             <div class="selectedCategoryInfo row">
+            <div class="categoryNameRed">Retarits</div>
+            <div class="categorySummary row">
+<div class="price">{{comptes[0].getSommeRetraits}} DT</div>
+              /
+              <div class="percentage">
+             {{comptes[0].getPourcentageRetrait|round}}%
+              </div>
+            </div>
+           
+          </div>
+          <!---->
+         <!--   <div class="selectedCategoryInfo row">        -->
+         <!--   <div class="categoryNameBlue">Dépenses</div>-->
+         <!--   <div class="categorySummary row">-->
+         <!--     <div class="price">$367.41</div>-->
+         <!--     /-->
+         <!--     <div class="percentage">-->
+         <!--       21%-->
+         <!--     </div>-->
+         <!--   </div>-->
+         <!--  -->
+         <!-- </div>-->
+          <!---->
+        </div>
+      </div>
+      
+      </div>
+    </div>
+      
+    </div>
+  </div>
 <!-- contenu de la page -->
 <!--mes activités-->
 <!--bouttons-->
@@ -201,16 +219,18 @@ Num Compte : {{comptes[0].rib}}
    <div class="row">
     <h3 class="title_tab col-sm-4">Mon historique</h3>
        
-                  <div class="col-sm-4" style="margin-top:30px;" >
-                         <button type="button" class="btn btn-block btn-primary btn-sm">
-                          <i class="fa fa-file-pdf-o"></i> PDF
-                        </button>
-             </div>
-    <div class="col-sm-4" style="margin-top:30px;">
-                            <button type="button" class="btn btn-block btn-primary btn-sm">
-                              <i class="fa fa-file-excel-o"></i> Excel
-                            </button>
-    </div>
+                 <div class="col-sm-4" style="margin-top:30px;">
+    <a href="{{path('export_compte_to_pdf')}}" class="btn btn-block btn-primary btn-sm">
+        <i class="fa fa-file-pdf-o"></i> PDF
+    </a>
+</div>
+             <div class="col-sm-4" style="margin-top:30px;">
+    <a href="{{path('send_mail_bilan')}}" class="btn btn-block btn-primary btn-sm">
+        <i class="fa fa-file-pdf-o"></i> Mail
+    </a>
+</div>
+
+ 
    
   </div>
  

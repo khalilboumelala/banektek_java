@@ -9,7 +9,11 @@
 {% block tableau_cheque %}{% endblock %}
 {% block tableau_virement %}{% endblock %}
 
+
 {% block body %}
+{% for carte in cartes %}
+  
+
   <div class="flip-card">
     <div class="flip-card-inner">
         <div class="flip-card-front">
@@ -66,22 +70,24 @@
             </svg>
             <img class="logo_banektek" src="../../backbank/dist/img/logo.png" alt="">
             
-            <p class="number">9759 2484 5269 6576</p>
-            <p class="valid_thru">EKTISADI</p>
-            <p class="date_8264">1 2 / 2 4</p>
+            <p class="number" style="font-size:17px;margin-top:20px;">{{carte.getNumCompte.Rib}}</p>
+            <p class="valid_thru" style="margin-left:20px;">{{carte.type}}</p>
+            <p class="date_8264">{{carte.getDateExpiration.format('m')}} /{{carte.getDateExpiration.format('Y')}}</p>
             <p class="name">{{(client.nom ~" " ~ client.prenom ~ " ")| upper}}</p>
-        </div>§ ;kn
+        </div>
         <div class="flip-card-back">
         <img class="logo_banektek_back" src="../../backbank/dist/img/logo.png" alt="">
 
             <div class="strip"></div>
             <div class="mstrip">
             <div class="col-md-6">
-            <p class="code">678</p>
+            <p class="code">{{carte.cvv}}</p>
             </div>
             </div>
             
         </div>
     </div>
 </div>
+
+{% endfor %}
 {% endblock %}
