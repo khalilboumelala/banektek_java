@@ -82,6 +82,16 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>panda-repository</id>
+      <url>https://repo.panda-lang.org/releases</url>
+    </repository>
+    <repository>
+      <id>gluon-nexus-repository</id>
+      <url>http://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

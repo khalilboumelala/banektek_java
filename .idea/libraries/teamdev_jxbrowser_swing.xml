@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="teamdev.jxbrowser.swing" type="repository">
+    <properties maven-id="com.teamdev.jxbrowser:jxbrowser-swing:7.12.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser-swing/7.12.2/jxbrowser-swing-7.12.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

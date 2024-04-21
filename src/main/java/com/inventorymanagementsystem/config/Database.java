@@ -1,33 +1,88 @@
 package com.inventorymanagementsystem.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Properties;
+import java.sql.*;
 
 public class Database {
-    private static String CONFIG_FILE="application.properties";
-    private static Database database=new Database();
-    public static Database getInstance()
-    {
-        if (database== null)
-            database= new Database();
-        return database;
+
+    public static Database databaseConnection;
+    private Connection connection;
+
+    private Database() {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banektek", "root", "");
+           // System.out.println("Connexion etablie");
+
+            //test
+            /*
+            PreparedStatement preparedStatement;
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `article`");
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+
+                    System.out.println(resultSet.getInt("id"));
+                    System.out.println( resultSet.getString("titre"));    ;
+                            System.out.println( resultSet.getString("image"));
+
+
+
+                }
+            } catch (SQLException exception) {
+                System.out.println("Error (getAll) article : " + exception.getMessage());
+            }
+*/
+            //
+
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-    public Connection connectDB(){
-        Properties dbConfig=new Properties();
-      try{
-          InputStream input=this.getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
-          dbConfig.load(input);
-          Class.forName(dbConfig.getProperty("javafx.jdbc.driver"));
-          Connection connection=DriverManager.getConnection(dbConfig.getProperty("javafx.datasource.url"),dbConfig.getProperty("javafx.datasource.username"), dbConfig.getProperty("javafx.datasource.password"));
-          return connection;
-      }catch (Exception exception){
-        exception.printStackTrace();
-      }
-      return null;
+
+    public Connection connectDB() {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banektek2", "root", "");
+           // System.out.println("Connexion etablie");
+return connection;
+            //test
+            /*
+            PreparedStatement preparedStatement;
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `article`");
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+
+                    System.out.println(resultSet.getInt("id"));
+                    System.out.println( resultSet.getString("titre"));    ;
+                            System.out.println( resultSet.getString("image"));
+
+
+
+                }
+            } catch (SQLException exception) {
+                System.out.println("Error (getAll) article : " + exception.getMessage());
+            }
+*/
+            //
+
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    public static Database getInstance() {
+        if (databaseConnection == null) {
+            databaseConnection = new Database();
+        }
+        return databaseConnection;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

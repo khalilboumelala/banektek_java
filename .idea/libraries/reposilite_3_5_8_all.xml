@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="reposilite-3.5.8-all">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/reposilite-3.5.8-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

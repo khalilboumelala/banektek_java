@@ -1,5 +1,5 @@
 .navbar{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
+-fx-background-color: linear-gradient(to bottom, #003883, #D9017A);
 }
 
 .close,.add,.save,.clear,.delete,.refresh,.print{
@@ -17,6 +17,19 @@
 
 .navbutton:hover{
 -fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7));
+}
+
+
+.splitdropdown {
+    
+    -fx-color: linear-gradient(to bottom right, #2f466b, #662d60);
+    -fx-border-radius: 8px;
+    -fx-padding: 0px;
+	-fx-cursor:hand;
+}
+
+.splitdropdown:hover {
+-fx-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7));
 }
 
 .dasboard_box{
@@ -79,4 +92,32 @@
 -fx-border-width:2px;
 }
 
+//Khalil
+.ConverterStocksbackground {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.2), rgba(255, 106, 239, 0.2));
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+}
+.TabPane .tab-header-area .tab .tab-label {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.2), rgba(255, 106, 239, 0.2));
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+}
 
+.TabPane .tab-header-area .tab {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.2), rgba(255, 106, 239, 0.2));
+}
+
+.TabPane .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.7), rgba(255, 106, 239, 0.7));
+}
+
+/* Style for the horizontal buttons */
+.TabPane .tab-header-area .tab .tab-container .arrow-button {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.2), rgba(255, 106, 239, 0.2));
+}
+
+.TabPane .tab-header-area .tab .tab-container .arrow-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.7), rgba(255, 106, 239, 0.7));
+}
+//

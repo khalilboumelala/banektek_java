@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="GMapsFX">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../GMapsFX-master-11/GMapsFX" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../GMapsFX-master-11/GMapsFX/src/main/java" />
+      <root url="file://$PROJECT_DIR$/../GMapsFX-master-11/GMapsFX/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

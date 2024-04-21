@@ -1,75 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+<?import org.controlsfx.control.ToggleSwitch?>
 
-<AnchorPane prefHeight="694.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashboardController">
+<AnchorPane prefHeight="851.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashboardController">
    <children>
-      <AnchorPane prefHeight="694.0" prefWidth="1080.0">
+      <AnchorPane prefHeight="831.0" prefWidth="1162.0">
          <children>
-            <AnchorPane prefHeight="694.0" prefWidth="275.0" styleClass="navbar" stylesheets="@dashboard.css">
+            <AnchorPane fx:id="left_pane" prefHeight="777.0" prefWidth="220.0" styleClass="navbar" stylesheets="@dashboard.css">
                <children>
-                  <Button fx:id="dashboard_btn" alignment="CENTER" layoutX="39.0" layoutY="266.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefWidth="200.0" styleClass="navbutton" stylesheets="@dashboard.css" text="DASHBOARD" textFill="WHITE">
+                  <Button fx:id="dashboard_btn" alignment="CENTER" layoutX="39.0" layoutY="138.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="DASHBOARD" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="1.2em" text="" />
                      </graphic></Button>
-                  <Label alignment="CENTER" layoutX="49.0" layoutY="65.0" prefHeight="30.0" prefWidth="180.0" text="WELCOME !" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="user" alignment="CENTER" layoutX="72.0" layoutY="96.0" prefHeight="30.0" prefWidth="134.0" text="Admin" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="sales_btn" layoutX="39.0" layoutY="396.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefWidth="200.0" styleClass="navbutton" stylesheets="@dashboard.css" text="SALES" textFill="WHITE">
+                  <Button fx:id="comptes_btn" layoutX="39.0" layoutY="182.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="COMPTES" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" size="1.2em" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="BANK" size="1.2em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="billing_btn" layoutX="39.0" layoutY="310.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefWidth="200.0" styleClass="navbutton" stylesheets="@dashboard.css" text="BILLING" textFill="WHITE">
+                  <Button fx:id="clients_btn" layoutX="39.0" layoutY="225.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="CLIENTS" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="CLIPBOARD" size="1.2em" text="" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.2em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="purchase_btn" layoutX="39.0" layoutY="440.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefWidth="200.0" styleClass="navbutton" stylesheets="@dashboard.css" text="PURCHASE" textFill="WHITE">
+                  <Button fx:id="cartes_btn" layoutX="39.0" layoutY="272.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="CARTES" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_BAG" size="1.2em" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="CREDIT_CARD" size="1.2em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="customer_btn" layoutX="39.0" layoutY="353.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefWidth="200.0" styleClass="navbutton" stylesheets="@dashboard.css" text="CUSTOMER" textFill="WHITE">
+                  <Button fx:id="virements_btn" layoutX="38.0" layoutY="320.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="VIREMENTS" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="1.2em" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="1.2em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="signout_btn" layoutX="14.0" layoutY="641.0" mnemonicParsing="false" onAction="#signOut" prefHeight="38.0" prefWidth="115.0" styleClass="navbutton" stylesheets="@dashboard.css" text="SIGN OUT" textFill="WHITE">
+                  <Button fx:id="agences_btn" layoutX="38.0" layoutY="419.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="AGENCES" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BUILDING" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="signout_btn" layoutX="33.0" layoutY="720.0" mnemonicParsing="false" onAction="#signOut" prefHeight="38.0" prefWidth="115.0" styleClass="navbutton" stylesheets="@dashboard.css" text="SIGN OUT" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -77,343 +81,652 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.2em" />
                      </graphic>
                   </Button>
-               </children></AnchorPane>
-            <AnchorPane layoutX="275.0" prefHeight="694.0" prefWidth="808.0">
-               <children>
-                  <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="743.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#onExit" onMouseDragged="#onExit" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
+                  <Label layoutX="39.0" layoutY="86.0" prefHeight="42.0" prefWidth="149.0" text="SIDEBAR" textFill="#d7c2c2">
+                     <font>
+                        <Font name="Cooper Black" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="articles_btn" layoutX="38.0" layoutY="466.0" mnemonicParsing="false" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="ARTICLES" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16.0" text="" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" />
                      </graphic>
                   </Button>
+                  <Button fx:id="comments_btn" layoutX="38.0" layoutY="517.0" mnemonicParsing="false" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="COMMENTS" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="COMMENT" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="transaction_btn" layoutX="38.0" layoutY="371.0" mnemonicParsing="false" onAction="#activateDashboard" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="TRANSACTIONS" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="EURO" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="reclamation_btn" layoutX="38.0" layoutY="569.0" mnemonicParsing="false" onMouseClicked="#activateAnchorPane" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@dashboard.css" text="Reclamation" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="EXCLAMATION_TRIANGLE" />
+                     </graphic>
+                  </Button>
+               </children></AnchorPane>
+            <Button fx:id="bill_delete1" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#onDrawerButtonClick" prefHeight="38.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="24.0" />
+               </graphic>
+            </Button>
+            <AnchorPane fx:id="content_pane" layoutX="220.0" layoutY="29.0" prefHeight="831.0" prefWidth="1111.0">
+               <children>
                   <AnchorPane layoutX="-2.0" prefHeight="47.0" prefWidth="741.0">
                      <children>
-                        <Label layoutX="26.0" layoutY="4.0" prefHeight="42.0" prefWidth="530.0" text="FASHION CLUB MANAGEMENT SYSTEM">
+                        <Label fx:id="user" alignment="CENTER" layoutX="304.0" layoutY="-1.0" prefHeight="30.0" prefWidth="175.0" text="BANEKTEK">
                            <font>
-                              <Font name="Cooper Black" size="24.0" />
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.09172259507829979">
+                                       <color>
+                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="695.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#onExit" onMouseDragged="#onExit" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16.0" text="" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="clients_pane" layoutX="45.0" layoutY="66.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                     <children>
+                        <TableView fx:id="client_table" layoutX="13.0" layoutY="317.0" onMouseClicked="#selectClient" prefHeight="316.0" prefWidth="794.0" stylesheets="@dashboard.css">
+                           <columns>
+                              <TableColumn fx:id="table_client_id" prefWidth="62.399993896484375" text="#" />
+                              <TableColumn fx:id="table_client_nom" prefWidth="182.39996337890625" text="Nom &amp; Prenom" />
+                              <TableColumn fx:id="table_client_cin" prefWidth="174.39996337890625" text="C.I.N" />
+                              <TableColumn fx:id="table_client_tel" minWidth="0.0" prefWidth="172.79998779296875" text="N° Tel" />
+                              <TableColumn fx:id="table_client_mail" prefWidth="201.60001220703123" text="E-MAIL" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="add_client_btn" layoutX="736.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#addClient" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="cust_btn_edit1" layoutX="679.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#updateClient" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="18.0" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btn_delete_client" layoutX="620.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#deleteClient" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
+                           </graphic>
+                        </Button>
+                        <TextField fx:id="client_search" layoutX="14.0" layoutY="25.0" onAction="#searchClient" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
+                        <FontAwesomeIconView glyphName="SEARCH" layoutX="21.0" layoutY="46.0" size="16" />
+                        <TextField fx:id="nom_client" layoutX="50.0" layoutY="101.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="prenom_client" layoutX="335.0" layoutY="101.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="6.0" layoutY="101.0" prefHeight="32.0" prefWidth="65.0" text="Nom :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="266.0" layoutY="101.0" prefHeight="32.0" prefWidth="122.0" text="Prenom :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="cust_btn_print1" layoutX="562.0" layoutY="32.0" mnemonicParsing="false" onAction="#printPdfClient" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+                           <graphic>
+                              <FontAwesomeIconView fx:id="customer_print21" fill="WHITE" glyphName="PRINT" size="18.0" />
+                           </graphic>
+                        </Button>
+                        <TextField fx:id="mail_client" layoutX="601.0" layoutY="101.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="554.0" layoutY="101.0" prefHeight="32.0" prefWidth="65.0" text="Mail :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tel_client" layoutX="335.0" layoutY="142.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="266.0" layoutY="142.0" prefHeight="32.0" prefWidth="122.0" text="N° Tel :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cin_client" layoutX="50.0" layoutY="142.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="6.0" layoutY="142.0" prefHeight="32.0" prefWidth="65.0" text="C.I.N :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="poste_client" layoutX="347.0" layoutY="184.0" prefHeight="32.0" prefWidth="191.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="266.0" layoutY="184.0" prefHeight="32.0" prefWidth="122.0" text=" Profession ">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="genre_client" layoutX="607.0" layoutY="184.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="554.0" layoutY="184.0" prefHeight="32.0" prefWidth="65.0" text="Genre :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="dob_client" layoutX="604.0" layoutY="142.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="554.0" layoutY="142.0" prefHeight="32.0" prefWidth="115.0" text="DOB :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="pays_client" layoutX="50.0" layoutY="184.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="6.0" layoutY="184.0" prefHeight="32.0" prefWidth="65.0" text="Pays :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="adresse_client" layoutX="72.0" layoutY="265.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="10.0" layoutY="265.0" prefHeight="32.0" prefWidth="122.0" text="Adresse :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="piece_client" layoutX="347.0" layoutY="226.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="281.0" layoutY="226.0" prefHeight="32.0" prefWidth="65.0" text="Piece idt :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="signature_client" layoutX="361.0" layoutY="265.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="286.0" layoutY="265.0" prefHeight="32.0" prefWidth="122.0" text="Signature :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="photo_client" layoutX="59.0" layoutY="226.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="6.0" layoutY="226.0" prefHeight="32.0" prefWidth="65.0" text="Photo :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="pass_client" layoutX="607.0" layoutY="233.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Label layoutX="562.0" layoutY="233.0" prefHeight="32.0" prefWidth="122.0" text="Pass :">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="dasboard_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                  <AnchorPane fx:id="articles_pane" layoutX="116.0" layoutY="97.0" prefHeight="703.0" prefWidth="929.0" visible="false">
                      <children>
-                        <Pane layoutX="44.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
+                    <AnchorPane fx:id="articles_front_anchorpane" layoutX="-11.0" layoutY="23.0" minHeight="0.0" minWidth="0.0" onMouseClicked="#list_article_comments" prefHeight="528.0" prefWidth="699.0" visible="false" />
+                    <AnchorPane fx:id="articles_back_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
                            <children>
-                              <Label layoutX="43.0" layoutY="31.0" text="TOTAL STOCKS" textFill="WHITE">
+                              <Label fx:id="user1" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Gestion des Articles">
                                  <font>
-                                    <Font name="Arial Rounded MT Bold" size="18.0" />
+                                    <Font name="Arial Black" size="20.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.09172259507829979">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                              <TextArea fx:id="article_contenu_input" layoutX="64.0" layoutY="100.0" prefHeight="157.0" prefWidth="230.0" />
+                              <TextField fx:id="article_titre_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                              <Button fx:id="article_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addArticleData" prefHeight="25.0" prefWidth="191.0" text="Add/Update article" />
+                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Titre" />
+                              <Label layoutX="14.0" layoutY="145.0" text="Contenu" />
+                              <Button fx:id="article_upload_button" layoutX="81.0" layoutY="313.0" mnemonicParsing="false" onAction="#uploadImageArticle" prefHeight="25.0" prefWidth="191.0" text="Upload image" />
+                              <Label fx:id="article_upload_status" layoutX="109.0" layoutY="271.0" prefHeight="17.0" prefWidth="117.0" text="Status:" />
+                              <Button fx:id="article_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#addArticleData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="308.0" layoutY="232.0" mnemonicParsing="false" onAction="#deleteSelectedArticles" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="16.0" text="" />
+                                 </graphic>
+                              </Button>
+                              <JFXListView fx:id="article_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                           </children>
+                        </AnchorPane>
+                        <ToggleSwitch fx:id="frontbackarticlesswitch" layoutX="387.0" layoutY="3.0" onMousePressed="#switchfrontbackarticles" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="agences_pane" layoutX="22.0" layoutY="47.0" prefHeight="736.0" prefWidth="811.0">
+                     <children>
+                        <AnchorPane fx:id="agences_front_anchorpane" prefHeight="617.0" prefWidth="810.0" visible="false">
+                           <children>
+                              <WebView fx:id="webViewClient" layoutY="101.0" prefHeight="508.0" prefWidth="757.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="agences_back_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="724.0" prefWidth="794.0">
+                           <children>
+                              <TableView fx:id="agence_table" layoutX="639.0" layoutY="196.0" onMouseClicked="#selectAgenceTableData" prefHeight="52.0" prefWidth="76.0" stylesheets="@dashboard.css">
+                                 <columns>
+                                    <TableColumn fx:id="agence_col_id" prefWidth="75.0" text="id" visible="false" />
+                                    <TableColumn fx:id="agence_col_dateajout" prefWidth="80.66665649414062" text="Date_Ajout" />
+                                    <TableColumn fx:id="agence_col_nom" prefWidth="162.66671752929688" text="Nom" />
+                                    <TableColumn fx:id="agence_col_adresse" prefWidth="215.3333740234375" text="Adresse" />
+                                    <TableColumn fx:id="agence_col_etat" minWidth="6.0" prefWidth="90.0" text="Etat" />
+                                    <TableColumn fx:id="agence_col_tel" prefWidth="160.6666259765625" text="Tel" />
+                                    <TableColumn fx:id="agence_col_longitude" prefWidth="67.111083984375" text="longitude" visible="false" />
+                                    <TableColumn fx:id="agence_col_latitude" prefWidth="103.333251953125" text="latitude" visible="false" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="add_agence_button" layoutX="635.0" layoutY="145.0" mnemonicParsing="false" onMouseClicked="#addAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="edit_agence_button" layoutX="633.0" layoutY="67.0" mnemonicParsing="false" onMouseClicked="#updateAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="EDIT" onMouseReleased="#updateAgenceData" size="18.0" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="delete_agence_button" layoutX="635.0" layoutY="105.0" mnemonicParsing="false" onMouseClicked="#deleteAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
+                                 </graphic>
+                              </Button>
+                              <TextField fx:id="customer_search1" layoutX="376.0" layoutY="33.0" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
+                              <FontAwesomeIconView glyphName="SEARCH" layoutX="586.0" layoutY="56.0" size="16" />
+                              <TextField fx:id="lat_input" layoutX="397.0" layoutY="239.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                              <TextField fx:id="lng_input" layoutX="180.0" layoutY="237.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                              <Label layoutX="349.0" layoutY="236.0" prefHeight="32.0" prefWidth="65.0" text="Lat">
+                                 <font>
+                                    <Font name="Dubai Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_stocks" alignment="CENTER" layoutX="20.0" layoutY="78.0" prefHeight="36.0" prefWidth="191.0" text="32" textFill="WHITE">
+                              <Label layoutX="136.0" layoutY="241.0" prefHeight="28.0" prefWidth="50.0" text="Lng">
                                  <font>
-                                    <Font name="Arial Rounded MT Bold" size="30.0" />
+                                    <Font name="Dubai Bold" size="15.0" />
                                  </font>
+                              </Label>
+                              <Button fx:id="translator_button" layoutX="708.0" layoutY="146.0" mnemonicParsing="false" onAction="#openexchangewindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fx:id="customer_print2" fill="WHITE" glyphName="EXCHANGE" size="18.0" />
+                                 </graphic>
+                              </Button>
+                              <TextField fx:id="agence_adresse_input" layoutX="85.0" layoutY="175.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                              <Label layoutX="9.0" layoutY="176.0" prefHeight="32.0" prefWidth="65.0" text="Adresse">
+                                 <font>
+                                    <Font name="Dubai Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="agence_nom_input" layoutX="87.0" layoutY="70.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                              <Label layoutX="35.0" layoutY="72.0" prefHeight="32.0" prefWidth="65.0" text="Nom">
+                                 <font>
+                                    <Font name="Dubai Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="agence_tel_input" layoutX="83.0" layoutY="125.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                              <Label layoutX="26.0" layoutY="130.0" prefHeight="32.0" prefWidth="65.0" text="Tel">
+                                 <font>
+                                    <Font name="Dubai Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <JFXListView fx:id="agence_listview" layoutX="27.0" layoutY="313.0" prefHeight="274.0" prefWidth="434.0" />
+                              <WebView fx:id="webView" layoutX="479.0" layoutY="316.0" onMouseClicked="#MapClick" prefHeight="274.0" prefWidth="298.0" />
+                           </children>
+                        </AnchorPane>
+                        <JFXToggleButton layoutX="318.0" layoutY="609.0" onAction="#switchfrontbackagences" onMouseClicked="#show_agences_map" text="Back/Front" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="comments_pane" layoutX="53.0" layoutY="83.0" prefHeight="667.0" prefWidth="741.0" visible="false" />
+                  <AnchorPane fx:id="comptes_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css" visible="false">
+                     <AnchorPane fx:id="compte_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
+                        <children>
+                           <Label fx:id="compte_title" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Compte Details">
+                              <font>
+                                 <Font name="Arial Black" size="20.0" />
+                              </font>
+                              <textFill>
+                                 <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                    <stops>
+                                       <Stop>
+                                          <color>
+                                             <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                          </color>
+                                       </Stop>
+                                       <Stop offset="0.09172259507829979">
+                                          <color>
+                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                          </color>
+                                       </Stop>
+                                       <Stop offset="1.0">
+                                          <color>
+                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                          </color>
+                                       </Stop>
+                                    </stops>
+                                 </LinearGradient>
+                              </textFill>
+                           </Label>
+                           <TextField fx:id="compte_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" promptText="Type" />
+                           <TextField fx:id="compte_solde_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="230.0" promptText="Solde" />
+                           <DatePicker fx:id="compte_date_creation_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="230.0" promptText="Date de création" />
+                           <DatePicker fx:id="compte_date_fermeture_input" layoutX="64.0" layoutY="174.0" prefHeight="25.0" prefWidth="230.0" promptText="Date de fermeture" />
+                           <TextField fx:id="compte_etat_input" layoutX="64.0" layoutY="211.0" prefHeight="25.0" prefWidth="227.0" promptText="État" />
+                           <TextField fx:id="compte_rib_input" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="227.0" promptText="RIB" />
+                           <Button fx:id="compte_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateCompteData" prefHeight="30.0" prefWidth="191.0" text="Add/Update compte" />
+                           <Button fx:id="compte_clear_button" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearCompteData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                           <Button fx:id="compte_add_button1" layoutX="81.0" layoutY="384.0" mnemonicParsing="false" onAction="#deleteCompteData" prefHeight="30.0" prefWidth="122.0" text="Delete compte" />
+                        </children>
+                     </AnchorPane>
+                     <JFXListView fx:id="comptes_listview" layoutX="366.0" layoutY="28.0" onMouseClicked="#selectCompteData" prefHeight="396.0" prefWidth="385.0" />
+
+
+                  </AnchorPane>
+
+                  <AnchorPane fx:id="cartes_pane" layoutX="170.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                     <AnchorPane fx:id="carte_back_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
+                        <children>
+                           <Label fx:id="carte_label" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Carte Information">
+                              <font>
+                                 <Font name="Arial Black" size="20.0" />
+                              </font>
+                              <textFill>
+                                 <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                    <stops>
+                                       <Stop>
+                                          <color>
+                                             <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                          </color>
+                                       </Stop>
+                                       <Stop offset="0.09172259507829979">
+                                          <color>
+                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                          </color>
+                                       </Stop>
+                                       <Stop offset="1.0">
+                                          <color>
+                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                          </color>
+                                       </Stop>
+                                    </stops>
+                                 </LinearGradient>
+                              </textFill>
+                           </Label>
+                           <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
+                           <TextField fx:id="carte_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                           <Label layoutX="14.0" layoutY="109.0" prefHeight="18.0" prefWidth="50.0" text="Date Emission" />
+                           <DatePicker fx:id="carte_date_emission_input" layoutX="128.0" layoutY="105.0" prefHeight="25.0" prefWidth="163.0" />
+                           <Label layoutX="14.0" layoutY="151.0" prefHeight="18.0" prefWidth="50.0" text="Date Expiration" />
+                           <DatePicker fx:id="carte_date_expiration_input" layoutX="128.0" layoutY="147.0" prefHeight="25.0" prefWidth="163.0" />
+                           <Label layoutX="14.0" layoutY="193.0" prefHeight="18.0" prefWidth="50.0" text="CVV" />
+                           <TextField fx:id="carte_cvv_input" layoutX="64.0" layoutY="189.0" prefHeight="25.0" prefWidth="163.0" />
+                           <Label layoutX="14.0" layoutY="235.0" prefHeight="18.0" prefWidth="50.0" text="Plafond" />
+                           <TextField fx:id="carte_plafond_input" layoutX="64.0" layoutY="231.0" prefHeight="25.0" prefWidth="163.0" />
+                           <Button fx:id="carte_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateCarteData" prefHeight="25.0" prefWidth="191.0" text="Add/Update carte" />
+                           <Label layoutX="14.0" layoutY="277.0" prefHeight="18.0" prefWidth="50.0" text="Etat" />
+                           <TextField fx:id="carte_etat_input" layoutX="64.0" layoutY="273.0" prefHeight="25.0" prefWidth="163.0" />
+                           <Button fx:id="carte_clear_button" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearCarteData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                           <JFXListView fx:id="carte_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                           <Button fx:id="carte_add_button1" layoutX="82.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteCarteData" prefHeight="25.0" prefWidth="117.0" text="Delete carte" />
+                           <ChoiceBox layoutX="53.0" layoutY="317.0" prefWidth="150.0" />
+                           <Label layoutX="-6.0" layoutY="321.0" text="Compte" />
+                        </children>
+                     </AnchorPane>
+                  </AnchorPane>
+                  <AnchorPane fx:id="virements_pane" layoutX="154.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                  <children>
+                        <AnchorPane fx:id="typeVirement_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0" visible="false">
+                           <children>
+                              <Label fx:id="typevirement_label" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Type virement">
+                                 <font>
+                                    <Font name="Arial Black" size="20.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.09172259507829979">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                              <TextField fx:id="typeVirement_nom_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                              <TextField fx:id="typeVirement_frais_input" layoutX="64.0" layoutY="141.0" prefHeight="25.0" prefWidth="227.0" />
+                              <Button fx:id="typeVirement_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateTypeVirementData" prefHeight="25.0" prefWidth="191.0" text="Add/Update Type Virement" />
+                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Nom" />
+                              <Label layoutX="14.0" layoutY="145.0" text="Frais" />
+                              <Button fx:id="typeVirement_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                              <JFXListView fx:id="typeVirement_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                              <Button layoutX="99.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteTypeVirementData" prefHeight="25.0" prefWidth="75.0" text="Delete" />
+                           </children>
+                        </AnchorPane>
+                     <AnchorPane fx:id="virement_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
+                        <children>
+                           <TextField fx:id="virement_cinEmetteur_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                           <TextField fx:id="virement_photoCin_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
+                           <TextField fx:id="virement_montant_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
+                           <!-- Date Picker for dateEmission -->
+                           <DatePicker fx:id="virement_dateEmission_input" layoutX="64.0" layoutY="174.0" prefHeight="25.0" prefWidth="227.0" />
+                           <!-- Date Picker for dateApprobation -->
+                           <DatePicker fx:id="virement_dateApprobation_input" layoutX="64.0" layoutY="211.0" prefHeight="25.0" prefWidth="227.0" />
+                           <TextField fx:id="virement_etat_input" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="227.0" />
+                           <!-- TypeVirement ComboBox -->
+                           <ComboBox fx:id="virement_type_combobox" layoutX="64.0" layoutY="285.0" prefHeight="25.0" prefWidth="227.0" />
+                           <Button fx:id="virement_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateVirementData" prefHeight="25.0" prefWidth="191.0" text="Add/Update Virement" />
+                           <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="CIN Emetteur" />
+                           <Label layoutX="12.0" layoutY="104.0" text="Photo CIN" />
+                           <Label layoutX="11.0" layoutY="141.0" text="Montant" />
+                           <Label layoutX="7.0" layoutY="178.0" text="Date Emission" />
+                           <Label layoutX="-9.0" layoutY="215.0" text="Date Approbation" />
+                           <Label layoutX="28.0" layoutY="252.0" text="Etat" />
+                           <Label layoutY="289.0" text="Type Virement" />
+                           <Button fx:id="virement_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                           <JFXListView fx:id="virement_listview" layoutX="356.0" layoutY="18.0" onMouseClicked="#selectVirementData" prefHeight="365.0" prefWidth="426.0" />
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Virements">
+                                 <font>
+                                    <Font name="Arial Black" size="20.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.09172259507829979">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                              <Button layoutX="91.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteVirementData" prefHeight="25.0" prefWidth="87.0" text="Delete" />
+                        </children>
+                     </AnchorPane>
+                     <JFXToggleButton fx:id="switchvirementtype" layoutX="339.0" layoutY="24.0" onAction="#switchvirementtype" text="Virement/Type" />
+                  </children></AnchorPane>
+                  <AnchorPane fx:id="transaction_pane" layoutX="27.0" layoutY="95.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                     <children>
+                        <AnchorPane fx:id="transaction_anchorpane" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
+                           <children>
+                              <TextField fx:id="transaction_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                              <DatePicker fx:id="transaction_date_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
+                              <TextField fx:id="transaction_montant_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
+                              <Button fx:id="transaction_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="191.0" text="Add/Update Transaction" />
+                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
+                              <Label layoutX="14.0" layoutY="105.0" prefHeight="18.0" prefWidth="50.0" text="Date" />
+                              <Label layoutX="14.0" layoutY="145.0" text="Montant" />
+                              <Button fx:id="transaction_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearTransactionData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                              <JFXListView fx:id="transaction_listview" layoutX="356.0" layoutY="18.0" onMouseClicked="#selectTransactionData" prefHeight="396.0" prefWidth="385.0" />
+                              <Button layoutX="91.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteTransactionData" prefHeight="25.0" prefWidth="75.0" text="Delete" />
+                           </children>
+                        </AnchorPane>
+                        <Label alignment="CENTER" layoutX="18.0" layoutY="24.0" prefHeight="30.0" prefWidth="267.0" text="Transaction">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.09172259507829979">
+                                       <color>
+                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="dashboard_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
+                  <AnchorPane fx:id="reclamation_pane" layoutX="37.0" layoutY="105.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                     <children>
+                        <AnchorPane fx:id="reclamation_anchorpane" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
+                           <children>
+                              <TextField layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                              <DatePicker layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
+                              <TextField layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
+                              <Button layoutX="82.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="191.0" text="Add/Update Transaction" />
+                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
+                              <Label layoutX="14.0" layoutY="105.0" prefHeight="18.0" prefWidth="50.0" text="Date" />
+                              <Label layoutX="14.0" layoutY="145.0" text="Montant" />
+                              <Button layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                              <JFXListView layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Reclamation">
+                                 <font>
+                                    <Font name="Arial Black" size="20.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.09172259507829979">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
                               </Label>
                            </children>
-                        </Pane>
-                        <Pane layoutX="310.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
+                        </AnchorPane>
+                        <AnchorPane fx:id="reponse_anchorpane" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0" visible="false">
                            <children>
-                              <Label layoutX="26.0" layoutY="32.0" text="TOTAL ITEMS SOLD" textFill="WHITE">
+                              <TextField layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
+                              <DatePicker layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
+                              <TextField layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
+                              <Button layoutX="82.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="191.0" text="Add/Update Transaction" />
+                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
+                              <Label layoutX="14.0" layoutY="105.0" prefHeight="18.0" prefWidth="50.0" text="Date" />
+                              <Label layoutX="14.0" layoutY="145.0" text="Montant" />
+                              <Button layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+                              <JFXListView layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Reponses">
                                  <font>
-                                    <Font name="Arial Rounded MT Bold" size="18.0" />
+                                    <Font name="Arial Black" size="20.0" />
                                  </font>
-                              </Label>
-                              <Label fx:id="dash_total_sold" alignment="CENTER" layoutX="22.0" layoutY="82.0" prefHeight="36.0" prefWidth="191.0" text="18" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="30.0" />
-                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.09172259507829979">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
                               </Label>
                            </children>
-                        </Pane>
-                        <Pane layoutX="569.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
-                           <children>
-                              <Label layoutX="11.0" layoutY="31.0" text="TOTAL ITEMS BOUGHT" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="dash_total_purchase" alignment="CENTER" layoutX="17.0" layoutY="82.0" prefHeight="36.0" prefWidth="200.0" text="50" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="30.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Pane layoutX="134.0" layoutY="347.0" prefHeight="200.0" prefWidth="294.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
-                           <children>
-                              <Label alignment="CENTER" layoutX="35.0" layoutY="21.0" prefHeight="22.0" prefWidth="220.0" text="SALES THIS MONTH" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="dash_total_sales_this_month" layoutX="97.0" layoutY="71.0" prefHeight="36.0" prefWidth="191.0" text="15000" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="30.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="dash_total_sales_this_month_name" alignment="CENTER" layoutX="71.0" layoutY="127.0" prefHeight="28.0" prefWidth="156.0" text="MAY" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="24.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="71.0" layoutY="67.0" prefHeight="45.0" prefWidth="26.0" text="₹ " textFill="WHITE">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Pane layoutX="467.0" layoutY="347.0" prefHeight="200.0" prefWidth="287.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
-                           <children>
-                              <Label alignment="CENTER" layoutX="16.0" layoutY="23.0" prefHeight="22.0" prefWidth="247.0" text="ITEMS SOLD THIS MONTH" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="dash_total_items_sold_this_month" alignment="CENTER" layoutX="13.0" layoutY="64.0" prefHeight="36.0" prefWidth="247.0" text="9" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="30.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="dash_total_sales_items_this_month_name" alignment="CENTER" layoutX="68.0" layoutY="122.0" prefHeight="28.0" prefWidth="149.0" text="MAY" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="24.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="billing_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css">
-                     <children>
-                        <TableView fx:id="billing_table" layoutX="13.0" layoutY="59.0" onMouseClicked="#selectBillingTableData" prefHeight="280.0" prefWidth="794.0" stylesheets="@dashboard.css">
-                          <columns>
-                              <TableColumn fx:id="col_bill_item_num" prefWidth="254.4000244140625" text="Item Number" />
-                              <TableColumn fx:id="col_bill_quantity" prefWidth="189.5999755859375" text="Quantity" />
-                              <TableColumn fx:id="col_bill_price" prefWidth="150.4000244140625" text="Price" />
-                              <TableColumn fx:id="col_bill_total_amt" minWidth="0.0" prefWidth="197.60001220703123" text="Total Amount" />
-                          </columns>
-                        </TableView>
-                        <TextField fx:id="billing_table_search" layoutX="12.0" layoutY="13.0" prefHeight="36.0" prefWidth="236.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
-                        <FontAwesomeIconView glyphName="SEARCH" layoutX="21.0" layoutY="37.0" size="18.0" wrappingWidth="14.857142448425293" />
-                        <Separator layoutX="13.0" layoutY="342.0" prefHeight="10.0" prefWidth="794.0" />
-                        <TextField fx:id="bill_name" layoutX="151.0" layoutY="389.0" promptText="Enter Customer Name" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="bill_phone" layoutX="151.0" layoutY="437.0" promptText="Enter Phone Number" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="bill_price" layoutX="556.0" layoutY="437.0" onKeyReleased="#onInputTextChanged" promptText="Enter Product Price" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="28.0" layoutY="389.0" prefHeight="32.0" prefWidth="83.0" text="Name:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="28.0" layoutY="437.0" prefHeight="32.0" prefWidth="101.0" text="Phone Number:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="28.0" layoutY="488.0" prefHeight="32.0" prefWidth="102.0" text="Item Number:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="449.0" layoutY="383.0" prefHeight="32.0" prefWidth="83.0" text="Quantity:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="449.0" layoutY="437.0" prefHeight="32.0" prefWidth="83.0" text="Price:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="bill_total_amount" layoutX="556.0" layoutY="489.0" promptText="Enter Total Amount" styleClass="textfield" stylesheets="@dashboard.css">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets></TextField>
-                        <Label layoutX="448.0" layoutY="488.0" prefHeight="32.0" prefWidth="102.0" text="Total Amount:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="bill_save" alignment="CENTER" layoutX="602.0" layoutY="583.0" mnemonicParsing="false" onMouseClicked="#billSave" prefHeight="38.0" prefWidth="91.0" styleClass="save" stylesheets="@dashboard.css" text="Save">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="SAVE" size="18.0" text="" />
-                           </graphic>
-                           <font>
-                              <Font name="Dubai Bold" size="16.0" />
-                           </font></Button>
-                        <Button fx:id="bill_clear" layoutX="476.0" layoutY="583.0" mnemonicParsing="false" onAction="#billClearData" onMouseClicked="#billClearData" prefHeight="38.0" prefWidth="115.0" styleClass="clear" stylesheets="@dashboard.css" text="Clear Data">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="REMOVE" size="18.0" text="" />
-                           </graphic>
-                           <font>
-                              <Font name="Dubai Bold" size="16.0" />
-                           </font></Button>
-                        <Button fx:id="bill_print" layoutX="743.0" layoutY="14.0" mnemonicParsing="false" onAction="#printBill" prefHeight="32.0" prefWidth="50.0" styleClass="print" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="24.0" wrappingWidth="22.285715103149414" />
-                           </graphic></Button>
-                        <DatePicker fx:id="bill_date" layoutX="151.0" layoutY="534.0" prefHeight="32.0" prefWidth="175.0" promptText="Todays Date" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="28.0" layoutY="534.0" prefHeight="32.0" prefWidth="102.0" text="Date:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="bill_add" alignment="CENTER" layoutX="707.0" layoutY="583.0" mnemonicParsing="false" onAction="#addBillingData" prefHeight="38.0" prefWidth="91.0" styleClass="add" stylesheets="@dashboard.css" text="Add">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" text="" />
-                           </graphic>
-                           <font>
-                              <Font name="Dubai Bold" size="16.0" />
-                           </font></Button>
-                        <Label layoutX="27.0" layoutY="352.0" prefHeight="32.0" prefWidth="115.0" text="Invoice Number :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="inv_num" layoutX="151.0" layoutY="352.0" prefHeight="32.0" prefWidth="102.0" />
-                        <Label layoutX="448.0" layoutY="534.0" prefHeight="32.0" prefWidth="102.0" text="Final Amount:">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="559.0" layoutY="534.0" prefHeight="32.0" prefWidth="15.0" text="₹ ">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="final_amount" layoutX="574.0" layoutY="534.0" prefHeight="32.0" prefWidth="156.0" text="0.00">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="bill_quantity" layoutX="554.0" layoutY="388.0" onAction="#onInputTextChanged" prefHeight="32.0" prefWidth="180.0" promptText="Enter Quanity" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Button fx:id="bill_update" alignment="CENTER" layoutX="682.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#updateSelectedBillingData" prefHeight="38.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="24.0" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bill_delete" alignment="CENTER" layoutX="622.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#deleteBillingData" prefHeight="38.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="24.0" />
-                           </graphic>
-                        </Button>
-                        <TextField fx:id="bill_item" layoutX="151.0" layoutY="489.0" onKeyPressed="#onInputTextChanged" promptText="Enter Item Number" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Button fx:id="bill_clear1" layoutX="253.0" layoutY="11.0" mnemonicParsing="false" onAction="#searchForBills" onMouseClicked="#billClearData" prefHeight="36.0" prefWidth="115.0" styleClass="clear" stylesheets="@dashboard.css" text="Get Bills">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="FILE_PDF_ALT" size="18.0" />
-                           </graphic>
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Button>
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="customer_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <children>
-                        <TableView fx:id="customer_table" layoutX="13.0" layoutY="159.0" onMouseClicked="#selectCustomerTableData" prefHeight="474.0" prefWidth="794.0" stylesheets="@dashboard.css">
-                           <columns>
-                              <TableColumn fx:id="cust_col_id" prefWidth="196.79998779296875" text="Id" />
-                              <TableColumn fx:id="cust_col_name" prefWidth="307.20001220703125" text="Name" />
-                              <TableColumn fx:id="cust_col_phone" prefWidth="288.00006103515625" text="Phone Number" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="cust_btn_add" layoutX="736.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#addCustomerData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
-                           </graphic></Button>
-                        <Button fx:id="cust_btn_edit" layoutX="679.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#updateCustomerData" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="18.0" />
-                           </graphic></Button>
-                        <Button fx:id="cust_btn_delete" layoutX="620.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#deleteCustomerData" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
-                           </graphic></Button>
-                        <TextField fx:id="customer_search" layoutX="14.0" layoutY="25.0" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
-                        <FontAwesomeIconView glyphName="SEARCH" layoutX="21.0" layoutY="46.0" size="16" />
-                        <TextField fx:id="cust_field_name" layoutX="113.0" layoutY="94.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="cust_field_phone" layoutX="487.0" layoutY="93.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="36.0" layoutY="94.0" prefHeight="32.0" prefWidth="65.0" text="Name :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="361.0" layoutY="94.0" prefHeight="32.0" prefWidth="122.0" text="Phone Number :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="cust_btn_print" layoutX="562.0" layoutY="32.0" mnemonicParsing="false" onAction="#printCustomersDetails" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fx:id="customer_print" fill="WHITE" glyphName="PRINT" size="18.0" />
-                           </graphic>
-                        </Button>
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="sales_pane" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <children>
-                        <TableView fx:id="sales_table" layoutX="13.0" layoutY="74.0" onMouseClicked="#selectCustomerTableData" prefHeight="558.0" prefWidth="794.0" stylesheets="@dashboard.css">
-                           <columns>
-                              <TableColumn fx:id="sales_col_id" prefWidth="63.200042724609375" text="Id" />
-                              <TableColumn fx:id="sales_col_inv_num" prefWidth="122.4000244140625" text="Invoice Number" />
-                              <TableColumn fx:id="sales_col_item_num" prefWidth="93.60009765625" text="Item Number" />
-                              <TableColumn fx:id="sales_col_cust_name" prefWidth="133.5999755859375" text="Customer Name" />
-                              <TableColumn fx:id="sales_col_price" prefWidth="90.4000244140625" text="Price" />
-                              <TableColumn fx:id="sales_col_quantity" prefWidth="64.0" text="Quantity" />
-                              <TableColumn fx:id="sales_col_total_amount" prefWidth="117.60003662109375" text="Total Amount" />
-                              <TableColumn fx:id="sales_col_date_of_sales" prefWidth="99.2000732421875" text="Date Of Sales" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="sales_btn_edit" layoutX="687.0" layoutY="16.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="sales_btn_print" layoutX="745.0" layoutY="16.0" mnemonicParsing="false" onAction="#printSalesDetails" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fx:id="customer_print1" fill="WHITE" glyphName="PRINT" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Label layoutX="14.0" layoutY="16.0" prefHeight="47.0" prefWidth="206.0" text="Total Sales Amount :">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="sales_total_amount" layoutX="180.0" layoutY="16.0" prefHeight="47.0" prefWidth="267.0">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <children>
-                        <TableView fx:id="purchase_table" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="558.0" prefWidth="794.0" stylesheets="@dashboard.css">
-                           <columns>
-                              <TableColumn fx:id="purchase_col_id" prefWidth="69.60000610351562" text="Id" />
-                              <TableColumn fx:id="purchase_col_invoice" prefWidth="161.5999755859375" text="invoice" />
-                              <TableColumn fx:id="purchase_col_shop_details" prefWidth="163.20001220703125" text="Shop Details" />
-                              <TableColumn fx:id="purchase_col_total_items" minWidth="0.0" prefWidth="136.0" text="Total Items" />
-                              <TableColumn fx:id="purchase_col_total_amount" minWidth="0.0" prefWidth="136.0" text="Total Amount" />
-                              <TableColumn fx:id="purchase_col_date_of_purchase" minWidth="0.0" prefWidth="125.59995117187498" text="Date Of Purchase" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="purchase_btn_add" layoutX="744.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#addCustomerData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="purchase_btn_print" layoutX="687.0" layoutY="22.0" mnemonicParsing="false" onAction="#printPurchaseDetails" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Label layoutX="13.0" layoutY="14.0" prefHeight="47.0" prefWidth="206.0" text="Total Purchase Amount :">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="purchase_total_amount" layoutX="230.0" layoutY="14.0" prefHeight="47.0" prefWidth="267.0">
-                           <font>
-                              <Font name="Dubai Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children></AnchorPane>
+                        </AnchorPane>
+                        <JFXToggleButton layoutX="310.0" layoutY="494.0" onAction="#switchreclamationreponse" text="Reclamation/reponses" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
