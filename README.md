@@ -4,7 +4,7 @@
 ## Requirement :
 
 **System Requirement :**
-- Java JDK 11.0.12
+- Java JDK 17.0.12
 - MYSQL
 - Java FX
   
