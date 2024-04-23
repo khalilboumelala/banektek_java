@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Tutorial</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="index.css" />
+
+    <style>
+        #map{
+            height: 100vh;
+            width: 100%;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="loader">
+    <span class="lettre">T</span>
+    <span class="lettre">R</span>
+    <span class="lettre">I</span>
+    <span class="lettre">P</span>
+    <span class="lettre">&nbsp;</span>
+    <span class="lettre">T</span>
+    <span class="lettre">O</span>
+    <span class="lettre">&nbsp;</span>
+    <span class="lettre">D</span>
+    <span class="lettre">O</span>
+    <span class="lettre">&nbsp;</span>
+    <span class="lettre">m</span>
+    <span class="lettre">a</span>
+    <span class="lettre">p</span>
+
+</div>
+
+
+<div id="map"></div>
+</body>
+</html>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="./data/line.js"></script>
+<script src="./data/point.js"></script>
+<script src="./data/polygon.js"></script>
+<script src="./data/nepaldata.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="./data/usstates.js"></script>
+
+<script>
+    const loader = document.querySelector('.loader');
+    var lat,lon,address;
+    var marker = null;
+    window.addEventListener('load', () => {
+        loader.classList.add('fondu-out');
+    })
+
+    var map = L.map('map').setView([35.5616, 9.0852], 8); // Set to Tunisia with a zoom level of 8
+
+
+    // Google Map Layer
+    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+    googleStreets.addTo(map);
+
+    // Remove all markers by default
+    var markersLayer = new L.LayerGroup();
+    map.on('layeradd', function(event) {
+        if (event.layer === markersLayer) {
+            event.target.removeLayer(markersLayer);
+        }
+    });
+
+    // Initialize Layer Control
+    var baseLayers = {
+        "Google Map": googleStreets
+    };
+    var overlays = {
+        // Empty overlays
+    };
+    L.control.layers(baseLayers, overlays).addTo(map);
+    var banektek = L.icon({
+        iconUrl: 'marker2.png',
+
+        iconSize:     [20, 45], // size of the icon
+
+
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    function returnaddressAndHandle() {
+
+
+        // Fetch address using reverse geocoding
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+                // Extract desired details from the address
+                const name =data.display_name;
+
+                // Concatenate the details
+                const addressDetails = name ;
+
+                // Update address input field
+                console.log(addressDetails);
+                return addressDetails;
+                address=addressDetails;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    map.on('click', function (e) {
+        lat=e.latlng.lat;
+
+        lon =  e.latlng.lng;
+
+        console.log(lat+" , "+lon);
+    //  address=  returnaddressAndHandle();
+
+    });
+    function createMarker(lat1,lon1) {
+        // Remove existing marker if it exists
+        if (marker !== null) {
+            map.removeLayer(marker);
+        }
+
+        // Create new marker
+        marker = L.marker([lat1, lon1], { icon: banektek }).addTo(map);
+    }
+
+    function createMarkers(lat1, lon1,adresse) {
+        // Create new marker
+        let marker_agence = L.marker([lat1, lon1], { icon: banektek }).addTo(map);
+        var popup = marker_agence.bindPopup(adresse, {
+            offset: [0, 50], // Adjust the offset as needed to position the popup closer to the marker
+            autoClose: true // Close the popup when another popup is opened
+        });
+        // Close the popup by default
+        popup.closePopup();
+    }
+
+
+
+
+    function removeAllMarkers() {
+        // Iterate over each layer on the map
+        map.eachLayer(function(layer) {
+            // Check if the layer is a marker
+            if (layer instanceof L.Marker) {
+                // Remove the marker from the map
+                map.removeLayer(layer);
+            }
+        });
+    }
+</script>

@@ -1,6 +1,5 @@
 package com.inventorymanagementsystem;
 
-import com.inventorymanagementsystem.entity.User;
 import com.inventorymanagementsystem.config.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -20,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
+//import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 public class LoginController implements Initializable {
     @FXML
     private Label c_logo;
@@ -74,44 +72,39 @@ public class LoginController implements Initializable {
     }
 
     public void login(){
-        connection= Database.getInstance().connectDB();
-        String sql="SELECT * FROM users WHERE username=? and password=?";
+        connection = Database.getInstance().connectDB();
+        String sql = "SELECT * FROM users WHERE username=? and password=?";
         try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,username.getText());
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username.getText());
             preparedStatement.setString(2, password.getText());
-            resultSet=preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                User.name=username.getText();
-                Alert alert=new Alert(Alert.AlertType.INFORMATION);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Login Successful !");
                 alert.showAndWait();
-                login_btn.getScene().getWindow().hide();
-                Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage=new Stage();
 
-                root.setOnMousePressed((event)->{
-                    x=event.getSceneX();
-                    y=event.getSceneY();
-                });
-                root.setOnMouseDragged((event)->{
-                    stage.setX(event.getScreenX()-x);
-                    stage.setY(event.getScreenY()-y);
-                });
-                stage.initStyle(StageStyle.TRANSPARENT);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+                Parent root = loader.load();
+              //  DashboardController dashboardController = loader.getController();
+                // User.name = username.getText();
+              //  dashboardController.initData(User.name); // Assuming your dashboard controller has a method to initialize user data
+
+                Stage stage = (Stage) login_btn.getScene().getWindow();
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
-            }else{
-                Alert alert=new Alert(Alert.AlertType.ERROR);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Wrong Username/Password");
                 alert.showAndWait();
             }
-        }catch (Exception err){
+        } catch (Exception err){
             err.printStackTrace();
         }
     }
