@@ -36,11 +36,11 @@ public class BillsController implements Initializable {
 
     private Connection connection;
 
-    private Statement statement;
+        private Statement statement;
 
-    private PreparedStatement preparedStatement;
+        private PreparedStatement preparedStatement;
 
-    private ResultSet resultSet;
+        private ResultSet resultSet;
 
 
     public void onExit(){

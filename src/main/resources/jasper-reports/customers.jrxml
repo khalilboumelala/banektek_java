@@ -8,21 +8,21 @@
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM `customers`]]>
+		<![CDATA[SELECT id, nom, num_tel FROM customers]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="Name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="Name"/>
-		<property name="com.jaspersoft.studio.field.label" value="Name"/>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nom"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="PhoneNumber" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="PhoneNumber"/>
-		<property name="com.jaspersoft.studio.field.label" value="PhoneNumber"/>
+	<field name="num_tel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="num_tel"/>
+		<property name="com.jaspersoft.studio.field.label" value="Numéro de Téléphone"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
 	<variable name="countCustomers" class="java.lang.Integer" calculation="Count">
@@ -35,17 +35,17 @@
 		<band height="118" splitType="Stretch">
 			<image>
 				<reportElement x="275" y="0" width="300" height="64" uuid="88796d59-cd8c-43c1-853f-dd6acfa88258"/>
-				<imageExpression><![CDATA["jasper-reports/leaf_banner_violet.png"]]></imageExpression>
+				<imageExpression><![CDATA["jasper-reports/img.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="bcf29663-c4b8-483e-a197-e5f6920fd2a2"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Fashion Club]]></text>
+				<text><![CDATA[BANEKTEK]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="63" y="46" width="200" height="22" uuid="c089ef81-84c2-4243-a7e9-0e0a8992e71a"/>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[Customers Details :]]></text>
+				<text><![CDATA[Clients :]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -70,13 +70,13 @@
 				<reportElement style="Column header" x="185" y="19" width="185" height="15" uuid="a1b5112f-5f2f-491c-8eed-159638447725">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb425c37-8e8d-4951-afe8-7bfa1011b934"/>
 				</reportElement>
-				<text><![CDATA[Name]]></text>
+				<text><![CDATA[Nom]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="370" y="19" width="185" height="15" uuid="2bf409d1-a459-4910-9711-8582f40e0baf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce52831d-2de8-446a-8950-b87b14e38405"/>
 				</reportElement>
-				<text><![CDATA[PhoneNumber]]></text>
+				<text><![CDATA[Numéro de Téléphone]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -98,13 +98,13 @@
 				<reportElement style="Detail" x="185" y="0" width="185" height="15" uuid="5bf7bb6e-7bbf-4371-9b0e-9968fa57aace">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb425c37-8e8d-4951-afe8-7bfa1011b934"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="370" y="0" width="185" height="15" uuid="a61575ba-558d-43b3-8a2b-ec6fea624263">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce52831d-2de8-446a-8950-b87b14e38405"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{PhoneNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{num_tel}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -121,7 +121,7 @@
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Customers :]]></text>
+				<text><![CDATA[Nombre de clients :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="305" y="20" width="143" height="30" uuid="d7026397-5d85-4bd1-9cb5-94d5d7a2729d"/>

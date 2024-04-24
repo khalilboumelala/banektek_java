@@ -4,15 +4,19 @@ import com.inventorymanagementsystem.entity.*;
 import com.inventorymanagementsystem.config.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -23,24 +27,834 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import org.controlsfx.control.textfield.TextFields;
 
+import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
 
 public class DashboardController implements Initializable {
     private double x;
     private double y;
+
+
+    /////////::client //////:
+    @FXML
+    private TextField nom_client;
+    @FXML
+    private TextField prenom_client;
+    @FXML
+    private TextField mail_client;
+    @FXML
+    private TextField cin_client;
+    @FXML
+    private TextField genre_client;
+    @FXML
+    private TextField pays_client;
+    @FXML
+    private TextField piece_client;
+    @FXML
+    private TextField photo_client;
+
+    @FXML
+    private TextField tel_client;
+    @FXML
+    private TextField poste_client;
+    @FXML
+    private TextField dob_client;
+    @FXML
+    private TextField adresse_client;
+    @FXML
+    private TextField signature_client;
+    @FXML
+    private TextField pass_client;
+    //////table client//////
+    @FXML
+    private TableColumn<?, ?> table_client_nom;
+    @FXML
+    private TableColumn<?, ?> table_client_id;
+    @FXML
+    private TableColumn<?, ?> table_client_cin;
+
+    @FXML
+    private TableColumn<?, ?> table_client_tel;
+
+    @FXML
+    private TableColumn<?, ?> table_client_mail;
+    @FXML
+    private TableView<Client> client_table;
+    /////////////////////////////////////////credit////////////////////////////////////////////////
+    @FXML
+    private Button add_credit_btn;
+    @FXML
+    public TextField apport_credit;
+    @FXML
+    private Button btn_delete_credit;
+    @FXML
+    private TextField credit_search;
+    @FXML
+    private Button cust_btn_editcredit;
+    @FXML
+    private Button cust_btn_printcredit;
+    @FXML
+    public DatePicker date_credit;
+    @FXML
+    public TextField ribtf;
+    @FXML
+    private TextField idcredit;
+    @FXML
+    private TextField rechtf;
+    @FXML
+    private Label decheance_credit;
+    @FXML
+    public ComboBox duree_credit;
+    @FXML
+    public ComboBox dateEch;
+    @FXML
+    public TextField mecheance_credit;
+    @FXML
+    public TextField montant_credit;
+    @FXML
+    public TextField revenu_credit;
+    @FXML
+    private TableView<Client> credit_credit;
+    @FXML
+    private TableColumn<Client, String> table_credit_nom;
+    @FXML
+    private TableColumn<Client, String> table_credit_prenom;
+    @FXML
+    private TableColumn<Client, String> table_credit_RIB;
+    @FXML
+    public TextField taux_credit;
+    @FXML
+    public ComboBox type_credit;
+    @FXML
+    private GridPane CredContainer;
+    @FXML
+    private GridPane EchContainer;
+    private ObservableList<Credit> addCreditList;
+    /*                  GESTION CREDIT                     */
+
+    ObservableList<String> DureeCred = FXCollections.observableArrayList("12 mois (1 année)", "24 mois (2 années)", "36 mois (3 années)", "48 mois (4 années)", "60 mois (5 années)", "84 mois (7 années)");
+    ObservableList<String> Types = FXCollections.observableArrayList("Crédit commercial", "Crédit agricole", "Crédit automobile", "Crédit à la consommation", "Crédit hypothécaire", "Crédit étudiant");
+    ObservableList<String> dateEche = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
+
+    int ID;
+    String nom;
+    private String typecreditvar;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Exports all modules to other modules
+        Modules.exportAllToAll();
+        fetchAllClients();
+        LoadCredits();
+        LoadEchs();
+        setUsername();
+        activateDashboard();
+        //client pane
+        showTableClient();
+        duree_credit.setItems(DureeCred);
+        type_credit.setItems(Types);
+        dateEch.setItems(dateEche);
+
+    }
+
+    public void Refresh2() {
+        EchContainer.getChildren().clear();
+        LoadEchs();
+    }
+
+    public List<Echeance> afficherEch() {
+        List<Echeance> echs = new ArrayList<>();
+        Connection cnx = Database.getInstance().connectDB();
+        String sql = "SELECT `id`, `id_credit_id`, `mode_paiement`, `etat`, `date` FROM `echeance` WHERE `etat` LIKE 'en cours'";
+        try {
+            Statement ste = cnx.createStatement();
+            ResultSet rs = ste.executeQuery(sql);
+            while (rs.next()) {
+                Echeance ech = new Echeance();
+                ech.setId(rs.getInt("id"));
+                ech.setIdCredit(rs.getInt("id_credit_id"));
+                ech.setModePyament(rs.getString("mode_paiement"));
+                ech.setEtat(rs.getString("etat"));
+                ech.setDate(rs.getDate("date"));
+                echs.add(ech);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return echs;
+    }
+
+    public List<Credit> afficher() {
+        List<Credit> credits = new ArrayList<>();
+        Connection cnx = Database.getInstance().connectDB();
+        String sql = "SELECT `id`, `id_compte_id`, `montant`, `taux`, `duree`, `date_debut`, `type`, `apport_propre`, `revenu_propre`, `montant_echeance`, `date_echeance`, `etat`, `nb_echeances_restants` FROM `credit`";
+        try {
+            Statement ste = cnx.createStatement();
+            ResultSet rs = ste.executeQuery(sql);
+            while (rs.next()) {
+                Credit credit = new Credit();
+                credit.setIdcredit(rs.getInt("id"));
+                credit.setId(rs.getInt("id_compte_id"));
+                credit.setMontant(rs.getFloat("montant"));
+                credit.setTaux(rs.getFloat("taux"));
+                credit.setDure(rs.getInt("duree"));
+                credit.setDate_debut(rs.getDate("date_debut"));
+                credit.setType(rs.getString("type"));
+                credit.setApport_propre(rs.getFloat("apport_propre"));
+                credit.setRevenu_propre(rs.getFloat("revenu_propre"));
+                credit.setMontant_echeance(rs.getFloat("montant_echeance"));
+                credit.setDate_echeance(rs.getInt("date_echeance"));
+                credit.setEtat(rs.getString("etat"));
+                credit.setNb_echeances_restants(rs.getInt("nb_echeances_restants"));
+                credits.add(credit);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return credits;
+    }
+
+    public List<Credit> Rechreche(String recherche) {
+        Connection cnx = Database.getInstance().connectDB();
+        List<Credit> credits = new ArrayList<>();
+        String sql = "SELECT * FROM `credit` WHERE `montant` LIKE '%" + recherche + "%' OR `etat` LIKE '%" + recherche + "%'";
+        try {
+            Statement ste = cnx.createStatement();
+            ResultSet rs = ste.executeQuery(sql);
+            while (rs.next()) {
+                Credit credit = new Credit();
+                credit.setIdcredit(rs.getInt("id"));
+                credit.setId(rs.getInt("id_compte_id"));
+                credit.setMontant(rs.getFloat("montant"));
+                credit.setTaux(rs.getFloat("taux"));
+                credit.setDure(rs.getInt("duree"));
+                credit.setDate_debut(rs.getDate("date_debut"));
+                credit.setType(rs.getString("type"));
+                credit.setApport_propre(rs.getFloat("apport_propre"));
+                credit.setRevenu_propre(rs.getFloat("revenu_propre"));
+                credit.setMontant_echeance(rs.getFloat("montant_echeance"));
+                credit.setDate_echeance(rs.getInt("date_echeance"));
+                credit.setEtat(rs.getString("etat"));
+                credit.setNb_echeances_restants(rs.getInt("nb_echeances_restants"));
+                credits.add(credit);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return credits;
+    }
+
+    public void LoadEchs() {
+        int column = 0;
+        int row = 1;
+        try {
+            for (Echeance ech : afficherEch()) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("EchCredit.fxml"));
+                Pane userBox = fxmlLoader.load();
+                EchCardController ECC = fxmlLoader.getController();
+                ECC.setData(ech);
+                if (column == 3) {
+                    column = 0;
+                    ++row;
+                }
+                EchContainer.add(userBox, column++, row);
+                GridPane.setMargin(userBox, new Insets(20));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void LoadCredits() {
+        int column = 0;
+        int row = 1;
+        try {
+            for (Credit credit : afficher()) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("CardCredit.fxml"));
+                Pane userBox = fxmlLoader.load();
+                CardCreditController CCC = fxmlLoader.getController();
+                CCC.setData(credit);
+                if (column == 2) {
+                    column = 0;
+                    ++row;
+                }
+                CredContainer.add(userBox, column++, row);
+                GridPane.setMargin(userBox, new Insets(20));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fetchAllClients() {
+        ObservableList<Client> clientsList = FXCollections.observableArrayList();
+        Connection cnx = Database.getInstance().connectDB();
+        try {
+            String sql1 = "SELECT `id`, `nom`, `prenom` FROM `client`";
+            Statement stm1 = cnx.createStatement();
+            ResultSet rs = stm1.executeQuery(sql1);
+            while (rs.next()) {
+                int IDCLIENT = rs.getInt("id");
+                String NOMCLIENT = rs.getString("nom");
+                String PRENOMCLIENT = rs.getString("prenom");
+                String sql2 = "SELECT * FROM `compte` WHERE `id_user_id` LIKE '%" + IDCLIENT + "%'";
+                Statement stm2 = cnx.createStatement();
+                ResultSet rs2 = stm2.executeQuery(sql2);
+                while (rs2.next()) {
+                    String RIB = rs2.getString("rib");
+                    clientsList.add(new Client(NOMCLIENT, PRENOMCLIENT, RIB));
+                    table_credit_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+                    table_credit_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+                    table_credit_RIB.setCellValueFactory(new PropertyValueFactory<>("rib"));
+                    credit_credit.setItems(clientsList);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectClientrib() {
+        Client SelectedClient = credit_credit.getSelectionModel().getSelectedItem();
+        if (SelectedClient != null) {
+            ribtf.setText(String.valueOf(SelectedClient.getRib()));
+        }
+    }
+
+    public void Refresh() {
+        CredContainer.getChildren().clear();
+        LoadCredits();
+    }
+
+    public void AjouterCredit() {
+        if (ribtf.getText().isBlank() || DureeCred.get(duree_credit.getSelectionModel().getSelectedIndex()).isBlank() || type_credit.equals(null)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Contorle de saisir");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir les données obligatoires");
+            alert.showAndWait();
+            return;
+        }
+        // el ! kbal l condition bch tkoul ken MECH .match kharajli l eeruer
+        if (!revenu_credit.getText().matches("\\d+") || !apport_credit.getText().matches("\\d+") || !montant_credit.getText().matches("\\d+")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Contorle de saisir");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir les données Int or Float");
+            alert.showAndWait();
+            return;
+        }
+        String RIB = ribtf.getText();
+        int selectedIndex = duree_credit.getSelectionModel().getSelectedIndex(); // Get the index of the selected item
+        String selectedDuration = DureeCred.get(selectedIndex); // Get the selected duration string
+        int DUREE = Integer.parseInt(selectedDuration.split(" ")[0]); // Extract the numerical value
+        String TYPE = typecreditvar; //(String) type_credit.getValue();
+        Float APPORT = Float.parseFloat(apport_credit.getText());
+        Float MONTANT = Float.parseFloat(montant_credit.getText());
+        Date DATE = Date.valueOf(date_credit.getValue());
+        Float TAUX = Float.parseFloat(taux_credit.getText());
+        Float REVENU = Float.parseFloat(revenu_credit.getText());
+        int DATE_ECH = Integer.parseInt((String) dateEch.getValue());
+        Float MontantTotal = (MONTANT - APPORT) * (1 + TAUX);
+        Float MONT_ECH = MontantTotal / DUREE;
+        System.out.println(MONT_ECH);
+        mecheance_credit.setText(String.valueOf(MONT_ECH)); //Afficher le montant calculer fel textfield
+
+        Connection connection = Database.getInstance().connectDB();
+        PreparedStatement preparedStatement = null;
+
+            try {
+                String sql0 = "SELECT * FROM `compte` WHERE `rib` LIKE '%" + RIB + "%'";
+                Statement stm0 = connection.createStatement();
+                ResultSet rs0 = stm0.executeQuery(sql0);
+                while (rs0.next()) {
+                    String IDCOMPTE = rs0.getString("id");
+                    String sql = "INSERT INTO `credit`(`id_compte_id`, `montant`, `taux`, `duree`, `date_debut`, `type`, `apport_propre`, `revenu_propre`, `montant_echeance`, `date_echeance`, `etat`, `nb_echeances_restants`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    preparedStatement.setString(1, IDCOMPTE);
+                    preparedStatement.setFloat(2, MONTANT);
+                    preparedStatement.setFloat(3, TAUX);
+                    preparedStatement.setInt(4, DUREE);
+                    preparedStatement.setDate(5, DATE);
+                    preparedStatement.setString(6, TYPE);
+                    preparedStatement.setFloat(7, APPORT);
+                    preparedStatement.setFloat(8, REVENU);
+                    preparedStatement.setFloat(9, MONT_ECH);
+                    preparedStatement.setInt(10, DATE_ECH);
+                    preparedStatement.setString(11, "en cours");
+                    preparedStatement.setInt(12, DUREE);
+                    preparedStatement.executeUpdate();
+                    LoadCredits();
+                    ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        long idCredit = generatedKeys.getLong(1);
+                        for (int i = 0; i < DUREE; i++) {
+                            LocalDate echeanceDate = DATE.toLocalDate().minusMonths(i);
+                            String echeanceQuery = "INSERT INTO echeance(id_credit_id, mode_paiement, etat, date) VALUES (?, ?, ?, ?)";
+                            PreparedStatement echeanceStmt = connection.prepareStatement(echeanceQuery);
+                            echeanceStmt.setLong(1, idCredit);
+                            echeanceStmt.setString(2, "Your mode of payment"); // Example payment mode
+                            echeanceStmt.setString(3, "en cours");
+                            echeanceStmt.setDate(4, Date.valueOf(echeanceDate));
+                            echeanceStmt.executeUpdate();
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Ajout avec success");
+                            alert.setHeaderText(null);
+                            alert.setContentText("L'ajout du credit sur le RIB :"+RIB+" avec succes");
+                            alert.showAndWait();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+    }
+    public void updateCredit() {
+        int IDCREDIT = Integer.parseInt(idcredit.getText());
+        String RIB = ribtf.getText();
+        int selectedIndex = duree_credit.getSelectionModel().getSelectedIndex(); // Get the index of the selected item
+        String selectedDuration = DureeCred.get(selectedIndex); // Get the selected duration string
+        int DUREE = Integer.parseInt(selectedDuration.split(" ")[0]); // Extract the numerical value
+        String TYPE = typecreditvar; //(String) type_credit.getValue();
+        Float APPORT = Float.parseFloat(apport_credit.getText());
+        Float MONTANT = Float.parseFloat(montant_credit.getText());
+        Date DATE = Date.valueOf(date_credit.getValue());
+        Float TAUX = Float.parseFloat(taux_credit.getText());
+        Float REVENU = Float.parseFloat(revenu_credit.getText());
+        int DATE_ECH = Integer.parseInt((String) dateEch.getValue());
+        Float MontantTotal = (MONTANT - APPORT) * (1 + TAUX);
+        Float MONT_ECH = MontantTotal / DUREE;
+        System.out.println(MONT_ECH);
+        mecheance_credit.setText(String.valueOf(MONT_ECH)); //Afficher le montant calculer fel textfield
+        Connection connection = Database.getInstance().connectDB();
+        PreparedStatement preparedStatement = null;
+        try {
+            String sql0 = "SELECT * FROM `compte` WHERE `rib` LIKE '%" + RIB + "%'";
+            Statement stm0 = connection.createStatement();
+            ResultSet rs0 = stm0.executeQuery(sql0);
+            while (rs0.next()) {
+                String IDCOMPTE = rs0.getString("id");
+                String sql = "UPDATE `credit` SET `id_compte_id`=?,`montant`=?,`taux`=?,`duree`=?,`date_debut`=?,`type`=?,`apport_propre`=?,`revenu_propre`=?,`montant_echeance`=?,`date_echeance`=?,`etat`=?,`nb_echeances_restants`=? WHERE `id`=?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, IDCOMPTE);
+                preparedStatement.setFloat(2, MONTANT);
+                preparedStatement.setFloat(3, TAUX);
+                preparedStatement.setInt(4, DUREE);
+                preparedStatement.setDate(5, DATE);
+                preparedStatement.setString(6, TYPE);
+                preparedStatement.setFloat(7, APPORT);
+                preparedStatement.setFloat(8, REVENU);
+                preparedStatement.setFloat(9, MONT_ECH);
+                preparedStatement.setInt(10, DATE_ECH);
+                preparedStatement.setString(11, "en cours");
+                preparedStatement.setInt(12, DUREE);
+                preparedStatement.setInt(13, IDCREDIT);
+                preparedStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void Recherche() {
+        int column = 0;
+        int row = 1;
+        String recherche = rechtf.getText();
+        try {
+            CredContainer.getChildren().clear();
+            for (Credit credit : Rechreche(recherche)) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("CardCredit.fxml"));
+                Pane userBox = fxmlLoader.load();
+                CardCreditController CCC = fxmlLoader.getController();
+                CCC.setData(credit);
+                if (column == 2) {
+                    column = 0;
+                    ++row;
+                }
+                CredContainer.add(userBox, column++, row);
+                GridPane.setMargin(userBox, new Insets(20));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void TypeTaux(ActionEvent event) {
+        String TYPE = (String) type_credit.getValue();
+        if (TYPE.equals("Crédit commercial")) {
+            typecreditvar = "commercial";
+            taux_credit.setText("0.09");
+        } else if (TYPE.equals("Crédit agricole")) {
+            typecreditvar = "agricole";
+            taux_credit.setText("0.07");
+        } else if (TYPE.equals("Crédit automobile")) {
+            typecreditvar = "automobile";
+            taux_credit.setText("0.1");
+        } else if (TYPE.equals("Crédit à la consommation")) {
+            typecreditvar = "consommation";
+            taux_credit.setText("0.12");
+        } else if (TYPE.equals("Crédit hypothécaire")) {
+            typecreditvar = "hypothecaire";
+            taux_credit.setText("0.05");
+        } else if (TYPE.equals("Crédit étudiant")) {
+            typecreditvar = "etudiant";
+            taux_credit.setText("0.11");
+        }
+    }
+
+    ////////////      fin credit                 ////////////////
+    public void addClient() {
+        if (nom_client.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir les données obligatoires.");
+            alert.showAndWait();
+            return;
+        }
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        long cinLong = Long.parseLong(cin_client.getText());
+        long telLong = Long.parseLong(tel_client.getText());
+        try {
+            connection = Database.getInstance().connectDB();
+            String sql = "INSERT INTO client (dob, nom, prenom, cin, num_tel, genre, pays, adresse, email, document, signature, profession, date_creation, username, password, last_login, etat, photo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, java.sql.Date.valueOf("2023-11-22"));
+            preparedStatement.setString(2, nom_client.getText());
+            preparedStatement.setString(3, prenom_client.getText());
+            preparedStatement.setLong(4, cinLong);
+            preparedStatement.setLong(5, telLong);
+            preparedStatement.setString(6, genre_client.getText());
+            preparedStatement.setString(7, pays_client.getText());
+            preparedStatement.setString(8, adresse_client.getText());
+            preparedStatement.setString(9, mail_client.getText());
+            preparedStatement.setString(10, "cin");
+            preparedStatement.setString(11, signature_client.getText());
+            preparedStatement.setString(12, poste_client.getText());
+            preparedStatement.setDate(13, java.sql.Date.valueOf("2023-11-22"));
+            preparedStatement.setString(14, "username");
+            preparedStatement.setString(15, "password");
+            preparedStatement.setDate(16, java.sql.Date.valueOf("2023-11-22"));
+            preparedStatement.setString(17, "activer");
+            preparedStatement.setString(18, "ss");
+
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Client ajouté avec succès.");
+                successAlert.showAndWait();
+
+                ClearClientData();
+                showTableClient();
+
+            } else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Erreur lors de l'ajout du client.");
+                errorAlert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert exceptionAlert = new Alert(Alert.AlertType.ERROR);
+            exceptionAlert.setTitle("Exception");
+            exceptionAlert.setHeaderText(null);
+            exceptionAlert.setContentText("Une exception s'est produite lors de l'ajout du client. Veuillez vérifier les données.");
+            exceptionAlert.showAndWait();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public ObservableList<Client> listClients() {
+        ObservableList<Client> clientList = FXCollections.observableArrayList();
+        connection = Database.getInstance().connectDB();
+        String sql = "SELECT * FROM CLIENT";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Client clientData = new Client(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nom"),
+                        resultSet.getString("prenom"),
+                        resultSet.getString("profession"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("photo"),
+                        resultSet.getDate("dob"),
+                        resultSet.getLong("cin"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("etat"),
+                        resultSet.getString("username"),
+                        resultSet.getLong("num_tel"),
+                        resultSet.getString("pays"),
+                        resultSet.getString("document")
+                );
+                clientList.add(clientData); // Ajouter chaque client à la liste
+            }
+
+        } catch (Exception err) {
+            err.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return clientList;
+    }
+
+
+    public void showTableClient() {
+        ObservableList<Client> clientList = listClients();
+        FXCollections.reverse(clientList); //pour inverser
+        table_client_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        table_client_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        table_client_cin.setCellValueFactory(new PropertyValueFactory<>("cin"));
+        table_client_tel.setCellValueFactory(new PropertyValueFactory<>("num"));
+        table_client_mail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        client_table.setItems(clientList);
+
+
+    }
+
+
+    public void deleteClient() {
+        if (client_table.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select client for deletion.");
+            alert.showAndWait();
+            return;
+        }
+        connection = Database.getInstance().connectDB();
+        String sql = "DELETE FROM CLIENT WHERE id=?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, client_table.getSelectionModel().getSelectedItem().getId());
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Client deleted successfully.");
+                alert.showAndWait();
+                ClearClientData();
+                showTableClient();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Message");
+                alert.setHeaderText(null);
+                alert.setContentText("No data present in the client table.");
+                alert.showAndWait();
+            }
+        } catch (Exception err) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeight(500);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText(err.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void ClearClientData() {
+        nom_client.setText("");
+        prenom_client.setText("");
+        cin_client.setText("");
+        tel_client.setText("");
+        mail_client.setText("");
+        adresse_client.setText("");
+        dob_client.setText("");
+        signature_client.setText("");
+        photo_client.setText("");
+        piece_client.setText("");
+        pays_client.setText("");
+        poste_client.setText("");
+        genre_client.setText("");
+        pass_client.setText("");
+    }
+
+    public void selectClient() {
+        Client selectedClient = client_table.getSelectionModel().getSelectedItem();
+        if (selectedClient == null) {
+            // Aucun client sélectionné, rien à faire
+            return;
+        }
+
+        // Remplir les champs de texte avec les données du client sélectionné
+        nom_client.setText(selectedClient.getNom());
+        prenom_client.setText(selectedClient.getPrenom());
+        mail_client.setText(selectedClient.getEmail());
+        cin_client.setText(String.valueOf(selectedClient.getCin()));
+        genre_client.setText("homme");
+        pays_client.setText(selectedClient.getPays());
+        piece_client.setText(selectedClient.getDocument());
+        photo_client.setText(selectedClient.getPhoto());
+        tel_client.setText(String.valueOf(selectedClient.getNum()));
+        poste_client.setText(selectedClient.getPoste());
+        dob_client.setText(selectedClient.getDob().toString()); // Modifier en fonction de votre format de date
+        adresse_client.setText(selectedClient.getAdresse());
+        signature_client.setText(selectedClient.getDocument());
+        pass_client.setText(selectedClient.getPassword());
+    }
+
+    public void updateClient() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = Database.getInstance().connectDB();
+            String sql = "UPDATE CLIENT SET nom=?, prenom=?, profession=?, email=?, password=?, photo=?, dob=?, cin=?, adresse=?, num_tel=?, pays=?, document=? WHERE id=?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nom_client.getText());
+            preparedStatement.setString(2, prenom_client.getText());
+            preparedStatement.setString(3, poste_client.getText());
+            preparedStatement.setString(4, mail_client.getText());
+            preparedStatement.setString(5, pass_client.getText());
+            preparedStatement.setString(6, photo_client.getText());
+            preparedStatement.setDate(7, Date.valueOf(dob_client.getText()));
+            preparedStatement.setLong(8, Long.parseLong(cin_client.getText()));
+            preparedStatement.setString(9, adresse_client.getText());
+
+            preparedStatement.setLong(10, Long.parseLong(tel_client.getText()));
+            preparedStatement.setString(11, pays_client.getText());
+            preparedStatement.setString(12, "document/cin");
+            preparedStatement.setInt(13, client_table.getSelectionModel().getSelectedItem().getId());
+
+            //  preparedStatement.setInt(12, Integer.parseInt(client_id.getText())); // Supposons que client_id est le champ ID du client à modifier
+
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Client updated successfully.");
+                successAlert.showAndWait();
+                ClearClientData();
+                showTableClient();
+                // Vous pouvez également actualiser ou recharger les données du tableau après la mise à jour
+            } else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error Message");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Failed to update client. Please check the provided data.");
+                errorAlert.showAndWait();
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void printPdfClient() {
+        connection = Database.getInstance().connectDB();
+        String sql = "SELECT id, nom, num_tel FROM client";
+        ;
+        try {
+            JasperDesign jasperDesign = JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/customers.jrxml"));
+            JRDesignQuery updateQuery = new JRDesignQuery();
+            updateQuery.setText(sql);
+            jasperDesign.setQuery(updateQuery);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void searchClient() {
+        String searchText = client_search.getText().trim();
+
+        // Vérifier si le champ de recherche n'est pas vide
+        if (!searchText.isEmpty()) {
+            // Créer un filtre pour rechercher dans la table
+            FilteredList<Client> filteredData = new FilteredList<>(listClients(), p -> true);
+
+            // Appliquer le filtre en fonction du texte de recherche
+            filteredData.setPredicate(client -> {
+                // Convertir l'ID en String pour la comparaison
+                String idString = Integer.toString(client.getId());
+
+                // Convertir le numéro de téléphone en String pour la comparaison
+                String numTelString = Long.toString(client.getNum());
+
+                // Convertir le texte de recherche en minuscules pour une comparaison insensible à la casse
+                String lowerCaseFilter = searchText.toLowerCase();
+
+                if (idString.contains(lowerCaseFilter)) {
+                    return true; // Correspondance de l'ID
+                } else if (client.getNom().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Correspondance du nom
+                } else if (numTelString.contains(lowerCaseFilter)) {
+                    return true; // Correspondance du numéro de téléphone
+                }
+                return false; // Aucune correspondance
+            });
+
+            // Mettre à jour la TableView avec la liste filtrée
+            client_table.setItems(filteredData);
+        } else {
+            // Si le champ de recherche est vide, afficher tous les clients
+            client_table.setItems(listClients());
+        }
+    }
+
+
+    ///////fin client ////////:
 
     @FXML
     private Button billing_btn;
@@ -60,7 +874,6 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane dasboard_pane;
 
-
     @FXML
     private Button purchase_btn;
 
@@ -73,6 +886,14 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane sales_pane;
 
+    @FXML
+    private AnchorPane clients_pane;
+    @FXML
+    private Button clients_btn;
+    @FXML
+    private Button credits_btn;
+    @FXML
+    private AnchorPane credits_pane;
     @FXML
     private Label user;
 
@@ -87,14 +908,6 @@ public class DashboardController implements Initializable {
 
     private ResultSet resultSet;
 
-    @FXML
-    private Button bill_add;
-
-    @FXML
-    private Button bill_clear;
-
-    @FXML
-    private DatePicker bill_date;
 
     @FXML
     private TextField bill_item;
@@ -129,39 +942,9 @@ public class DashboardController implements Initializable {
     @FXML
     private Label final_amount;
 
-    private  String invoiceList[]={"BX123456","ZX123456","AX123456"};
+    private String invoiceList[] = {"BX123456", "ZX123456", "AX123456"};
 
-    private String quantityList[]={"1","2","3","4","5","6","7","8","9","10"};
-
-    @FXML
-    private TableColumn<?, ?> col_bill_item_num;
-
-    @FXML
-    private TableColumn<?, ?> col_bill_price;
-
-    @FXML
-    private TableColumn<?, ?> col_bill_quantity;
-
-    @FXML
-    private TableColumn<?, ?> col_bill_total_amt;
-
-    @FXML
-    private Button cust_btn_add;
-
-    @FXML
-    private Button cust_btn_delete;
-
-    @FXML
-    private Button cust_btn_edit;
-
-    @FXML
-    private TableColumn<?, ?> cust_col_id;
-
-    @FXML
-    private TableColumn<?, ?> cust_col_name;
-
-    @FXML
-    private TableColumn<?, ?> cust_col_phone;
+    private String quantityList[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
     @FXML
     private TextField cust_field_name;
@@ -170,113 +953,76 @@ public class DashboardController implements Initializable {
     private TextField cust_field_phone;
 
     @FXML
-    private TextField customer_search;
-
-    @FXML
-    private TableView<Customer> customer_table;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_cust_name;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_date_of_sales;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_id;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_inv_num;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_quantity;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_total_amount;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_price;
-
-    @FXML
-    private TableColumn<?, ?> sales_col_item_num;
-
-    @FXML
-    private TableView<Sales> sales_table;
-
-    @FXML
-    private Label sales_total_amount;
-
-    @FXML
-    private Button purchase_btn_add;
-
-    @FXML
-    private Button purchase_btn_print;
-
-    @FXML
-    private Label purchase_total_amount;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_date_of_purchase;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_id;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_invoice;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_shop_details;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_total_amount;
-
-    @FXML
-    private TableColumn<?, ?> purchase_col_total_items;
-
-    @FXML
-    private TableView<Purchase> purchase_table;
-
-    @FXML
-    private Label dash_total_items_sold_this_month;
-
-    @FXML
-    private Label dash_total_purchase;
-
-    @FXML
-    private Label dash_total_sales_items_this_month_name;
-
-    @FXML
-    private Label dash_total_sales_this_month;
-
-    @FXML
-    private Label dash_total_sales_this_month_name;
-
-    @FXML
-    private Label dash_total_sold;
-
-    @FXML
-    private Label dash_total_stocks;
+    private TextField client_search;
 
     @FXML
     private Button signout_btn;
 
     List<Product> productsList;
 
-    public void onExit(){
+    public void onExit() {
         System.exit(0);
     }
 
-    public void activateAnchorPane(){
+    public void activateAnchorPane() {
+        clients_btn.setOnMouseClicked(mouseEvent -> {
+            dasboard_pane.setVisible(false);
+            billing_pane.setVisible(false);
+            customer_pane.setVisible(false);
+            sales_pane.setVisible(false);
+            purchase_pane.setVisible(false);
+            clients_pane.setVisible(true);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
+            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+
+        });
+        credits_btn.setOnMouseClicked(mouseEvent -> {
+            credits_pane.setVisible(true);
+            dasboard_pane.setVisible(false);
+            billing_pane.setVisible(false);
+            customer_pane.setVisible(false);
+            sales_pane.setVisible(false);
+            purchase_pane.setVisible(false);
+            clients_pane.setVisible(false);
+
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+        });
+
         dashboard_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(true);
             billing_pane.setVisible(false);
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
+            clients_pane.setVisible(false);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
             billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
         });
         billing_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -284,11 +1030,18 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
+            clients_pane.setVisible(false);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
             customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
         });
         customer_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -296,11 +1049,19 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(true);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
+            clients_pane.setVisible(false);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
             sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+
         });
         sales_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -308,11 +1069,18 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(true);
             purchase_pane.setVisible(false);
+            clients_pane.setVisible(false);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
             purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
         });
         purchase_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -320,887 +1088,55 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(true);
+            clients_pane.setVisible(false);
+            credits_pane.setVisible(false);
+            credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
             purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            });
 
+        });
 
 
     }
 
-    public void setUsername(){
+    public void setUsername() {
         user.setText(User.name.toUpperCase());
     }
 
-    public void activateDashboard(){
+    public void activateDashboard() {
         dasboard_pane.setVisible(true);
         billing_pane.setVisible(false);
         customer_pane.setVisible(false);
         sales_pane.setVisible(false);
         purchase_pane.setVisible(false);
+        clients_pane.setVisible(false);
+        credits_pane.setVisible(false);
     }
 
-    public List<Product> getItemsList(){
-        productsList=new ArrayList<>();
-        connection= Database.getInstance().connectDB();
-        String sql="SELECT * FROM PRODUCTS";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            Product product;
-            while (resultSet.next()){
-                product=new Product(Integer.parseInt(resultSet.getString("id")),resultSet.getString("item_number"),resultSet.getString("item_group"),Integer.parseInt(resultSet.getString("quantity")),Double.parseDouble(resultSet.getString("price")));
-                productsList.add(product);
-            }
-        }catch (Exception err){
-            Alert alert=new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-        return productsList;
-    }
-
-    public void setInvoiceNum(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT MAX(inv_num) AS inv_num FROM sales";
-
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
-                String result=resultSet.getString("inv_num");
-                if (result == null) {
-                    Invoice.billingInvoiceNumber = "INV-1";
-                    inv_num.setText(Invoice.billingInvoiceNumber);
-                } else {
-                    int invId = Integer.parseInt(result.substring(4));
-                    invId++;
-                    Invoice.billingInvoiceNumber = "INV-" + invId;
-                    inv_num.setText(Invoice.billingInvoiceNumber);
-                }
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-    public void setAutoCompleteItemNumber(){
-        getItemsList();
-        List<String> itemNumberList=productsList.stream().map(Product::getItemNumber).collect(Collectors.toList());
-        ObservableList<String> observableItemList=FXCollections.observableArrayList(itemNumberList);
-        TextFields.bindAutoCompletion(bill_item,observableItemList);
-    }
-
-    public void comboBoxQuantity(){
-        List<String> list=new ArrayList<>();
-        for(String quantity:quantityList){
-            list.add(quantity);
-        }
-        ObservableList comboList= FXCollections.observableArrayList(list);
-        bill_quantity.setItems(comboList);
-    }
-    public void checkForPriceandQuantity(){
-        if(!bill_price.getText().isBlank()&& !bill_quantity.getSelectionModel().isEmpty()){
-            bill_total_amount.setText(String.valueOf(Integer.parseInt(bill_price.getText())*Integer.parseInt(bill_quantity.getValue().toString())));
-        }else{
-            bill_total_amount.setText("0");
-        }
-    }
-    public void getPriceOfTheItem(){
-        try {
-            Product product = productsList.stream().filter(prod -> prod.getItemNumber().equals(bill_item.getText())).findAny().get();
-            System.out.println("Price " + product.getPrice());
-            bill_price.setText(String.valueOf((int) product.getPrice()));
-        }catch (Exception err){
-            Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Exception Item Number : "+err.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-    public void onInputTextChanged(){
-        bill_price.setOnKeyReleased(event-> checkForPriceandQuantity());
-        bill_price.setOnKeyPressed(event-> checkForPriceandQuantity());
-        bill_price.setOnKeyTyped(event-> checkForPriceandQuantity());
-        bill_quantity.setOnAction(actionEvent -> checkForPriceandQuantity());
-        bill_item.setOnKeyPressed(actionEvent ->{
-            if(actionEvent.getCode().equals(KeyCode.ENTER)) {
-                getPriceOfTheItem();
-            }
-        });
-    }
-    public void addBillingData(){
-        if(bill_item.getText().isBlank()||bill_quantity.getSelectionModel().isEmpty()||bill_price.getText().isBlank()||bill_total_amount.getText().isBlank()){
-            Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
-            alert.showAndWait();
-            return;
-        }
-        connection=Database.getInstance().connectDB();
-        String sql="INSERT INTO BILLING(item_number,quantity,price,total_amount)VALUES(?,?,?,?)";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_item.getText());
-            preparedStatement.setString(2, bill_quantity.getValue().toString());
-            preparedStatement.setString(3, bill_price.getText());
-            preparedStatement.setString(4,bill_total_amount.getText());
-            int result=preparedStatement.executeUpdate();
-            if(result>0){
-               showBillingData();
-               billClearData();
-            }else{
-                Alert alert=new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
-                alert.showAndWait();
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-
-    public ObservableList<Billing> listBilligData(){
-        ObservableList<Billing> billingList=FXCollections.observableArrayList();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM BILLING";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-
-
-              Billing billingData;
-              while (resultSet.next()){
-              billingData=new Billing(resultSet.getString("item_number"),Integer.parseInt(resultSet.getString("quantity")),Double.parseDouble(resultSet.getString("price")),Double.parseDouble(resultSet.getString("total_amount")));
-              billingList.addAll(billingData);
-             }
-
-
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-        return billingList;
-    }
-
-    public void calculateFinalAmount(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) AS final_amount FROM billing";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            if(resultSet.next()){
-                final_amount.setText(resultSet.getString("final_amount"));
-            }
-
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-
-    }
-
-    public void showBillingData(){
-        ObservableList<Billing> billingList=listBilligData();
-        col_bill_item_num.setCellValueFactory(new PropertyValueFactory<>("item_number"));
-        col_bill_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        col_bill_price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        col_bill_total_amt.setCellValueFactory(new PropertyValueFactory<>("total_amount"));
-
-        billing_table.setItems(billingList);
-        LocalDate date=LocalDate.now();
-        bill_date.setValue(date);
-        if(!billingList.isEmpty()){
-         calculateFinalAmount();
-        }else{
-            final_amount.setText("0.00");
-        }
-
-    }
-
-    public void billClearCustomerData(){
-        bill_name.setText("");
-        bill_phone.setText("");
-    }
-
-    public void billClearData(){
-        bill_item.clear();
-        bill_quantity.setValue(null);
-        bill_price.setText("");
-        bill_total_amount.setText("");
-    }
-
-    public void selectBillingTableData(){
-        int num=billing_table.getSelectionModel().getSelectedIndex();
-        Billing billingData=billing_table.getSelectionModel().getSelectedItem();
-        if(num-1 < -1){
-            return;
-        }
-        bill_item.setText(billingData.getItem_number());
-        bill_price.setText(String.valueOf((int)billingData.getPrice()));
-        bill_total_amount.setText(String.valueOf((int)billingData.getTotal_amount()));
-    }
-    public void updateSelectedBillingData() {
-        connection = Database.getInstance().connectDB();
-        String sql = "UPDATE billing SET quantity=?,price=?,total_amount=? WHERE item_number=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_quantity.getValue().toString());
-            preparedStatement.setString(2, bill_price.getText());
-            preparedStatement.setString(3, bill_total_amount.getText());
-            preparedStatement.setString(4, bill_item.getText());
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showBillingData();
-                billClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public void deleteBillingData(){
-        connection = Database.getInstance().connectDB();
-        String sql;
-        try {
-            if(billing_table.getSelectionModel().isEmpty()){
-                sql = "DELETE FROM BILLING";
-                preparedStatement = connection.prepareStatement(sql);
-            }else{
-                sql="DELETE FROM BILLING WHERE item_number=?";
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1,billing_table.getSelectionModel().getSelectedItem().getItem_number());
-            }
-           int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showBillingData();
-                billClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("No data present in the billing table..");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-    public boolean saveCustomerDetails(){
-        if(bill_phone.getText().isBlank() || bill_name.getText().isBlank()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Kindly Fill Customer Name and Phone number.");
-            alert.showAndWait();
-            return false;
-        }
-        connection = Database.getInstance().connectDB();
-        String sql="SELECT * FROM CUSTOMERS WHERE phonenumber=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_phone.getText());
-            resultSet= preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Customer Data is already present in customer table. Proceeding further to save invoice.");
-                alert.showAndWait();
-                return true;
-            } else {
-                String customerSql="INSERT INTO CUSTOMERS(name,phonenumber) VALUES(?,?)";
-                preparedStatement = connection.prepareStatement(customerSql);
-                preparedStatement.setString(1,bill_name.getText());
-                preparedStatement.setString(2,bill_phone.getText());
-                int result= preparedStatement.executeUpdate();
-                if(result>0){
-                    showCustomerData();
-                    return true;
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Customer Data not saved. Please fill name and phone number correctly.");
-                    alert.showAndWait();
-                    return false;
-                }
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-        return false;
-    }
-    public void saveInvoiceDetails(){
-        // GET CUSTOMER ID FOR MAPPING INVOICE RECORDS
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT id FROM CUSTOMERS WHERE PHONENUMBER=?";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_phone.getText());
-            resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                  String custId=resultSet.getString("id");
-                  // GET BILLING TABLE DETAILS
-                  String getBillingDetails="SELECT * FROM BILLING";
-                  preparedStatement=connection.prepareStatement(getBillingDetails);
-                  resultSet=preparedStatement.executeQuery();
-                  // SAVE INVOICE DETAILS ALONG WITH CUSTOMER ID AND DATE IN SALES TABLE
-                  int count=0;
-                  while (resultSet.next()){
-                      String salesDetailsSQL="INSERT INTO sales(inv_num,item_number,cust_id,price,quantity,total_amount,date) VALUES(?,?,?,?,?,?,?)";
-                      preparedStatement=connection.prepareStatement(salesDetailsSQL);
-                      preparedStatement.setString(1,inv_num.getText());
-                      preparedStatement.setString(2,resultSet.getString("item_number"));
-                      preparedStatement.setString(3,custId);
-                      preparedStatement.setString(4,resultSet.getString("price"));
-                      preparedStatement.setString(5,resultSet.getString("quantity"));
-                      preparedStatement.setString(6,resultSet.getString("total_amount"));
-                      preparedStatement.setString(7,bill_date.getValue().toString());
-                      preparedStatement.executeUpdate();
-                      count++;
-                  }
-                  if(count>0){
-                      billClearCustomerData();
-                      deleteBillingData();
-                      showSalesData();
-                      setInvoiceNum();
-                      showDashboardData();
-                      Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                      alert.setTitle("Message");
-                      alert.setHeaderText(null);
-                      alert.setContentText("Data is successfully saved in the sales tables. ");
-                      alert.showAndWait();
-                  }else{
-                      Alert alert = new Alert(Alert.AlertType.ERROR);
-                      alert.setTitle("Error Message");
-                      alert.setHeaderText(null);
-                      alert.setContentText("No Data saved in the sales table. ");
-                      alert.showAndWait();
-                  }
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Kindly fill Customer Details such as Name and Phone Number correctly.");
-                alert.showAndWait();
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-
-
-    }
-
-    public void billSave(){
-        // Save Customer Details
-        if(!saveCustomerDetails()) {
-            return;
-        }
-        //Save Invoice Details in Sales Table and Reference Customer
-        saveInvoiceDetails();
-
-    }
-
-    public void printBill(){
-     connection=Database.getInstance().connectDB();
-     String sql="SELECT * FROM `sales` s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=(SELECT MAX(inv_num) as inv_num FROM `sales`)";
-     try{
-         JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/Invoice.jrxml"));
-         JRDesignQuery updateQuery=new JRDesignQuery();
-         updateQuery.setText(sql);
-         jasperDesign.setQuery(updateQuery);
-         JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-         JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,null,connection);
-         JasperViewer.viewReport(jasperPrint ,false);
-     }catch (Exception err){
-      err.printStackTrace();
-     }
-    }
-    public void searchForBills(){
-        try{
-            Parent root = FXMLLoader.load(getClass().getResource("bills.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage=new Stage();
-            root.setOnMousePressed((event)->{
-                x=event.getSceneX();
-                y=event.getSceneY();
-            });
-            root.setOnMouseDragged((event)->{
-                stage.setX(event.getScreenX()-x);
-                stage.setY(event.getScreenY()-y);
-            });
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.show();
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-    public void customerClearData(){
-        cust_field_name.setText("");
-        cust_field_phone.setText("");
-    }
-    public ObservableList<Customer> listCustomerData(){
-        ObservableList<Customer> customersList=FXCollections.observableArrayList();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM Customers";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-
-
-            Customer customer;
-            while (resultSet.next()){
-                customer=new Customer(Integer.parseInt(resultSet.getString("id")),resultSet.getString("name"),resultSet.getString("phonenumber"));
-                customersList.addAll(customer);
-            }
-
-
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-        return customersList;
-    }
-    public void showCustomerData(){
-        ObservableList<Customer> customerList=listCustomerData();
-        cust_col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        cust_col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cust_col_phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        customer_table.setItems(customerList);
-    }
-    public boolean checkForCustomerAvailability(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM CUSTOMERS WHERE phoneNumber=?";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,cust_field_phone.getText());
-            resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                Alert alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Customer already present in the customer table.");
-                alert.showAndWait();
-                return false;
-            }else {
-              return true;
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-
-        return false;
-    }
-    public void addCustomerData(){
-        if(!checkForCustomerAvailability()){
-            return;
-        }
-        connection=Database.getInstance().connectDB();
-        String sql="INSERT INTO CUSTOMERS(name,phonenumber)VALUES(?,?)";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,cust_field_name.getText());
-            preparedStatement.setString(2,cust_field_phone.getText());
-            int result=preparedStatement.executeUpdate();
-            if(result>0){
-                showCustomerData();
-                customerClearData();
-            }else{
-                Alert alert=new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as name and phone number.");
-                alert.showAndWait();
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-    public void selectCustomerTableData(){
-        int num=customer_table.getSelectionModel().getSelectedIndex();
-        Customer customerData=customer_table.getSelectionModel().getSelectedItem();
-        if(num-1 < -1){
-            return;
-        }
-
-        cust_field_name.setText(customerData.getName());
-        cust_field_phone.setText(customerData.getPhoneNumber());
-    }
-
-    public void updateCustomerData(){
-        if(cust_field_phone.getText().isBlank() || cust_field_name.getText().isBlank() ){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as name, phone number .");
-            alert.showAndWait();
-            return;
-        }
-        connection = Database.getInstance().connectDB();
-        String sql = "UPDATE CUSTOMERS SET name=? WHERE phonenumber=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,cust_field_name.getText());
-            preparedStatement.setString(2, cust_field_phone.getText());
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showCustomerData();
-                customerClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as name, phone number .");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public void deleteCustomerData(){
-        if(customer_table.getSelectionModel().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select customer for deletion.");
-            alert.showAndWait();
-            return;
-        }
-        connection = Database.getInstance().connectDB();
-        String sql="DELETE FROM CUSTOMERS WHERE phonenumber=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,customer_table.getSelectionModel().getSelectedItem().getPhoneNumber());
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showCustomerData();
-                customerClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("No data present in the customer table.");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-    public void printCustomersDetails(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM customers";
-        try{
-            JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/customers.jrxml"));
-            JRDesignQuery updateQuery=new JRDesignQuery();
-            updateQuery.setText(sql);
-            jasperDesign.setQuery(updateQuery);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,null,connection);
-            JasperViewer.viewReport(jasperPrint ,false);
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-    public void getTotalSalesAmount(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_sale_amount FROM sales";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while (resultSet.next()){
-                String result=resultSet.getString("total_sale_amount");
-                if (result == null) {
-                    sales_total_amount.setText("0.00");
-                }else{
-                    sales_total_amount.setText(result);
-                }
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-
-    }
-    public ObservableList<Sales> listSalesData(){
-        ObservableList<Sales> salesList=FXCollections.observableArrayList();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM SALES s INNER JOIN CUSTOMERS c ON s.cust_id=c.id";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            Sales sale;
-            while (resultSet.next()){
-                sale=new Sales(Integer.parseInt(resultSet.getString("id")),resultSet.getString("inv_num"),Integer.parseInt(resultSet.getString("cust_id")),resultSet.getString("name"),Double.parseDouble(resultSet.getString("price")),Integer.parseInt(resultSet.getString("quantity")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date"),resultSet.getString("item_number"));
-                salesList.addAll(sale);
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-        return salesList;
-    }
-    public void showSalesData(){
-        ObservableList<Sales> salesList=listSalesData();
-        sales_col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        sales_col_inv_num.setCellValueFactory(new PropertyValueFactory<>("inv_num"));
-        sales_col_cust_name.setCellValueFactory(new PropertyValueFactory<>("custName"));
-        sales_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        sales_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        sales_col_total_amount.setCellValueFactory(new PropertyValueFactory<>("total_amount"));
-        sales_col_date_of_sales.setCellValueFactory(new PropertyValueFactory<>("date"));
-        sales_col_item_num.setCellValueFactory(new PropertyValueFactory<>("item_num"));
-        sales_table.setItems(salesList);
-
-        getTotalSalesAmount();
-    }
-    public void printSalesDetails(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM sales s INNER JOIN customers c ON s.cust_id=c.id";
-        try{
-            JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/sales_report.jrxml"));
-            JRDesignQuery updateQuery=new JRDesignQuery();
-            updateQuery.setText(sql);
-            jasperDesign.setQuery(updateQuery);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,null,connection);
-            JasperViewer.viewReport(jasperPrint ,false);
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-    public void getTotalPurchaseAmount(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_purchase_amount FROM purchase";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while (resultSet.next()){
-                String result=resultSet.getString("total_purchase_amount");
-                if (result == null) {
-                    purchase_total_amount.setText("0.00");
-                }else{
-                    purchase_total_amount.setText(result);
-                }
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-
-    }
-    public void printPurchaseDetails(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM purchase";
-        try{
-            JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/purchase_report.jrxml"));
-            JRDesignQuery updateQuery=new JRDesignQuery();
-            updateQuery.setText(sql);
-            jasperDesign.setQuery(updateQuery);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,null,connection);
-            JasperViewer.viewReport(jasperPrint ,false);
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-    public ObservableList<Purchase> listPurchaseData(){
-        ObservableList<Purchase> purchaseList=FXCollections.observableArrayList();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM Purchase";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            Purchase purchase;
-            while (resultSet.next()){
-                purchase=new Purchase(Integer.parseInt(resultSet.getString("id")),resultSet.getString("invoice"),resultSet.getString("shop and address"),Integer.parseInt(resultSet.getString("total_items")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date_of_purchase"));
-                purchaseList.addAll(purchase);
-            }
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-        return purchaseList;
-    }
-    public void showPurchaseData(){
-        ObservableList<Purchase> purchaseList=listPurchaseData();
-        purchase_col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        purchase_col_invoice.setCellValueFactory(new PropertyValueFactory<>("invoice"));
-        purchase_col_shop_details.setCellValueFactory(new PropertyValueFactory<>("shopDetails"));
-        purchase_col_total_items.setCellValueFactory(new PropertyValueFactory<>("totalItems"));
-        purchase_col_total_amount.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
-        purchase_col_date_of_purchase.setCellValueFactory(new PropertyValueFactory<>("dateOfPurchase"));
-        purchase_table.setItems(purchaseList);
-        getTotalPurchaseAmount();
-    }
-
-    public void getTotalPurchase(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_items) as total_purchase FROM PURCHASE";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while (resultSet.next()){
-                String result=resultSet.getString("total_purchase");
-                if (result == null) {
-                    dash_total_purchase.setText("0");
-                }else{
-                    dash_total_purchase.setText(result);
-                }
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-
-    }
-
-    public void getTotalSales(){
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(quantity) as total_sale FROM sales";
-        try{
-            statement=connection.createStatement();
-            resultSet=statement.executeQuery(sql);
-            while (resultSet.next()){
-                String result=resultSet.getString("total_sale");
-                if (result == null) {
-                    dash_total_sold.setText("0");
-                }else{
-                    dash_total_sold.setText(result);
-                }
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-
-    }
-
-    public void getTotalStocks(){
-        int totalPurchase=Integer.parseInt(dash_total_purchase.getText());
-        int total_sold= Integer.parseInt(dash_total_sold.getText());
-        int totalStockLeft=totalPurchase-total_sold;
-        dash_total_stocks.setText(String.valueOf(totalStockLeft));
-    }
-
-    public void getSalesDetailsOfThisMonth(){
-        LocalDate date=LocalDate.now();
-        String monthName=date.getMonth().toString();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE MONTHNAME(DATE)=?";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
-            resultSet=preparedStatement.executeQuery();
-            while (resultSet.next()){
-                String result=resultSet.getString("total_sales_this_month");
-                if (result == null) {
-                    dash_total_sales_this_month.setText("0.00");
-                }else{
-                    dash_total_sales_this_month.setText(result);
-                }
-                dash_total_sales_this_month_name.setText(monthName);
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-    public void getItemSoldThisMonth(){
-        LocalDate date=LocalDate.now();
-        String monthName=date.getMonth().toString();
-        connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE MONTHNAME(DATE)=?";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
-            resultSet=preparedStatement.executeQuery();
-            while (resultSet.next()){
-                String result=resultSet.getString("total_items_sold_this_month");
-                if (result == null) {
-                    dash_total_items_sold_this_month.setText("0");
-                }else{
-                    dash_total_items_sold_this_month.setText(result);
-                }
-                dash_total_sales_items_this_month_name.setText(monthName);
-            }
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-    public void showDashboardData(){
-     getTotalPurchase();
-     getTotalSales();
-     getTotalStocks();
-     getSalesDetailsOfThisMonth();
-     getItemSoldThisMonth();
-    }
-    public void signOut(){
+    public void signOut() {
         signout_btn.getScene().getWindow().hide();
-        try{
-        Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage=new Stage();
-            root.setOnMousePressed((event)->{
-                x=event.getSceneX();
-                y=event.getSceneY();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            root.setOnMousePressed((event) -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
             });
-            root.setOnMouseDragged((event)->{
-                stage.setX(event.getScreenX()-x);
-                stage.setY(event.getScreenY()-y);
+            root.setOnMouseDragged((event) -> {
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
             });
 
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
-        }catch (Exception err){
+        } catch (Exception err) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
             alert.setTitle("Error Message");
@@ -1211,30 +1147,5 @@ public class DashboardController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Exports all modules to other modules
-        Modules.exportAllToAll();
 
-        setUsername();
-        activateDashboard();
-
-//      DASHBOARD PANE
-        showDashboardData();
-
-//      BILLING PANE
-        setAutoCompleteItemNumber();
-        comboBoxQuantity();
-        setInvoiceNum();
-        showBillingData();
-
-//      CUSTOMER PANE
-        showCustomerData();
-
-//      SALES PANE
-        showSalesData();
-
-//      Purchase Pane
-        showPurchaseData();
-    }
 }
