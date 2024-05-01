@@ -13,7 +13,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="inventory-management-system" options="--add-exports java.base/jdk.internal.access=com.inventorymanagementsystem --add-exports atlantafx.base/atlantafx.base=com.inventorymanagementsystem --add-exports de.jensd.fx.glyphs.commons/de.jensd=com.inventorymanagementsystem" />
+      <module name="inventory-management-system" options="" />
     </option>
   </component>
 </project>

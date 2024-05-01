@@ -43,8 +43,8 @@ public class AgenceService {
                         resultSet.getString("nom"),
                         resultSet.getLong("num_tel"),
                         resultSet.getString("etat"),
-                        resultSet.getInt("id_chef"),
-                        resultSet.getDate("date_ajout"),
+                        resultSet.getInt("id_chef_id"),
+                        resultSet.getDate("data_ajout"),
                         resultSet.getString("latitude"),
                         resultSet.getString("longitude")
                 ));
@@ -115,4 +115,43 @@ public class AgenceService {
         }
         return false;
     }
+    public Agence getAgenceById(int id) {
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM `agence` WHERE `id` = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Récupérer les données de l'agence depuis le ResultSet
+                int agenceId = resultSet.getInt("id");
+                String adresse = resultSet.getString("adresse");
+                String nom = resultSet.getString("nom");
+                long numTel = resultSet.getLong("num_tel");
+                String etat = resultSet.getString("etat");
+                int idChef = resultSet.getInt("id_chef_id");
+                java.util.Date dateAjout = resultSet.getDate("data_ajout");
+                String latitude = resultSet.getString("latitude");
+                String longitude = resultSet.getString("longitude");
+                // Instancier et retourner l'objet Agence avec les données récupérées
+                return new Agence(agenceId, adresse, nom, numTel, etat, idChef, dateAjout, latitude, longitude);
+            } else {
+                // Aucune agence trouvée avec cet identifiant, retourner null
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la récupération de l'agence par ID : " + e.getMessage(), e);
+        } finally {
+            // Assurez-vous de fermer les ressources (preparedStatement, resultSet) dans le bloc finally
+            // Ceci est crucial pour éviter les fuites de ressources et les problèmes de performance
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                // Gérer l'exception de fermeture de la preparedStatement si nécessaire
+                System.out.println("Erreur lors de la fermeture de la preparedStatement : " + e.getMessage());
+            }
+        }
+    }
+
 }

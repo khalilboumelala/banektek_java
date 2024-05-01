@@ -17,8 +17,8 @@ public class AgentService {
 
     private static AgentService instance;
 
-    Connection connection;
-    PreparedStatement preparedStatement;
+    static Connection connection;
+    static PreparedStatement preparedStatement;
 
     public AgentService() {
         connection = Database.getInstance().connectDB();
@@ -88,7 +88,7 @@ public class AgentService {
         return agent;
     }
     @FXML
-    public boolean add(Agent agent) {
+    public static boolean add(Agent agent) {
         String request = "INSERT INTO `agent`(`id_agence_id`, `nom`, `prenom`, `poste`, `matricule`, `password`, `email`, `num_tel`, `photo`, `faceid`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             preparedStatement = connection.prepareStatement(request);
@@ -113,12 +113,12 @@ public class AgentService {
         return false;
     }
     @FXML
-    public boolean edit(Agent agent) {
+    public static boolean edit(Agent agent) {
         String request = "UPDATE `agent` SET `id_agence_id`=?, `nom`=?, `prenom`=?, `poste`=?, `matricule`=?, `password`=?, `email`=?, `num_tel`=?, `photo`=?, `faceid`=? WHERE `id`=?";
         try {
             preparedStatement = connection.prepareStatement(request);
 
-            preparedStatement.setInt(1, agent.getIdAgence());
+            preparedStatement.setInt(1,agent.getIdAgence());
             preparedStatement.setString(2, agent.getNom());
             preparedStatement.setString(3, agent.getPrenom());
             preparedStatement.setString(4, agent.getPoste());

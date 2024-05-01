@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+
+<AnchorPane prefHeight="676.0" prefWidth="1122.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashFXController">
+   <children>
+      <AnchorPane layoutY="-2.0" prefHeight="695.0" prefWidth="1194.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
+         <children>
+            <Pane layoutX="670.0" layoutY="51.0" prefHeight="95.0" prefWidth="406.0" style="-fx-background-radius: 20 20 0 0;" styleClass="linear-grad" stylesheets="@css/fullpackstyling.css">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="34.0" layoutX="271.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/ic_usr.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="nom_agent_session" layoutX="124.0" layoutY="11.0" text="Hamza Nasr" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="mini_bar" layoutX="-400.0" layoutY="-5.0" prefHeight="55.0" prefWidth="483.0" style="-fx-background-color: #131022; -fx-background-radius: 15 0 0 15;">
+                     <children>
+                        <Pane prefHeight="54.0" prefWidth="81.0" style="-fx-background-radius: 15 0 15 15;" />
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#movetoAdd" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="Ajouter" textFill="#a868a0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/cat.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="AGENCES" textFill="#a868a0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/time.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="HAMZA" textFill="#a868a0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/flag.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#movetoShow" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="Consulter" textFill="#a868a0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/group.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+
+            <AnchorPane fx:id="clientAddPane" layoutX="245.0" layoutY="100.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 40;" stylesheets="@css/fullpackstyling.css" visible="false">
+               <children>
+                  <Label layoutX="39.0" layoutY="34.0" text="Gestion des " textFill="WHITE">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="182.0" layoutY="34.0" text="Clients" textFill="#fff600">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="39.0" layoutY="81.0" text="Formulaire d'Ajout de Nouveaux Clients" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="39.0" layoutY="144.0" text="Veuillez remplir tous les champs  pour continuer." textFill="#9a9292">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pays_client" layoutX="82.0" layoutY="347.0" prefHeight="19.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css" />
+                  <Pane layoutX="586.0" layoutY="62.0" prefHeight="297.0" prefWidth="270.0" style="-fx-background-radius: 20;" styleClass="linear-grad" stylesheets="@css/fullpackstyling.css">
+                     <children>
+                        <Button fx:id="add_client_btn" layoutX="63.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleAddClientButtonAction" prefHeight="27.0" prefWidth="145.0" styleClass="button4" stylesheets="@css/fullpackstyling.css" text="Ajouter Client" textFill="WHITE" />
+                        <Label fx:id="fiche_username" layoutX="14.0" layoutY="135.0" prefHeight="27.0" prefWidth="257.0" text="Nom d'utilisateur" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+
+                        <ImageView fx:id="photo1_client" fitHeight="76.0" fitWidth="94.0" layoutX="25.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="rounded-image">
+
+                           <image>
+                              <Image url="@resources/simpleuser.png" />
+                           </image>
+                        </ImageView>
+
+                        <Label fx:id="fiche_nom" layoutX="101.0" layoutY="39.0" prefHeight="38.0" prefWidth="155.0" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="age_client" layoutX="106.0" layoutY="70.0" textFill="#b5adad">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="fiche_password" layoutX="14.0" layoutY="162.0" prefHeight="27.0" prefWidth="249.0" text="Mot de passe" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Line endX="100.0" layoutX="445.0" layoutY="54.0" startX="100.0" startY="418.0" stroke="#b9b1b1" strokeDashOffset="2.0" />
+                  <Label layoutX="569.0" layoutY="377.0" text="Ajout de Client :  " textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="702.0" layoutY="377.0" text="Attention Requise" textFill="#fff600">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <BorderPane layoutX="569.0" layoutY="404.0" prefHeight="66.0" prefWidth="270.0">
+                     <top>
+                        <Label alignment="CENTER" prefWidth="265.0" text="L'ajout d'un client est définitif. Vérifiez les informations fournies avec précision avant de procéder. Une fois ajouté, les données seront intégrées au système. Assurez-vous de leur exactitude avant confirmation." textFill="#9a9292" wrapText="true" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </top>
+                  </BorderPane>
+                  <CustomTextField fx:id="nom_client" layoutX="82.0" layoutY="187.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="187.0" text="Nom      " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="cin_client" layoutX="382.0" layoutY="188.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="268.0" layoutY="187.0" text="C.I.N " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="prenom_client" layoutX="82.0" layoutY="219.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="219.0" text="Prenom  " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="email_client" layoutX="82.0" layoutY="250.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="250.0" text="EMAIL  " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="adresse_client" layoutX="82.0" layoutY="282.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="282.0" text="Adresse " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="numero_client" layoutX="82.0" layoutY="313.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="313.0" text="Numero " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="347.0" text="Pays " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="sexe_client" layoutX="382.0" layoutY="253.0" prefHeight="29.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Homme" />
+                           <String fx:value="Femme" />
+                           <String fx:value="Autre" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+                  <Label layoutX="268.0" layoutY="219.0" text="Proffession " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="proffession_client" layoutX="382.0" layoutY="219.0" prefHeight="29.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+
+                              <String fx:value="Fonctionnaire/Public" />
+                        <String fx:value="Indépendant/Entrepreneur" />
+                        <String fx:value="Profession libérale" />
+                        <String fx:value="Artiste/Créatif" />
+                        <String fx:value="Freelancer" />
+                        <String fx:value="Retraité" />
+                        <String fx:value="Etudiant" />
+                        <String fx:value="Autre" />
+                        </FXCollections>
+
+                           </items>
+                  </ComboBox>
+
+
+                        <Label layoutX="268.0" layoutY="253.0" text="Sexe " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="268.0" layoutY="285.0" text="D Naissance" textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dob_client" layoutX="385.0" layoutY="287.0" prefHeight="8.0" prefWidth="155.0" />
+                  <Button fx:id="verif_client_btn" layoutX="268.0" layoutY="347.0" mnemonicParsing="false" onAction="#verifier_client" prefHeight="27.0" prefWidth="270.0" stylesheets="@css/fullpackstyling.css" text="VERIFIER LA FICHE CLIENT" textFill="WHITE">
+                     <styleClass>
+                        <String fx:value="button5" />
+                        <String fx:value="button5" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="uploadButton" layoutX="385.0" layoutY="317.0" mnemonicParsing="false" onAction="#uploadPhoto" prefHeight="27.0" prefWidth="155.0" stylesheets="@css/fullpackstyling.css" text="Télécharger Photo" />
+
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="38.0" fitWidth="34.0" layoutX="91.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="134.0" layoutY="29.0" prefHeight="19.0" prefWidth="78.0" text="BANEK-TEK" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+
+            <AnchorPane fx:id="clientListPane" layoutX="245.0" layoutY="100.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 40;" stylesheets="@css/fullpackstyling.css" xmlns:fx="http://javafx.com/fxml/11.0">
+
+               <children>
+                  <HBox layoutX="39.0" layoutY="34.0" prefWidth="221.0">
+                     <children>
+                        <Label text="Liste des " textFill="WHITE">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <Label text="Clients" textFill="#fff600">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+
+                  <Label fx:id="addClientLabel" layoutX="39.0" layoutY="81.0" text="Formulaire d'Ajout de Nouveaux Clients" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+
+                  <ScrollPane fx:id="clientCardScrollPane" layoutX="15.0" layoutY="114.0" prefHeight="406.0" prefWidth="866.0" style="-fx-border-color: linear-gradient(to bottom left, #A868A0, #2D75E8); -fx-border-width: 5; -fx-border-radius: 11; -fx-background-color: transparent;" styleClass="linear-grad">
+                     <VBox fx:id="clientCardVBox">
+
+                     </VBox>
+                  </ScrollPane>
+                  <TextField fx:id="client_search" layoutX="651.0" layoutY="76.0" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@css/dashboard.css" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" layoutX="658.0" layoutY="97.0" size="16" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="clientEditPane" disable="true" layoutX="245.0" layoutY="100.0" prefHeight="542.0" prefWidth="947.0" style="-fx-background-color: #131022; -fx-background-radius: 40;" stylesheets="@css/fullpackstyling.css" visible="false">
+               <children>
+                  <Label layoutX="39.0" layoutY="34.0" text="Modifier" textFill="WHITE">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="150.0" layoutY="34.0" text="Client" textFill="#fff600">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="39.0" layoutY="81.0" text="Formulaire d'Ajout de Nouveaux Clients" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="39.0" layoutY="144.0" text="Veuillez remplir tous les champs  pour continuer." textFill="#9a9292">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pays_client_edit" layoutX="82.0" layoutY="347.0" prefHeight="19.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css" />
+                  <Pane layoutX="586.0" layoutY="62.0" prefHeight="297.0" prefWidth="270.0" style="-fx-background-radius: 20;" styleClass="linear-grad" stylesheets="@css/fullpackstyling.css">
+                     <children>
+                        <Button fx:id="edit_client_btn" layoutX="63.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleEditClientButtonAction" prefHeight="27.0" prefWidth="145.0" styleClass="button4" stylesheets="@css/fullpackstyling.css" text="Modifier Client" textFill="WHITE" />
+                        <ImageView fx:id="photo1_client_edit" fitHeight="76.0" fitWidth="94.0" layoutX="25.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="rounded-image">
+                           <image>
+                              <Image url="@resources/hamza.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nomprenom_client_edit" layoutX="107.0" layoutY="39.0" prefHeight="38.0" prefWidth="155.0" text="khalil boumelala" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="age_client_edit" layoutX="106.0" layoutY="70.0" text="24 ans" textFill="#b5adad">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="1.0" layoutY="200.0" prefHeight="27.0" prefWidth="138.0" text="Nouveau mot de passe" textFill="WHITE">
+                           <font>
+                              <Font name="Leelawadee Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <CustomTextField fx:id="username_client_edit" layoutX="139.0" layoutY="163.0" prefHeight="27.0" prefWidth="130.0" stylesheets="@css/fullpackstyling.css" />
+                        <Label layoutX="2.0" layoutY="163.0" prefHeight="27.0" prefWidth="138.0" text="Nom d'utilisateur" textFill="WHITE">
+                           <font>
+                              <Font name="Leelawadee Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <CustomTextField fx:id="password_client_edit" layoutX="138.0" layoutY="198.0" prefHeight="27.0" prefWidth="130.0" stylesheets="@css/fullpackstyling.css" />
+                        <Button fx:id="upload_photo_edit" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#uploadPhoto" prefHeight="27.0" prefWidth="106.0" stylesheets="@css/fullpackstyling.css" text="Modifier" />
+                     </children>
+                  </Pane>
+                  <Line endX="100.0" layoutX="445.0" layoutY="54.0" startX="100.0" startY="418.0" stroke="#b9b1b1" strokeDashOffset="2.0" />
+                  <Label layoutX="569.0" layoutY="379.0" text="Attention Requise" textFill="#fff600">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <BorderPane layoutX="569.0" layoutY="404.0" prefHeight="66.0" prefWidth="270.0">
+                     <top>
+                        <Label alignment="CENTER" prefWidth="265.0" text="Avant de confirmer les modifications du client, assurez-vous avec précision de l'exactitude des informations fournies. Une fois confirmées, les données seront intégrées au système." textFill="#9a9292" wrapText="true" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </top>
+                  </BorderPane>
+                  <CustomTextField fx:id="nom_client_edit" layoutX="82.0" layoutY="187.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="187.0" text="Nom      " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="cin_client_edit" layoutX="382.0" layoutY="188.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="268.0" layoutY="187.0" text="C.I.N " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="prenom_client_edit" layoutX="82.0" layoutY="219.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="219.0" text="Prenom  " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="email_client_edit" layoutX="82.0" layoutY="250.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="250.0" text="EMAIL  " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="adresse_client_edit" layoutX="82.0" layoutY="282.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="282.0" text="Adresse " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CustomTextField fx:id="numero_client_edit" layoutX="82.0" layoutY="313.0" stylesheets="@css/fullpackstyling.css" />
+                  <Label layoutX="10.0" layoutY="313.0" text="Numero " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="347.0" text="Pays " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="sexe_client_edit" layoutX="382.0" layoutY="253.0" prefHeight="29.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Homme" />
+                           <String fx:value="Femme" />
+                           <String fx:value="Autre" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+                  <Label layoutX="268.0" layoutY="219.0" text="Proffession " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="proffession_client_edit" layoutX="382.0" layoutY="219.0" prefHeight="29.0" prefWidth="155.0" styleClass="combo-box" stylesheets="@css/fullpackstyling.css">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Fonctionnaire/Public" />
+                           <String fx:value="Indépendant/Entrepreneur" />
+                           <String fx:value="Profession libérale" />
+                           <String fx:value="Artiste/Créatif" />
+                           <String fx:value="Freelancer" />
+                           <String fx:value="Retraité" />
+                           <String fx:value="Etudiant" />
+                           <String fx:value="Autre" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+                  <Label layoutX="268.0" layoutY="253.0" text="Sexe " textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="268.0" layoutY="285.0" text="D Naissance" textFill="#c4c4c4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dob_client_edit" layoutX="385.0" layoutY="287.0" prefHeight="8.0" prefWidth="155.0" />
+                  <Button fx:id="verif_client_btn_edit" layoutX="268.0" layoutY="347.0" mnemonicParsing="false" onAction="#verifier_client" prefHeight="27.0" prefWidth="270.0" stylesheets="@css/fullpackstyling.css" text="VERIFIER LA FICHE CLIENT" textFill="WHITE">
+                     <styleClass>
+                        <String fx:value="button5" />
+                        <String fx:value="button5" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </AnchorPane>
+
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="sidebar1" prefHeight="426.0" prefWidth="228.0" styleClass="navbar" stylesheets="@css/dashboard.css">
+         <children>
+            <Button fx:id="comptes_btn1" layoutX="39.0" layoutY="244.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="COMPTES" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BANK" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="cartes_btn1" layoutX="39.0" layoutY="290.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="CARTES" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CREDIT_CARD" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="virements_btn1" layoutX="38.0" layoutY="338.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="VIREMENTS" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="agences_btn1" layoutX="38.0" layoutY="437.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="AGENCES" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BUILDING" />
+               </graphic>
+            </Button>
+            <Label layoutX="39.0" layoutY="82.0" prefHeight="42.0" prefWidth="149.0" text="SIDEBAR" textFill="#d7c2c2">
+               <font>
+                  <Font name="Cooper Black" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="articles_btn1" layoutX="38.0" layoutY="484.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="ARTICLES" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BOOK" />
+               </graphic>
+            </Button>
+            <Button fx:id="comments_btn1" layoutX="38.0" layoutY="535.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="COMMENTS" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="COMMENT" />
+               </graphic>
+            </Button>
+            <Button fx:id="transaction_btn1" layoutX="38.0" layoutY="389.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="TRANSACTIONS" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="EURO" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="reclamation_btn1" layoutX="38.0" layoutY="587.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="Reclamation" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="EXCLAMATION_TRIANGLE" />
+               </graphic>
+            </Button>
+            <Button fx:id="clients_btn1" layoutX="38.0" layoutY="136.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="CLIENTS" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="agents_btn" layoutX="38.0" layoutY="187.0" mnemonicParsing="false" onAction="#movetoAgents" prefHeight="36.0" prefWidth="169.0" styleClass="navbutton" stylesheets="@css/dashboard.css" text="AGENTS" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.2em" />
+               </graphic>
+            </Button>
+            <Button fx:id="signout_btn" layoutX="2.0" layoutY="650.0" mnemonicParsing="false" onAction="#signOut" prefHeight="38.0" prefWidth="145.0" styleClass="navbutton" text="Déconnecter" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.2em" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

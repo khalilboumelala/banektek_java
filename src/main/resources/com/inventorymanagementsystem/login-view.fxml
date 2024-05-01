@@ -23,7 +23,7 @@
                <children>
                   <AnchorPane layoutX="274.0" prefHeight="694.0" prefWidth="805.0">
                      <children>
-                        <TextField fx:id="username" layoutX="245.0" layoutY="356.0" onKeyTyped="#textfieldDesign" onMouseClicked="#textfieldDesign" onMouseDragged="#textfieldDesign" prefHeight="42.0" prefWidth="366.0" promptText="Username" styleClass="textfield-design" stylesheets="@login.css">
+                        <TextField fx:id="username" layoutX="245.0" layoutY="356.0" onKeyTyped="#textfieldDesign" onMouseClicked="#textfieldDesign" onMouseDragged="#textfieldDesign" prefHeight="42.0" prefWidth="366.0" promptText="Username" style="fx-text-fill: black;" styleClass="textfield-design" stylesheets="@login.css">
                            <font>
                               <Font size="18.0" />
                            </font>

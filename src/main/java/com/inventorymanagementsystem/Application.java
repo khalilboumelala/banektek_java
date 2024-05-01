@@ -43,41 +43,18 @@ public class Application extends javafx.application.Application {
 
     private double x;
     private double y;
-/*
-    public void start(Stage stage) throws MalformedURLException {
-        // Create web engine and view
-         WebView webView = new WebView();
-         WebEngine webEngine = webView.getEngine();
-            String script= getClass().getResource("map.js").toString();
-        //webEngine.executeScript(script);
-        // Load the HTML file
-        URL htmlFileUrl = new URL("http://localhost/map.html");//getClass().getResource("map.html");
-        if (htmlFileUrl != null) {
-            webEngine.load(htmlFileUrl.toExternalForm());
-            webEngine.executeScript(script);
-        } else {
-            System.err.println("Failed to load map.html");
-            // Handle the case where the HTML file is not found
-            // You can show an error message or take appropriate action here
-        }
 
-        // Create scene
-        stage.setTitle("Web Map");
-        Scene scene = new Scene(webView, 500, 500);
-        stage.setScene(scene);
-
-        // Show stage
-        stage.show();
-    }
-
-*/
 
     @Override
     public void start(Stage stage) throws IOException {
-       // Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
-        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("DashFX.fxml"));
+        //
         Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(getClass().getResource("/com/inventorymanagementsystem/css/fullpackstyling.css").toExternalForm());
+
+
         stage.setTitle("Banektek");
         root.setOnMousePressed((event)->{
             x=event.getSceneX();

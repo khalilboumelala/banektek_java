@@ -1,5 +1,7 @@
 package com.inventorymanagementsystem.entity;
 
+import java.security.SecureRandom;
+
 public class Agent {
     private int id;
     private int idAgence;
@@ -114,4 +116,26 @@ public class Agent {
     public void setFaceId(String faceId) {
         this.faceId = faceId;
     }
+    public static String generateStrongPassword(int length) {
+        String CHARACTERS = "1234567890";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+        }
+
+        return password.toString();
+    }
+    public static String generateMatricule(String prenom, String nom) {
+        String prenomSubstring = prenom.substring(0, Math.min(prenom.length(), 3)).toLowerCase();
+        String nomSubstring = nom.substring(0, Math.min(nom.length(), 3)).toLowerCase();
+
+        int randomNum = (int) (Math.random() * 100);
+
+        String randomString = String.format("%02d", randomNum);
+
+        return prenomSubstring + nomSubstring + randomString;
+    }
+
 }

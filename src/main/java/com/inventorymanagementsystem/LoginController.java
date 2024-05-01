@@ -73,26 +73,29 @@ public class LoginController implements Initializable {
 
     public void login(){
         connection = Database.getInstance().connectDB();
-        String sql = "SELECT * FROM users WHERE username=? and password=?";
+        String sql = "SELECT * FROM agent WHERE matricule=? and password=?";
         try{
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username.getText());
             preparedStatement.setString(2, password.getText());
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
+                String agentName = resultSet.getString("nom");
 
+                System.out.println(agentName);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Login Successful !");
                 alert.showAndWait();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
-                Parent root = loader.load();
-              //  DashboardController dashboardController = loader.getController();
-                // User.name = username.getText();
-              //  dashboardController.initData(User.name); // Assuming your dashboard controller has a method to initialize user data
 
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AgentFX.fxml"));
+                Parent root = loader.load();
+                // Passer le nom de l'agent au contrôleur AgentFXController
+                AgentFXController agentController = loader.getController();
+                agentController.setAgentName(agentName);
                 Stage stage = (Stage) login_btn.getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
