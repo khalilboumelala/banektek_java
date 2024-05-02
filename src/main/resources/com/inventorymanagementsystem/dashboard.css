@@ -1,5 +1,5 @@
 .navbar{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
+-fx-background-color: linear-gradient(to bottom, #003883, #D9017A);
 }
 
 .close,.add,.save,.clear,.delete,.refresh,.print{

@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
@@ -12,7 +14,8 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.LoginController">
+
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="1080.0">
          <children>
@@ -50,7 +53,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="694.0" prefWidth="275.0" styleClass="login-bg" stylesheets="@login.css">
                      <children>
-                        <Label fx:id="f_logo" layoutX="34.0" layoutY="232.0" prefHeight="190.0" prefWidth="103.0" text="F">
+                        <Label fx:id="f_logo" layoutX="34.0" layoutY="232.0" prefHeight="190.0" prefWidth="103.0" text="Banek">
                            <font>
                               <Font name="Engravers MT" size="86.0" />
                            </font>
@@ -71,7 +74,7 @@
                               </LinearGradient>
                            </textFill>
                         </Label>
-                        <Label fx:id="c_logo" layoutX="138.0" layoutY="238.0" prefHeight="178.0" prefWidth="94.0" text="C">
+                        <Label fx:id="c_logo" layoutX="138.0" layoutY="238.0" prefHeight="178.0" prefWidth="94.0" text="TEK">
                            <font>
                               <Font name="Engravers MT" size="86.0" />
                            </font>
@@ -92,6 +95,11 @@
                               </LinearGradient>
                            </textFill>
                         </Label>
+                        <ImageView fx:id="LOGOBANEKTEK" fitHeight="150.0" fitWidth="200.0" layoutX="60.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@logo.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </children>

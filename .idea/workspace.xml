@@ -10,8 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9817e94-3970-49c2-adaf-e2027458d2ad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/jasper-reports/Invoice.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/jasper-reports/Invoice.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/inventorymanagementsystem/hamza.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Atelier_Connexion.pro.user" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Atelier_Connexion.pro.user.d567f1b.4.8-pre1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../authentif.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../connection.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../connection.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../employe.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../employe.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../employee.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../employee.pro.user" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mainwindow.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mainwindow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mainwindow.ui" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,50 +38,90 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/11.0.2/javafx-fxml-11.0.2-win.jar!/javafx/fxml/FXMLLoader.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/11.0.2/javafx-graphics-11.0.2-win.jar!/com/sun/javafx/application/LauncherImpl.class" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2Qhsq6XoCgJSZ1d4U2jQM3h5d2p" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rashi/Documents/gui/inventory-management-system/database&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.Launcher.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Maven.inventory-management-system [clean].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "11",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/SceneBuilder/SceneBuilder.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.5443038",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "spring.configuration.checksum": "ff1c0c02e4b95b421f5c0569e8c2b387",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\database" />
       <recent name="C:\Users\rashi\Documents\gui\inventory-management-system" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem" />
       <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\src\main\resources\jasper-reports" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn install" />
+      <command value="mvn dependency:tree" />
+      <command value="mvn clean install" />
+      <command value="mvn clean" />
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="Launcher" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.inventorymanagementsystem.app.Launcher" />
       <module name="inventory-management-system" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="inventory-management-system-main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="inventory-management-system-main" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -83,7 +135,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1685817335980</updated>
+      <workItem from="1710721156345" duration="5189000" />
+      <workItem from="1710808326349" duration="325000" />
+      <workItem from="1710809261133" duration="3632000" />
+      <workItem from="1710875601915" duration="33000" />
+      <workItem from="1710875645497" duration="47000" />
+      <workItem from="1710875700168" duration="594000" />
+      <workItem from="1710876302389" duration="27895000" />
+      <workItem from="1711190714968" duration="5656000" />
+      <workItem from="1711241125185" duration="3261000" />
+      <workItem from="1711327949129" duration="1184000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
