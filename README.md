@@ -33,7 +33,7 @@ Note: The above descriptions can be further expanded or customized based on the 
 - To create executable jar file in shade directory:
 
             mvn compile package
-   //        
+   ////        
 ## Demo:
 
 https://github.com/rashidmakki/inventory-management-system/assets/52795057/12cb1dbd-8858-4b94-9c96-24231a3977bd
