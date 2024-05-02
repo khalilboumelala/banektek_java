@@ -19,7 +19,7 @@ bbbb
 - Utilized Java, JavaFX, and SQL technologies to deliver a seamless user experience and ensure efficient data management.
 
 Note: The above descriptions can be further expanded or customized based on the specific functionalities, technologies, and achievements in your application.
-
+//
 ## How to install and start the application:
 
 - To install all the dependencies:
