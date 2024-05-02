@@ -1,13 +1,13 @@
 # inventory-management-system
 Inventory Management System is a powerful desktop application developed using JavaFX and MySQL, designed to streamline operations related to billing, sales reporting, and purchase tracking. The application provides users with a user-friendly interface and essential features to effectively manage inventory and generate comprehensive reports.
-hhhhhhhhhh
+bbbb
 ## Requirement :
 
 **System Requirement :**
 - Java JDK 11.0.12
 - MYSQL
 - Java FX
-  
+  //////
 **System Features:**
 - Implemented functionality to display sales based on month, providing users with insights into monthly sales trends.
 - Incorporated inventory management features to track and display the remaining stocks in real-time, ensuring efficient stock control. 
