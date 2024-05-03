@@ -43,7 +43,7 @@ public class Database {
 
     public Connection connectDB() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banektek2", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banektek", "root", "");
            // System.out.println("Connexion etablie");
 return connection;
             //test

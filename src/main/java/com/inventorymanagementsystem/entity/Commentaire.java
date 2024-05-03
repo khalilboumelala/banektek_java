@@ -12,6 +12,7 @@ public class Commentaire {
     private java.util.Date date;
 
     // Constructor
+    public Commentaire(){}
     public Commentaire(Integer id, Integer user, Integer articleId, String contenu, Integer note, java.util.Date date) {
         this.id = id;
         this.user = user;

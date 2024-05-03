@@ -31,6 +31,9 @@ module com.inventorymanagementsystem{
     requires com.fasterxml.jackson.databind;
     requires de.jensd.fx.glyphs.fontawesome;
     requires com.jfoenix;
+    requires jackson.core.asl;
+    requires jackson.mapper.asl;
+    requires org.json;
 
 
     opens com.inventorymanagementsystem to javafx.fxml;

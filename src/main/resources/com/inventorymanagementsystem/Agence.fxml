@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane fx:id="agences_pane" prefHeight="736.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.AgenceController">
+   <children>
+      <AnchorPane fx:id="agences_backshow_anchorpane" layoutX="-22.0" layoutY="22.0" prefHeight="631.0" prefWidth="977.0" visible="false">
+         <children>
+            <JFXListView fx:id="agence_listview" layoutX="38.0" layoutY="84.0" onMouseClicked="#selectAgenceTableData" prefHeight="498.0" prefWidth="901.0" />
+            <TextField fx:id="customer_search1" layoutX="712.0" layoutY="33.0" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="918.0" layoutY="54.0" size="16" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="agences_front_anchorpane" layoutX="14.0" layoutY="41.0" prefHeight="617.0" prefWidth="810.0" visible="false">
+         <children>
+            <Label fx:id="user11" alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Liste des agences">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.09172259507829979">
+                           <color>
+                              <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <WebView fx:id="webViewClient" layoutX="38.0" layoutY="95.0" prefHeight="508.0" prefWidth="757.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="agences_back_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="728.0" prefWidth="911.0">
+         <children>
+            <Button fx:id="add_agence_button" layoutX="191.0" layoutY="523.0" mnemonicParsing="false" onMouseClicked="#addAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
+               </graphic>
+            </Button>
+            <Button layoutX="262.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#updateAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="EDIT" onMouseReleased="#updateAgenceData" size="18.0" />
+               </graphic>
+            </Button>
+            <Button fx:id="delete_agence_button" layoutX="370.0" layoutY="415.0" mnemonicParsing="false" onMouseClicked="#deleteAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
+               </graphic>
+            </Button>
+            <TextField fx:id="lat_input" layoutX="736.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
+            <TextField fx:id="lng_input" layoutX="837.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
+            <Label layoutX="711.0" prefHeight="32.0" prefWidth="65.0" text="Lat">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="812.0" layoutY="2.0" prefHeight="28.0" prefWidth="50.0" text="Lng">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="translator_button" layoutX="371.0" layoutY="371.0" mnemonicParsing="false" onAction="#openexchangewindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fx:id="customer_print2" fill="WHITE" glyphName="EXCHANGE" size="18.0" />
+               </graphic>
+            </Button>
+            <TextField fx:id="agence_adresse_input" layoutX="103.0" layoutY="463.0" prefHeight="44.0" prefWidth="233.0" styleClass="textfield" stylesheets="@dashboard.css" />
+            <Label layoutX="31.0" layoutY="471.0" prefHeight="32.0" prefWidth="65.0" text="Adresse">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="agence_nom_input" layoutX="97.0" layoutY="342.0" prefHeight="40.0" prefWidth="241.0" styleClass="textfield" stylesheets="@dashboard.css" />
+            <Label layoutX="35.0" layoutY="347.0" prefHeight="32.0" prefWidth="65.0" text="Nom">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="agence_tel_input" layoutX="99.0" layoutY="400.0" prefHeight="40.0" prefWidth="241.0" styleClass="textfield" stylesheets="@dashboard.css" />
+            <Label layoutX="41.0" layoutY="403.0" prefHeight="32.0" prefWidth="65.0" text="Tel">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <WebView fx:id="webView" layoutX="438.0" layoutY="44.0" onMouseClicked="#MapClick" prefHeight="636.0" prefWidth="465.0" />
+            <Button fx:id="add_agence_button1" layoutX="370.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#clearAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="TIMES" size="18.0" />
+               </graphic>
+            </Button>
+            <Button fx:id="translator_button1" layoutX="371.0" layoutY="331.0" mnemonicParsing="false" onAction="#openepltwindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+               <graphic>
+                  <FontAwesomeIconView fx:id="customer_print22" fill="WHITE" glyphName="LINE_CHART" size="18.0" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <JFXSlider fx:id="agences_slider" layoutX="359.0" layoutY="3.0" onDragDetected="#agences_slider_panes" onMouseClicked="#agences_slider_panes" />
+   </children>
+</AnchorPane>

@@ -153,6 +153,7 @@
 
         // Create new marker
         marker = L.marker([lat1, lon1], { icon: banektek }).addTo(map);
+        map.setView([lat1, lon1], map.getZoom());
     }
 
     function createMarkers(lat1, lon1,adresse) {

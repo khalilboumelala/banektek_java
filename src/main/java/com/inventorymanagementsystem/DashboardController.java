@@ -1,35 +1,25 @@
 package com.inventorymanagementsystem;
 
 //import atlantafx.base.controls.ToggleSwitch;
-import atlantafx.base.controls.Spacer;
-import atlantafx.base.theme.Styles;
 import atlantafx.base.util.Animations;
 import com.inventorymanagementsystem.services.*;
 
-import com.jfoenix.utils.JFXUtilities;
+import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXTreeView;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
+
 import javafx.event.Event;
 import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
 import javafx.scene.control.cell.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.Callback;
 import javafx.util.Duration;
-import net.sf.jasperreports.engine.export.tabulator.NestedTableCell;
-import org.controlsfx.control.HyperlinkLabel;
+import javafx.util.StringConverter;
 import org.controlsfx.control.ToggleSwitch;
-import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.kordamp.ikonli.javafx.Icon;
 import org.kordamp.ikonli.material2.Material2AL;
 
 
@@ -54,7 +44,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -70,9 +59,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.Rating;
-import org.controlsfx.control.textfield.TextFields;
 
-import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.File;
 import java.net.URI;
@@ -89,7 +76,6 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 //
 
 import java.io.IOException;
@@ -102,11 +88,9 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXListCell;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import org.kordamp.ikonli.material2.Material2MZ;
 
 //import com.gluonhq.charm.glisten.control.DropdownButton;
 
-import static java.util.stream.DoubleStream.generate;
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
 
 public class DashboardController implements Initializable {
@@ -192,72 +176,11 @@ private Button articles_btn;
     @FXML
     private ToggleSwitch frontbackarticlesswitch;
 
-    @FXML
-    private TextField lat_input;
-    @FXML
-    private TextField agence_tel_input;
-    @FXML
-    private TextField agence_nom_input;
-    @FXML
-    private TextField agence_adresse_input;
-    @FXML
-    private TextField lng_input;
+
     @FXML
     private TableView<Article> article_table;
     @FXML
     private JFXListView<Article> article_listview;
-
-//
-    @FXML
-    private TableView<Agence> agence_table;
-    @FXML
-    private JFXListView<Agence> agence_listview;
-
-    @FXML
-    private WebView webView;
-    @FXML
-    private WebView webViewClient;
-    @FXML
-    private TableColumn<Agence, java.util.Date> agence_col_dateajout;
-    @FXML
-    private TableColumn<Agence, Integer> agence_col_id;
-    @FXML
-    private TableColumn<Agence, String> agence_col_longitude;
-    @FXML
-    private TableColumn<Agence, String> agence_col_latitude;
-
-    @FXML
-    private TableColumn<Agence, String> agence_col_adresse;
-
-    @FXML
-    private TableColumn<Agence,String> agence_col_nom;
-
-    @FXML
-    private TableColumn<Agence,String> agence_col_etat;
-    @FXML
-    private TableColumn<Agence, Long> agence_col_tel;
-
-    @FXML
-    TableColumn<Article, Date> article_col_datepub ;
-    @FXML
-    TableColumn<Article, String> article_col_image ;
-    @FXML
-    TableColumn<Article, String> article_col_titre ;
-    @FXML
-    TableColumn<Article, String> article_col_auteur ;
-    @FXML
-    TableColumn<Article, Boolean> article_col_checkbox ;
-    @FXML
-    TableColumn<Article, Integer> article_col_id ;
-
-    @FXML
-    private Button add_agence_button;
-    @FXML
-    private Button delete_agence_button;
-    @FXML
-    private Button edit_agence_button;
-    @FXML
-    private Button translator_button;
     @FXML
     private Button article_add_button;
 
@@ -272,7 +195,7 @@ private Button articles_btn;
     private Label article_upload_status;
     @FXML
     private Button agences_btn;
-    //
+
 
     /////////::client //////:
     @FXML
@@ -304,364 +227,7 @@ private Button articles_btn;
     private TextField signature_client;
     @FXML
     private TextField pass_client;
-    //////table client//////
-    @FXML
-    private TableColumn<?, ?> table_client_nom;
-    @FXML
-    private TableColumn<?, ?> table_client_id;
-    @FXML
-    private TableColumn<?, ?> table_client_cin;
 
-    @FXML
-    private TableColumn<?, ?> table_client_tel;
-
-    @FXML
-    private TableColumn<?, ?> table_client_mail;
-    @FXML
-    private TableView<Client> client_table;
-    @FXML
-    private TextField client_search;
-
-
-    @FXML
-    public void addClient() {
-        if (nom_client.getText().isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez remplir les données obligatoires.");
-            alert.showAndWait();
-            return;
-        }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        long cinLong = Long.parseLong(cin_client.getText());
-        long telLong = Long.parseLong(tel_client.getText());
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "INSERT INTO client (dob, nom, prenom, cin, num_tel, genre, pays, adresse, email, document, signature, profession, date_creation, username, password, last_login, etat, photo) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setDate(1, java.sql.Date.valueOf("2023-11-22"));
-            preparedStatement.setString(2, nom_client.getText());
-            preparedStatement.setString(3, prenom_client.getText());
-            preparedStatement.setLong(4, cinLong);
-            preparedStatement.setLong(5, telLong);
-            preparedStatement.setString(6, genre_client.getText());
-            preparedStatement.setString(7, pays_client.getText());
-            preparedStatement.setString(8, adresse_client.getText());
-            preparedStatement.setString(9, mail_client.getText());
-            preparedStatement.setString(10, "cin");
-            preparedStatement.setString(11, signature_client.getText());
-            preparedStatement.setString(12, poste_client.getText());
-            preparedStatement.setDate(13, java.sql.Date.valueOf("2023-11-22"));
-            preparedStatement.setString(14, "username");
-            preparedStatement.setString(15, "password");
-            preparedStatement.setDate(16, java.sql.Date.valueOf("2023-11-22"));
-            preparedStatement.setString(17, "activer");
-            preparedStatement.setString(18, "ss");
-
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Client ajouté avec succès.");
-                successAlert.showAndWait();
-
-                ClearClientData();
-                showTableClient();
-
-            } else {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Erreur");
-                errorAlert.setHeaderText(null);
-                errorAlert.setContentText("Erreur lors de l'ajout du client.");
-                errorAlert.showAndWait();
-            }
-        } catch (Exception e) {
-            Alert exceptionAlert = new Alert(Alert.AlertType.ERROR);
-            exceptionAlert.setTitle("Exception");
-            exceptionAlert.setHeaderText(null);
-            exceptionAlert.setContentText("Une exception s'est produite lors de l'ajout du client. Veuillez vérifier les données.");
-            exceptionAlert.showAndWait();
-            e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    public ObservableList<Client> listClients() {
-        ObservableList<Client> clientList = FXCollections.observableArrayList();
-        connection = Database.getInstance().connectDB();
-        String sql = "SELECT * FROM CLIENT";
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                Client clientData = new Client(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nom"),
-                        resultSet.getString("prenom"),
-                        resultSet.getString("profession"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("photo"),
-                        resultSet.getDate("dob"),
-                        resultSet.getLong("cin"),
-                        resultSet.getString("adresse"),
-                        resultSet.getString("etat"),
-                        resultSet.getString("username"),
-                        resultSet.getLong("num_tel"),
-                        resultSet.getString("pays"),
-                        resultSet.getString("document")
-                );
-                clientList.add(clientData); // Ajouter chaque client à la liste
-            }
-
-        } catch (Exception err) {
-            err.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return clientList;
-    }
-
-
-
-    public void showTableClient(){
-        ObservableList<Client> clientList=listClients();
-        FXCollections.reverse(clientList); //pour inverser
-        table_client_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        table_client_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        table_client_cin.setCellValueFactory(new PropertyValueFactory<>("cin"));
-        table_client_tel.setCellValueFactory(new PropertyValueFactory<>("num"));
-        table_client_mail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
-        client_table.setItems(clientList);
-
-
-
-    }
-
-    @FXML
-    public void deleteClient(){
-        if(client_table.getSelectionModel().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select client for deletion.");
-            alert.showAndWait();
-            return;
-        }
-        connection = Database.getInstance().connectDB();
-        String sql="DELETE FROM CLIENT WHERE id=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,client_table.getSelectionModel().getSelectedItem().getId());
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Client deleted successfully.");
-                alert.showAndWait();
-                ClearClientData();
-                showTableClient();
-
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("No data present in the client table.");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-    public void ClearClientData(){
-        nom_client.setText("");
-        prenom_client.setText("");
-        cin_client.setText("");
-        tel_client.setText("");
-        mail_client.setText("");
-        adresse_client.setText("");
-        dob_client.setText("");
-        signature_client.setText("");
-        photo_client.setText("");
-        piece_client.setText("");
-        pays_client.setText("");
-        poste_client.setText("");
-        genre_client.setText("");
-        pass_client.setText("");
-    }
-    @FXML
-    public void selectClient() {
-        Client selectedClient = client_table.getSelectionModel().getSelectedItem();
-        if (selectedClient == null) {
-            // Aucun client sélectionné, rien à faire
-            return;
-        }
-
-        // Remplir les champs de texte avec les données du client sélectionné
-        nom_client.setText(selectedClient.getNom());
-        prenom_client.setText(selectedClient.getPrenom());
-        mail_client.setText(selectedClient.getEmail());
-        cin_client.setText(String.valueOf(selectedClient.getCin()));
-        genre_client.setText("homme");
-        pays_client.setText(selectedClient.getPays());
-        piece_client.setText(selectedClient.getDocument());
-        photo_client.setText(selectedClient.getPhoto());
-        tel_client.setText(String.valueOf(selectedClient.getNum()));
-        poste_client.setText(selectedClient.getPoste());
-        dob_client.setText(selectedClient.getDob().toString()); // Modifier en fonction de votre format de date
-        adresse_client.setText(selectedClient.getAdresse());
-        signature_client.setText(selectedClient.getDocument());
-        pass_client.setText(selectedClient.getPassword());
-    }
-    @FXML
-    public void updateClient() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "UPDATE CLIENT SET nom=?, prenom=?, profession=?, email=?, password=?, photo=?, dob=?, cin=?, adresse=?, num_tel=?, pays=?, document=? WHERE id=?";
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, nom_client.getText());
-            preparedStatement.setString(2, prenom_client.getText());
-            preparedStatement.setString(3, poste_client.getText());
-            preparedStatement.setString(4, mail_client.getText());
-            preparedStatement.setString(5, pass_client.getText());
-            preparedStatement.setString(6, photo_client.getText());
-            preparedStatement.setDate(7, Date.valueOf(dob_client.getText()));
-            preparedStatement.setLong(8, Long.parseLong(cin_client.getText()));
-            preparedStatement.setString(9, adresse_client.getText());
-
-            preparedStatement.setLong(10, Long.parseLong(tel_client.getText()));
-            preparedStatement.setString(11, pays_client.getText());
-            preparedStatement.setString(12, "document/cin");
-            preparedStatement.setInt(13,client_table.getSelectionModel().getSelectedItem().getId());
-
-            //  preparedStatement.setInt(12, Integer.parseInt(client_id.getText())); // Supposons que client_id est le champ ID du client à modifier
-
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Client updated successfully.");
-                successAlert.showAndWait();
-                ClearClientData();
-                showTableClient();
-                // Vous pouvez également actualiser ou recharger les données du tableau après la mise à jour
-            } else {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Error Message");
-                errorAlert.setHeaderText(null);
-                errorAlert.setContentText("Failed to update client. Please check the provided data.");
-                errorAlert.showAndWait();
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @FXML
-    public void printPdfClient(){
-        connection=Database.getInstance().connectDB();
-        String  sql = "SELECT id, nom, num_tel FROM client";
-        ;
-        try{
-            JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/customers.jrxml"));
-            JRDesignQuery updateQuery=new JRDesignQuery();
-            updateQuery.setText(sql);
-            jasperDesign.setQuery(updateQuery);
-            JasperReport jasperReport= JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,null,connection);
-            JasperViewer.viewReport(jasperPrint ,false);
-        }catch (Exception err){
-            err.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void searchClient() {
-        String searchText = client_search.getText().trim();
-
-        // Vérifier si le champ de recherche n'est pas vide
-        if (!searchText.isEmpty()) {
-            // Créer un filtre pour rechercher dans la table
-            FilteredList<Client> filteredData = new FilteredList<>(listClients(), p -> true);
-
-            // Appliquer le filtre en fonction du texte de recherche
-            filteredData.setPredicate(client -> {
-                // Convertir l'ID en String pour la comparaison
-                String idString = Integer.toString(client.getId());
-
-                // Convertir le numéro de téléphone en String pour la comparaison
-                String numTelString = Long.toString(client.getNum());
-
-                // Convertir le texte de recherche en minuscules pour une comparaison insensible à la casse
-                String lowerCaseFilter = searchText.toLowerCase();
-
-                if (idString.contains(lowerCaseFilter)) {
-                    return true; // Correspondance de l'ID
-                } else if (client.getNom().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Correspondance du nom
-                } else if (numTelString.contains(lowerCaseFilter)) {
-                    return true; // Correspondance du numéro de téléphone
-                }
-                return false; // Aucune correspondance
-            });
-
-            // Mettre à jour la TableView avec la liste filtrée
-            client_table.setItems(filteredData);
-        } else {
-            // Si le champ de recherche est vide, afficher tous les clients
-            client_table.setItems(listClients());
-        }
-    }
 
 
 
@@ -672,6 +238,8 @@ private Button articles_btn;
 
     @FXML
     private Button signout_btn;
+    @FXML
+    private Button comptes_btn;
 
 
 
@@ -734,6 +302,8 @@ private Button articles_btn;
 
         agences_btn.setOnMouseClicked(mouseEvent -> {
             ActivateThisAnchor(agences_pane,agences_btn);
+
+
         });
         articles_btn.setOnMouseClicked(mouseEvent -> {
 
@@ -757,7 +327,8 @@ private Button articles_btn;
         //user.setText(User.name.toUpperCase());
        // user.setText("banektek");
     }
-
+@FXML
+private AnchorPane comptes_pane;
     public void activateDashboard(){
         dashboard_pane.setVisible(true);
         comptes_pane.setVisible(false);
@@ -796,32 +367,38 @@ private Button articles_btn;
 
     }
 
+    FXMLLoader loaderAgence= new FXMLLoader(getClass().getResource("Agence.fxml"));
+    Pane AgenceLoadedPane;
+    public void initializeAllFxml(){
+
+        try {
+            // Load the FXML file
+           AgenceLoadedPane = loaderAgence.load();
+            // Add the loaded Pane to secPane
+            agences_pane.getChildren().add(AgenceLoadedPane);
+            agences_pane.toFront();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Exports all modules to other modules
         Modules.exportAllToAll();
 
         setUsername();
-        showTableClient();
+        //showTableClient();
 
 
-        //Affichage map
-        WebEngine webengine;
-        webengine = webView.getEngine();
-        WebEngine webengine2;
-        webengine2 = webViewClient.getEngine();
-
-        url = this.getClass().getResource("map/index.html");
-        webengine.load(url.toString());
-        webengine2.load(url.toString());
-
-//
-        showAgenceData();
+initializeAllFxml();
 
         showArticleData();
         addarticlepanes();
 
-        showCompteData();
+    /*    showCompteData();
         initializeCompteListSelection();
 
         showCarteData();
@@ -835,463 +412,16 @@ private Button articles_btn;
 
         showTransactionData();
         initializeTransactionListSelection();
+*/
+
+
+        populateTreeView(comment_treeview);
 
 /*
         agence_listview.setExpanded(true);
         agence_listview.depthProperty().set(1);*/
-/*
-     article_col_datepub = new TableColumn<>("Date Pub");
-       article_col_image = new TableColumn<>("Image");
-        article_col_titre = new TableColumn<>("Titre");
-         article_col_auteur = new TableColumn<>("Auteur");*/
-        connection = Database.getInstance().connectDB();
-
-    }
-    //ARTICLES-AGENCES
-//agence
-
-    @FXML
-    private void MapClick() {
-
-        // Retrieve the latitude and longitude values from JavaScript
-        Object latResult = webView.getEngine().executeScript("lat");
-        Object lonResult = webView.getEngine().executeScript("lon");
-
-        // Check if latitude and longitude values are not null and are valid numbers
-        if (latResult != null && lonResult != null && latResult instanceof Number && lonResult instanceof Number) {
-            double lat = ((Number) latResult).doubleValue();
-            double lon = ((Number) lonResult).doubleValue();
-
-            // Display latitude and longitude values
-            lat_input.setText(String.valueOf(lat));
-            lng_input.setText(String.valueOf(lon));
-            System.out.println("lat: "+lat+" lon: "+lon);
-            // Call JavaScript function to create marker
-            webView.getEngine().executeScript("createMarker("+lat+","+lon+")");
-
-            // Retrieve address and set it in the text field
-            String address = returnAddressAndHandle(lat, lon);
-            System.out.println(lat + " , " + lon + " , " + address);
-            agence_adresse_input.setText(String.valueOf(address));
-        } else {
-            System.err.println("Error: Latitude or Longitude is null or not a number");
-        }
-    }
-
-
-    public static String returnAddressAndHandle(double lat, double lon) {
-        String address = null;
-        try {
-            // Create the URL for the reverse geocoding API
-            String urlString = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + lon+"&accept-language=fr";
-            URL url = new URL(urlString);
-
-            // Open connection
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            // Get response code
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Read response
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                // Parse JSON response
-                // Attempt to extract address from the 'display_name' field
-                Pattern pattern = Pattern.compile("\"display_name\":\"(.*?)\"");
-                Matcher matcher = pattern.matcher(response.toString());
-                if (matcher.find()) {
-                    address = matcher.group(1);
-                }
-            } else {
-                System.err.println("Failed to fetch address. Response code: " + responseCode);
-            }
-
-            // Disconnect
-            connection.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return address;
-    }
-
-
-    public void returntranslation() throws IOException, InterruptedException {
-        /*HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://google-translate1.p.rapidapi.com/language/translate/v2/detect"))
-                .header("content-type", "application/x-www-form-urlencoded")
-                .header("Accept-Encoding", "application/gzip")
-                .header("X-RapidAPI-Key", "7a9f9612aemsh9673ccae68eefcap16afb3jsn3ab3b4b815e5")
-                .header("X-RapidAPI-Host", "google-translate1.p.rapidapi.com")
-                .method("POST", HttpRequest.BodyPublishers.ofString("q=English%20is%20hard%2C%20but%20detectably%20so"))
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());*/
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://currency-exchange.p.rapidapi.com/exchange?from=EUR&to=TND&q=1.0"))
-                .header("X-RapidAPI-Key", "7a9f9612aemsh9673ccae68eefcap16afb3jsn3ab3b4b815e5")
-                .header("X-RapidAPI-Host", "currency-exchange.p.rapidapi.com")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-
-    }
-
-ArticleService articleService=new ArticleService(connection);
-//AgenceService agenceService=new AgenceService(connection);
-    public void addAgenceData() {
-
-        if (agence_nom_input.getText().isBlank() || agence_tel_input.getText().isBlank() || agence_adresse_input.getText().isBlank() || lat_input.getText().isBlank() || lng_input.getText().isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill all the mandatory data such as name, telephone number, address, latitude, and longitude.");
-            alert.showAndWait();
-
-            return;
-        }
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "INSERT INTO Agence(adresse, nom, num_tel, etat, data_ajout, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
-
-            // Set parameters
-            preparedStatement.setString(1, agence_adresse_input.getText());
-            preparedStatement.setString(2, agence_nom_input.getText());
-            preparedStatement.setString(3, agence_tel_input.getText());
-            preparedStatement.setString(4, "Normal"); // Default value for etat
-            preparedStatement.setDate(5, java.sql.Date.valueOf(LocalDate.now())); // Current date for data_ajout
-            preparedStatement.setString(6, lat_input.getText());
-            preparedStatement.setString(7, lng_input.getText());
-
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                // Success message
-                showAgenceData();
-                clearAgenceData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to add agence data.");
-                alert.showAndWait();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-
-
-
-
-    public void clearAgenceData() {
-        agence_nom_input.clear();
-        agence_tel_input.clear();
-        agence_adresse_input.clear();
-        lat_input.clear();
-        lng_input.clear();
-    }
-
-    public ObservableList<Agence> listAgenceData() {
-        ObservableList<Agence> agenceList = FXCollections.observableArrayList();
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "SELECT * FROM agence";
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                Agence agenceData = new Agence(
-                        resultSet.getInt("id"),
-                        resultSet.getString("adresse"),
-                        resultSet.getString("nom"),
-                        resultSet.getLong("num_tel"),
-                        "Normal", // Set etat to "Normal" initially
-                        0,
-                        resultSet.getDate("data_ajout"), // Set data_ajout to the current date
-
-                        resultSet.getString("latitude"),
-                        resultSet.getString("longitude")
-                );
-                agenceList.add(agenceData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return agenceList;
-    }
-
-    public void showAgenceData() {
-        ObservableList<Agence> agenceList = listAgenceData();
-
-        // Assuming the table columns are properly defined as TableColumn<Agence, T>
-
-
-
-       //
-        agence_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(Agence agence, boolean empty) {
-                super.updateItem(agence, empty);
-                if (empty || agence == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView addressIcon = new FontAwesomeIconView(FontAwesomeIcon.MAP_MARKER);
-                    addressIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    addressIcon.setSize("2em"); // Set icon size
-                    Text addressText = new Text(" " + agence.getAdresse());
-
-                    FontAwesomeIconView nameIcon = new FontAwesomeIconView(FontAwesomeIcon.ADDRESS_CARD);
-                    nameIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    nameIcon.setSize("2em"); // Set icon size
-                    Text nameText = new Text(" " + agence.getNom());
-
-
-                    FontAwesomeIconView telephoneIcon = new FontAwesomeIconView(FontAwesomeIcon.PHONE);
-                    telephoneIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    telephoneIcon.setSize("2em"); // Set icon size
-                    Text telephoneText = new Text(" " + agence.getNumTel());
-
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(nameIcon, nameText,addressIcon, addressText , telephoneIcon, telephoneText);
-                    //container.getChildren().addAll();
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null);
-                    setGraphic(container);
-                }
-            }
-
-        });
-        agence_listview.setItems(agenceList);
-
-
-    }
-
-
-    public void show_agences_map() {
-        ObservableList<Agence> agenceList = listAgenceData();
-
-        for (Agence agence : agenceList) {
-            double lat = Double.parseDouble(agence.getLatitude());
-            double lon = Double.parseDouble(agence.getLongitude());
-            String adresse = agence.getNom();
-
-            // Escape special characters in the address string and enclose it within quotes
-            adresse = "'" + adresse.replace("'", "\\'") + "'";
-
-            // Call the JavaScript function with properly formatted parameters
-            webViewClient.getEngine().executeScript("createMarkers(" + lat + "," + lon + "," + adresse + ")");
-        }
-    }
-
-@FXML
-  private AnchorPane  agences_front_anchorpane;
-    @FXML
-  private AnchorPane  agences_back_anchorpane;
-    @FXML
-    public void switchfrontbackagences(){
-
-        if (agences_front_anchorpane.isVisible()) {
-            agences_front_anchorpane.setVisible(false);
-            agences_back_anchorpane.setVisible(true);
-        }
-        else
-        {
-            agences_back_anchorpane.setVisible(false);
-            agences_front_anchorpane.setVisible(true);
-        }
-    }
-   Integer agence_id;
-
-
-    public void selectAgenceTableData(){
-        int num=agence_table.getSelectionModel().getSelectedIndex();
-        Agence agenceData=agence_table.getSelectionModel().getSelectedItem();
-        if(num-1 < -1){
-            return;
-        }
-
-        agence_nom_input.setText(agenceData.getNom());
-        agence_tel_input.setText(String.valueOf(agenceData.getNumTel()));
-        lat_input.setText(agenceData.getLatitude());
-        lng_input.setText(agenceData.getLongitude());
-        agence_adresse_input.setText(agenceData.getAdresse());
-        agence_id=agenceData.getId();
-        System.out.println(agenceData.toString());
-        //complete from here..
-    }
-
-    public void updateAgenceData(){
-        if (agence_nom_input.getText().isBlank() || agence_tel_input.getText().isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as name, phone number.");
-            alert.showAndWait();
-            return;
-        }
 
         connection = Database.getInstance().connectDB();
-        String sql = "UPDATE agence SET nom=?,num_tel=?,adresse=?,latitude=?,longitude=? WHERE id=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, agence_nom_input.getText());
-            preparedStatement.setString(2, agence_tel_input.getText());
-            preparedStatement.setString(3, agence_adresse_input.getText());
-            preparedStatement.setString(4, lat_input.getText());
-            preparedStatement.setString(5, lng_input.getText());
-            preparedStatement.setLong(6, agence_id);
-            int result = preparedStatement.executeUpdate();
-
-
-            if (result > 0) {
-                // Refresh Agence data in the table
-             //   clearAgenceData();
-                agence_table.getItems().clear();
-                showAgenceData();
-
-                // Clear input fields if needed
-                // agenceClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to update Agence data.");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
-
-    public void deleteAgenceData(){
-        if (agence_table.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select Agence for deletion.");
-            alert.showAndWait();
-            return;
-        }
-        connection = Database.getInstance().connectDB();
-        String sql = "DELETE FROM agence WHERE id=?";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1,agence_id);
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                // Refresh Agence data in the table
-                webView.getEngine().executeScript("removeAllMarkers() ");
-                showAgenceData();
-                // Clear input fields if needed
-                // agenceClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("No data present in the Agence table.");
-                alert.showAndWait();
-            }
-        } catch (Exception err) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-
-    public void openexchangewindow(){
-        try{
-            Parent root = FXMLLoader.load(getClass().getResource("viewconverter.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage=new Stage();
-            root.setOnMousePressed((event)->{
-                x=event.getSceneX();
-                y=event.getSceneY();
-            });
-            root.setOnMouseDragged((event)->{
-                stage.setX(event.getScreenX()-x);
-                stage.setY(event.getScreenY()-y);
-            });
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.show();
-        }catch (Exception err){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        }
-
 
     }
 
@@ -1366,6 +496,8 @@ VBox articlesContainer;
         for(Article article : articles) {
             // Create a new pane for each article
             ArticlePane articlePane = new ArticlePane(article.getId()); // Assuming getId() returns the ID of the article
+            articlePane.setContenu(article.getContenu());
+            articlePane.setTitre(article.getTitre());
             articlePane.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
             articlePane.setPrefWidth(articleWidth);
 
@@ -1373,8 +505,8 @@ VBox articlesContainer;
 
             // Create ImageView for the image
             ImageView imageView = new ImageView(new Image("file:C:/" + article.getImage()));
-            imageView.setFitWidth(articleWidth-20);
-            imageView.setFitHeight(articleHeight-20);
+            imageView.setFitWidth(articleWidth-0);
+            imageView.setFitHeight(articleHeight-0);
             imageView.setOpacity(0.35);
 
             Text titleLabel = new Text(article.getTitre());
@@ -1400,7 +532,7 @@ VBox articlesContainer;
             if (articlesPerRow >= 3) {
                 articlesContainer.getChildren().add(currentRow);
                 currentRow = new HBox(10);
-                currentRow.setAlignment(Pos.CENTER); // Align articles in the center horizontally
+            ///    currentRow.setAlignment(Pos.CENTER); // Align articles in the center horizontally
                 articlesPerRow = 0;
             }
         }
@@ -1420,7 +552,11 @@ VBox articlesContainer;
 
     @FXML
     AnchorPane mainAnchorpane;
-
+    @FXML
+    private TextArea add_comment_field ;
+     @FXML
+private     Rating article_rating;
+    ArticlePane clonedPane = new ArticlePane();
     @FXML
     private void list_article_comments() {
         for (Node node : articlesContainer.getChildren()) {
@@ -1432,33 +568,15 @@ VBox articlesContainer;
 
                         articlePane.setOnMouseClicked(event -> {
                             int articleId = articlePane.getArticleId();
+                            String titre=articlePane.getTitre();
+                            String Contenu= articlePane.getContenu();
+                            article_titre_input.setText(titre);
+                            //
+                            article_contenu_input.setPrefRowCount(10);
+                            article_contenu_input.setWrapText(true);
+                            article_contenu_input.setText(Contenu);
 
-                            // Clear existing content of comments_pane
-                            comments_pane.getChildren().clear();
-
-                            // Clone the clicked article pane
-                            ArticlePane clonedPane = cloneArticlePane(articlePane);
-
-                            // Retrieve comments for the article
-                            ObservableList<Commentaire> comments = listCommentsById( clonedPane.getArticleId());
-                            VBox commentContainer = createCommentContainer(comments);
-
-                            // Create Rating and TextArea for adding comments
-                            Rating rating = new Rating();
-                            TextArea add_comment_field = createCommentField();
-
-                            // Layout for adding comments and existing comments
-                            HBox addCommentAndCommentsHBox = new HBox(100);
-                            addCommentAndCommentsHBox.getChildren().addAll(add_comment_field);
-                        //    addCommentAndCommentsHBox.setPrefHeight(100); // Adjust the value as needed
-
-                            // Add the cloned article pane and comments layout to the comments_pane
-                            VBox vBox = new VBox(100); // No spacing between children
-                            vBox.getChildren().addAll(clonedPane, addCommentAndCommentsHBox);
-                            comments_pane.getChildren().add(vBox);
-
-                            // Activate the comments_pane
-                            ActivateThisAnchor(comments_pane, comments_btn);
+                           addcommentpane(articlePane);
                         });
                     }
                 }
@@ -1466,12 +584,163 @@ VBox articlesContainer;
         }
     }
 
+    @FXML
+    JFXSlider comments_slider;
+    @FXML
+    public void comment_slider_panes(){
+
+        double position = comments_slider.getValue();
+
+        if (position >= 0 && position < 50) {
+            comment_anchorpane1.setVisible(false);
+            comment_anchorpane2.setVisible(true);
+        } else if (position >= 51 && position < 100) {
+            comment_anchorpane2.setVisible(false);
+            comment_anchorpane1.setVisible(true);
+        }
+
+    }
+
+
+
+@FXML
+AnchorPane comment_anchorpane1;
+    @FXML
+    AnchorPane comment_anchorpane2;
+
+    @FXML
+    public void switchfrontbackcomments(){
+
+        if (comment_anchorpane1.isVisible()) {
+            comment_anchorpane1.setVisible(false);
+            comment_anchorpane2.setVisible(true);
+        }
+        else
+        {
+            comment_anchorpane2.setVisible(false);
+            comment_anchorpane1.setVisible(true);
+        }
+    }
+@FXML
+private    Button editButton ;
+ public void   addcommentpane(ArticlePane articlePane)
+ {
+     comment_anchorpane1.getChildren().clear();
+     clonedPane = cloneArticlePane(articlePane);
+
+
+     // Retrieve comments for the article
+     ObservableList<Commentaire> comments = listCommentsById( clonedPane.getArticleId());
+     //  VBox commentContainer = createCommentContainer(comments);
+
+     // Create Rating and TextArea for adding comments
+     // Rating rating = new Rating();
+     createCommentField();
+     Button addButton = new Button("POST");
+     editButton.setText("EDIT");
+
+     addButton.setStyle("-fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);\n" +
+             "-fx-background-radius:3px;\n" +
+             "-fx-cursor:hand;\n" +
+             "-fx-text-fill:#fff;");
+     editButton.setStyle("-fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);\n" +
+             "-fx-background-radius:3px;\n" +
+             "-fx-cursor:hand;\n" +
+             "-fx-text-fill:#fff;");
+     addButton.setLayoutX(467);
+     addButton.setLayoutY(141);
+     addButton.setOnAction(eventt -> addComment(articlePane.getArticleId()) );
+     editButton.setLayoutX(467);
+     editButton.setLayoutY(190);
+     editButton.setOnAction(eventt -> {
+         ActivateThisAnchor(articles_pane,articles_btn) ;
+         articles_back_anchorpane.setVisible(true);articles_front_anchorpane.setVisible(false);
+
+
+     });
+     // Layout for adding comments and existing comments
+     HBox addCommentAndCommentsHBox = new HBox(100);
+     addCommentAndCommentsHBox.getChildren().addAll(add_comment_field,addButton);
+     //    addCommentAndCommentsHBox.setPrefHeight(100); // Adjust the value as needed
+
+     // Add the cloned article pane and comments layout to the comments_pane
+     VBox vBox = new VBox(100); // No spacing between children
+     vBox.getChildren().addAll(clonedPane, addCommentAndCommentsHBox);
+     // Add the cloned article pane and comments layout to the comments_pane
+     AnchorPane.setTopAnchor(vBox, 10.0); // Set the top margin of vBox
+     AnchorPane.setLeftAnchor(vBox, 10.0); // Set the left margin of vBox
+     //  AnchorPane.setTopAnchor(article_rating, 500.0); // Set the top margin of article_rating
+     AnchorPane.setLeftAnchor(article_rating, 30.0); // Set the right margin of article_rating
+     AnchorPane.setBottomAnchor(article_rating,5.0);
+     AnchorPane.setLeftAnchor(editButton, 320.0); // Set the right margin of article_rating
+     AnchorPane.setBottomAnchor(editButton,10.0);
+     editButton.setVisible(true);
+     article_rating.setVisible(true);
+     comment_anchorpane1.getChildren().addAll(vBox,article_rating,editButton);
+
+     // Activate the comments_pane
+     ActivateThisAnchor(comments_pane, comments_btn);
+
+
+ }
+
+    public void addComment(Integer article_id) {
+        // Check if any mandatory fields are blank
+        // Here, you would typically check if the user has provided all necessary information for adding a comment to the article
+
+        // Assuming that the user input for the comment is stored in a variable called "commentContent"
+        if (add_comment_field.getText().equals("")) {
+           Animations.shakeX( add_comment_field).playFromStart();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill the comment content.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Create a Commentaire instance
+        Commentaire commentaire = new Commentaire();
+        commentaire.setArticleId(article_id);
+        commentaire.setContenu(add_comment_field.getText()); // Assuming commentContent is the content of the comment
+        commentaire.setDate(new java.util.Date()); // Set the current date for the comment
+        commentaire.setNote((int) article_rating.getRating()); // Set the rating
+
+        // Call the service to add the comment to the database
+        boolean result = CommentaireService.getInstance().add(commentaire);
+
+        if (result) {
+            // Success message
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Comment Added.");
+            alert.showAndWait();
+        } else {
+            // Error message
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Failed to add the comment.");
+            alert.showAndWait();
+        }
+
+       // comments_pane.getChildren().clear();
+      //  ObservableList<Commentaire> comments = listCommentsById(article_id);
+
+       addcommentpane(clonedPane.getOriginal());
+        populateTreeView(comment_treeview);
+    }
+
+    VBox commentContainer;
+
     // Helper method to clone the article pane
     private ArticlePane cloneArticlePane(ArticlePane articlePane) {
         ArticlePane clonedPane = new ArticlePane();
         clonedPane.setStyle("-fx-border-width: 0;");
         clonedPane.setPrefSize(articlePane.getPrefWidth() + 100, articlePane.getPrefHeight() + 100);
         clonedPane.setArticleId(articlePane.getArticleId());
+        clonedPane.setOriginal(articlePane);
         Integer textcounter=0;
         for (Node child : articlePane.getChildren()) {
             if (child instanceof ImageView) {
@@ -1490,7 +759,7 @@ VBox articlesContainer;
 
                 if (textcounter==2) {
                     ObservableList<Commentaire> comments = listCommentsById(clonedPane.getArticleId()); // Replace with actual comments list
-                    VBox commentContainer = createCommentContainer(comments);
+                     commentContainer = createCommentContainer(comments);
 
                     commentContainer.setLayoutX(((Text) child).getLayoutX() + 400);
                     commentContainer.setLayoutY(((Text) child).getLayoutY() + 350);
@@ -1502,8 +771,7 @@ VBox articlesContainer;
                     clonedPane.getChildren().addAll(text,commentslabel,commentContainer);
 
                 }
-                else
-                clonedPane.getChildren().add(text);
+                else clonedPane.getChildren().add(text);
             }
         }
 
@@ -1517,6 +785,10 @@ VBox articlesContainer;
     }
 
     private VBox createCommentContainer(ObservableList<Commentaire> comments) {
+        if (comments.isEmpty()) {
+            // If no comments are found, return an empty VBox
+            return new VBox();
+        }
         int pageSize = 2; // Number of comments per page
         int pageCount = (int) Math.ceil((double) comments.size() / pageSize);
 
@@ -1590,7 +862,9 @@ VBox articlesContainer;
                 // Event listener for deleting comments (to be added later)
                 deleteIcon.setOnMouseClicked(event -> {
                     // Empty event listener for deleting comments
-                    // Add your delete logic here
+                    CommentaireService.getInstance().delete(comment.getId());
+                    addcommentpane(clonedPane.getOriginal());
+                    showAlertArticle(Alert.AlertType.INFORMATION, "Success", null, "Commentaire supprime avec succes.");
                 });
 
                 // Footer containing the X icon
@@ -1614,17 +888,61 @@ VBox articlesContainer;
 
 
     // Helper method to create the TextArea for adding comments
-    private TextArea createCommentField() {
-        TextArea add_comment_field = new TextArea();
+    private void createCommentField() {
+
         add_comment_field.setPrefRowCount(3);
         add_comment_field.setPrefColumnCount(24);
         add_comment_field.setPromptText("Add a comment");
+add_comment_field.setVisible(true);
 
-        return add_comment_field;
     }
     //
+@FXML
+    JFXTreeView<Object> comment_treeview=new JFXTreeView<>();
 
+    public void populateTreeView(JFXTreeView<Object> treeView) {
+        // Clear existing items
+      // treeView.getRoot().getChildren().clear();
 
+        // Get articles from the database or wherever they are stored
+        List<Article> articles = ArticleService.getInstance().getAll();
+
+        // Create root node
+        FontAwesomeIconView commentIcon = new FontAwesomeIconView(FontAwesomeIcon.COMMENT);
+        commentIcon.setSize("24");
+        commentIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
+
+        TreeItem<Object> rootItem = new TreeItem<>("Commentaires", commentIcon);
+        treeView.setRoot(rootItem);
+        rootItem.setExpanded(true);
+
+        // Populate tree with articles and their comments
+        for (Article article : articles) {
+            FontAwesomeIconView articleIcon = new FontAwesomeIconView(FontAwesomeIcon.BOOK);
+            articleIcon.setSize("24");
+            articleIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
+
+           TreeItem articleItem = new TreeItem(article.getTitre(),articleIcon);
+
+            // Get comments for this article
+            List<Commentaire> comments = listCommentsById(article.getId());
+
+            // Add comments as child nodes
+            for (Commentaire comment : comments) {
+               String nomuser=getEntityProperty("client",comment.getUserId(),"nom");
+               String prenomuser=getEntityProperty("client",comment.getUserId(),"prenom");
+                FontAwesomeIconView CommentIcon = new FontAwesomeIconView(FontAwesomeIcon.COMMENT);
+                CommentIcon.setSize("12");
+                CommentIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
+
+                TreeItem commentItem = new TreeItem(comment.getContenu()+" By user " +nomuser+" "+prenomuser,CommentIcon);
+                articleItem.getChildren().add(commentItem);
+            }
+
+            // Add article node to root
+            rootItem.getChildren().add(articleItem);
+        }
+    }
     public ObservableList<Commentaire> listCommentsById(Integer id) {
         ObservableList<Commentaire> commentList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -1778,57 +1096,18 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 }
 
 
-    // Method to retrieve the ID of the last article added from the database
-    private int getLastArticleIdFromDatabase() {
-        int lastArticleId = 0;
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "SELECT id FROM article ORDER BY id DESC LIMIT 1";
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
 
-            if (resultSet.next()) {
-                lastArticleId = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return lastArticleId;
-    }
 
     // Global variable to store the path of the uploaded image
     private String imagePath = "";
+    @FXML
+    private ImageView Photoarticle;
 
     @FXML
     private void uploadImageArticle(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a File to Upload");
+        fileChooser.setInitialDirectory(new File("C:/Users/khali/Downloads")); // Set initial directory to C:/Users/Downloads
 
         // Set file extension filters if needed
         fileChooser.getExtensionFilters().addAll(
@@ -1840,19 +1119,29 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
         if (selectedFile != null) {
             try {
-                // Retrieve the articles from the database to get the last article ID
-                int lastArticleId = getLastArticleIdFromDatabase();
-
-                // Generate the new article ID by incrementing the last article ID
-                int newArticleId = lastArticleId + 1;
-
-                // Rename the file with the new article ID
-                String fileName = "article_" + newArticleId+".png" ;
-                File destination = new File("C:/uploads/" + fileName);
+                // Generate a UUID to use as the filename
+                String uniqueFileName = UUID.randomUUID().toString().substring(0, 8);;
+                // Get the file extension from the selected file
+                String fileExtension = selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+                // Construct the filename with the UUID and file extension
+                String fileName = uniqueFileName + fileExtension;
+                // Define the destination directory
+                File destinationDirectory = new File("C:/uploads/");
+                // If the directory doesn't exist, create it
+                if (!destinationDirectory.exists()) {
+                    destinationDirectory.mkdirs();
+                }
+                // Construct the destination file path
+                File destination = new File(destinationDirectory, fileName);
+                // Copy the selected file to the destination
                 Files.copy(selectedFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 // Update the global variable with the image path
                 imagePath = "uploads/" + fileName;
+
+                // Load the image into the ImageView
+                Image image = new Image(destination.toURI().toString());
+                Photoarticle.setImage(image);
 
                 // Update the image path in the database or store it temporarily to be used when adding an article
                 // For now, you can just print the path
@@ -1867,115 +1156,130 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         }
     }
 
+    int selectedArticle=0;
+    private void shakeTextField(TextField textField) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), textField);
+        shake.setByX(10f);
+        shake.setCycleCount(5);
+        shake.setAutoReverse(true);
+        shake.play();
+    }
+
+    private void shakeTextArea(TextArea textField) {
+        TranslateTransition shake = new TranslateTransition(Duration.millis(100), textField);
+        shake.setByX(10f);
+        shake.setCycleCount(5);
+        shake.setAutoReverse(true);
+        shake.play();
+    }
     @FXML
-    public void addArticleData() {
-        if (article_titre_input.getText().isBlank() || article_contenu_input.getText().isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill all the mandatory data such as title and content.");
-            alert.showAndWait();
+    public void addOrUpdateArticleData() {
+        // Input validation
+        boolean isAnyArticleFieldEmpty = false;
+
+        if (article_titre_input.getText().isBlank()) {
+            shakeTextField(article_titre_input);
+            article_titre_input.setStyle("-fx-border-color: red;");
+            isAnyArticleFieldEmpty = true;
+        }
+
+        if (article_contenu_input.getText().isBlank()) {
+            shakeTextArea(article_contenu_input);
+            article_contenu_input.setStyle("-fx-border-color: red;");
+            isAnyArticleFieldEmpty = true;
+        }
+
+// Show overall alert if any article field is empty
+        if (isAnyArticleFieldEmpty) {
+            showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Veuillez remplir tous les champs.");
             return;
         }
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "INSERT INTO article(id_agent_id, contenu, image, titre, date_pub) VALUES (?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
 
-            // Set parameters
-            preparedStatement.setInt(1, 11); // Assuming id_agent is 1
-            preparedStatement.setString(2, article_contenu_input.getText());
-            preparedStatement.setString(3, imagePath); // Use the global variable for the image path
-            preparedStatement.setString(4, article_titre_input.getText());
-            preparedStatement.setDate(5, java.sql.Date.valueOf(LocalDate.now())); // Current date for date_pub
+        // Create Article object from FXML input fields
+        Article article = new Article();
+        article.setContenu(article_contenu_input.getText());
+        article.setImage(imagePath); // Use the global variable for the image path
+        article.setTitre(article_titre_input.getText());
+        article.setDatePub(java.sql.Date.valueOf(LocalDate.now())); // Current date for date_pub
 
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                // Success message
+
+        // Determine if an existing article is selected
+        selectedArticle = clonedPane.getArticleId();//article_listview.getSelectionModel().getSelectedItem();
+        if (selectedArticle != 0) {
+            // If an article is selected, update its data
+            article.setId(selectedArticle); // Set the ID of the selected article
+            article.setIdAgent(Integer.parseInt(getEntityProperty("article",selectedArticle,"id_agent_id")));
+            if (Objects.equals(imagePath, ""))  article.setImage(getEntityProperty("article",selectedArticle,"image"));
+
+
+            if (ArticleService.getInstance().edit(article)) {
+                showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Article updated successfully.");
                 showArticleData();
-                //  clearArticleData();
+                clearArticleData();
+                articles_front_anchorpane.getChildren().clear();
+                addarticlepanes();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to add article data.");
-                alert.showAndWait();
+                showAlertArticle(Alert.AlertType.ERROR, "Error Message", null, "Failed to update article data.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        } else {
+            // If no article is selected, add a new article
+            if (ArticleService.getInstance().add(article)) {
+                showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Article added successfully.");
+                showArticleData();
+                clearArticleData();
+            } else {
+                showAlertArticle(Alert.AlertType.ERROR, "Error Message", null, "Failed to add article data.");
             }
         }
+        addarticlepanes();
+    }
+    private void initializeslider(){
+
+        // Set the formatter for the indicator text
+
+        comments_slider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double value) {
+                // Customize the format of the indicator text
+                if (value >= 0 && value < 50) {
+                    // Return the first string when the value is between 0 and 33
+                    return "Back";
+                } else if (value >= 51 && value <= 100) {
+                    // Return the second string when the value is between 68 and 100
+                    return "Front";
+                } else {
+                    // Return an empty string for other values
+                    return "";
+                }
+            }
+
+            @Override
+            public Double fromString(String string) {
+                // Not needed for this example
+                return null;
+            }
+        });
     }
 
-    public ObservableList<Article> listArticleData() {
-        ObservableList<Article> articleList = FXCollections.observableArrayList();
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = Database.getInstance().connectDB();
-            String sql = "SELECT * FROM article";
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
 
-            while (resultSet.next()) {
-
-                Article articleData = new Article(
-                        resultSet.getInt("id"),
-                        resultSet.getInt("id_agent_id"),
-                        resultSet.getString("contenu"),
-                        resultSet.getString("image"),
-                        resultSet.getString("titre"),
-                        resultSet.getDate("date_pub")
-                );
-                articleList.add(articleData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return articleList;
+    public void clearArticleData() {
+        article_contenu_input.clear();
+        article_titre_input.clear();
+        article_listview.getSelectionModel().clearSelection();
+        selectedArticle=0;
     }
+    private void showAlertArticle(Alert.AlertType alertType, String title, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+
+
+
 
 
     private void validate(CheckBox checkBox,Article a, Event event) {
@@ -1986,7 +1290,9 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         a.setSelected(true);
     }
     public void showArticleData() {
-       ObservableList<Article> articleList = listArticleData();
+
+     List<Article> listart=   ArticleService.getInstance().getAll();
+       ObservableList<Article> articleList = FXCollections.observableArrayList(listart);
 
 
         article_listview.setCellFactory(param -> new JFXListCell<>() {
@@ -2003,7 +1309,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                     container.setSpacing(5); // Adjust spacing as needed
 
                     // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView titleIcon = new FontAwesomeIconView(FontAwesomeIcon.ADDRESS_CARD);
+                    FontAwesomeIconView titleIcon = new FontAwesomeIconView(FontAwesomeIcon.BOOK);
                     titleIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
                     titleIcon.setSize("2em"); // Set icon size
                     Text titleText = new Text(" " + article.getTitre());
@@ -2036,24 +1342,25 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
     }
 
-    public void selectArticleTableData(){
-        int num=article_table.getSelectionModel().getSelectedIndex();
-        Article articleData=article_table.getSelectionModel().getSelectedItem();
+    /*public void selectArticleTableData(){
+      int num=article_listview.getSelectionModel().getSelectedIndex();
+        Article articleData=article_listview.getSelectionModel().getSelectedItem();
         if(num-1 < -1){
             return;
         }
 
         article_titre_input.setText(articleData.getTitre());
+      //
+        article_contenu_input.setPrefRowCount(10);
+        article_contenu_input.setWrapText(true);
         article_contenu_input.setText(articleData.getContenu());
 
-
-    }
+    }*/
 
     public void deleteSelectedArticles() {
         System.out.println("hello");
-        ObservableList<Article> selectedArticles = article_table.getItems()
-                .filtered(article -> article.isSelected().get());
-        if (selectedArticles.isEmpty()) {
+       int selectedArticles = selectedArticle;//article_listview.getSelectionModel().getSelectedItem();
+        if (selectedArticles!=0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Message");
             alert.setHeaderText(null);
@@ -2061,1162 +1368,14 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
             alert.showAndWait();
             return;
         }
-
-        connection = Database.getInstance().connectDB();
-        String sql = "DELETE FROM article WHERE id=?";
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            for (Article article : selectedArticles) {
-                preparedStatement.setInt(1, article.getId()); // Assuming 'getId()' returns article's ID
-                preparedStatement.addBatch(); // Add delete query to batch
-
-            }
-            int[] results = preparedStatement.executeBatch(); // Execute batch
-            int totalDeleted = Arrays.stream(results).sum(); // Total number of deleted rows
-
-            if (totalDeleted > 0) {
-                // Refresh article data in the table
-                showArticleData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("No data present in the article table.");
-                alert.showAndWait();
-            }
-        } catch (SQLException err) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
-            alert.showAndWait();
-        } finally {
-            // Close resources
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                // Handle close exceptions
-            }
-        }
-    }
-    //COMPTES
-    @FXML
-    private Button comptes_btn;
-
-    @FXML
-    private AnchorPane comptes_pane;
-
-    @FXML
-    private AnchorPane compte_anchorpane;
-
-    @FXML
-    private Label compte_title;
-
-    @FXML
-    private TextField compte_type_input;
-
-    @FXML
-    private TextField compte_solde_input;
-
-    @FXML
-    private DatePicker compte_date_creation_input;
-
-    @FXML
-    private DatePicker compte_date_fermeture_input;
-
-    @FXML
-    private TextField compte_etat_input;
-
-    @FXML
-    private TextField compte_rib_input;
-
-    @FXML
-    private Button compte_add_button;
-
-    @FXML
-    private Button compte_clear_button;
-
-    @FXML
-    private JFXListView<Compte> comptes_listview;
-    @FXML
-    public void addOrUpdateCompteData() {
-        // Input validation
-        if (compte_type_input.getText().isBlank() || compte_solde_input.getText().isBlank() || compte_date_creation_input.getValue() == null) {
-            showAlertCompte(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as type, solde, and date de creation.");
-            return;
-        }
-
-        // Create Compte object from FXML input fields
-        Compte compte = new Compte();
-        compte.setType(compte_type_input.getText());
-        compte.setSolde(Double.parseDouble(compte_solde_input.getText()));
-        compte.setDateCreation(java.sql.Date.valueOf(compte_date_creation_input.getValue()));
-        compte.setDateFermeture(compte_date_fermeture_input.getValue() != null ? java.sql.Date.valueOf(compte_date_fermeture_input.getValue()) : null);
-        compte.setEtat(compte_etat_input.getText());
-        compte.setRib(compte_rib_input.getText());
-
-        // Determine if an existing compte is selected
-        Compte selectedCompte = comptes_listview.getSelectionModel().getSelectedItem();
-        if (selectedCompte != null) {
-            // If a compte is selected, update its data
-            compte.setId(selectedCompte.getId()); // Set the ID of the selected compte
-            compte.setIdAgence(selectedCompte.getIdAgence());
-            compte.setIdUser(selectedCompte.getIdUser());
-            if (CompteService.getInstance().edit(compte)) {
-                showAlertCompte(Alert.AlertType.INFORMATION, "Message", null, "Compte updated successfully.");
-                showCompteData();
-                clearCompteData();
-            } else {
-                showAlertCompte(Alert.AlertType.ERROR, "Error Message", null, "Failed to update compte data.");
-            }
-        } else {
-            // If no compte is selected, add a new compte
-            if (CompteService.getInstance().add(compte)) {
-                showAlertCompte(Alert.AlertType.INFORMATION, "Message", null, "Compte added successfully.");
-                showCompteData();
-                clearCompteData();
-            } else {
-                showAlertCompte(Alert.AlertType.ERROR, "Error Message", null, "Failed to add compte data.");
-            }
-        }
-    }
-
-    // Method to show Compte data
-    public void showCompteData() {
-        // Retrieve Compte data from database using CompteService
-        List<Compte> compteList = CompteService.getInstance().getAll();
-
-        ObservableList<Compte> observableCompteList = FXCollections.observableArrayList(compteList);
-
-        // Assuming the listview is properly defined
-        comptes_listview.getItems().clear();
-        comptes_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(Compte compte, boolean empty) {
-                super.updateItem(compte, empty);
-                if (empty || compte == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView typeIcon = new FontAwesomeIconView(FontAwesomeIcon.FILE);
-                    typeIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    typeIcon.setSize("2em"); // Set icon size
-                    Text typeText = new Text(" " + compte.getType());
-
-                    FontAwesomeIconView soldeIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-                    soldeIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    soldeIcon.setSize("2em"); // Set icon size
-                    Text soldeText = new Text(" " + compte.getSolde());
-
-                    FontAwesomeIconView etatIcon = new FontAwesomeIconView(FontAwesomeIcon.EXCLAMATION_TRIANGLE);
-                    etatIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    etatIcon.setSize("2em"); // Set icon size
-                    Text etatText = new Text(" " + compte.getEtat());
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(typeIcon, typeText, soldeIcon, soldeText, etatIcon, etatText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-        comptes_listview.setItems(observableCompteList);
-    }
-
-    // Method to delete Compte data
-    @FXML
-    public void deleteCompteData() {
-        // Input validation
-        if (comptes_listview.getSelectionModel().isEmpty()) {
-            showAlertCompte(Alert.AlertType.INFORMATION, "Message", null, "Please select a compte for deletion.");
-            return;
-        }
-
-        // Confirmation dialog
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText("Are you sure you want to delete this compte?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        // Proceed with deletion if confirmed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Retrieve selected compte from listview
-            Compte selectedCompte = comptes_listview.getSelectionModel().getSelectedItem();
-            // Delete Compte data using CompteService
-            if (CompteService.getInstance().delete(selectedCompte.getId())) {
-                showAlertCompte(Alert.AlertType.INFORMATION, "Message", null, "Compte deleted successfully.");
-                showCompteData(); // Refresh Compte data in the listview
-            } else {
-                showAlertCompte(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete compte data.");
-            }
-        }
-    }
-
-    // Method to show alert messages
-    private void showAlertCompte(Alert.AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    // Method to clear Compte data from input fields
-    @FXML
-    private void clearCompteData() {
-        // Clear input fields
-        compte_type_input.clear();
-        compte_solde_input.clear();
-        compte_date_creation_input.setValue(null);
-        compte_date_fermeture_input.setValue(null);
-        compte_etat_input.clear();
-        compte_rib_input.clear();
-
-        // Unset the selected compte
-        comptes_listview.getSelectionModel().clearSelection();
-    }
-    // Method to select Compte data
-    @FXML
-    public void selectCompteData() {
-        // Get the selected Compte from the listview
-        Compte selectedCompte = comptes_listview.getSelectionModel().getSelectedItem();
-
-        if (selectedCompte != null) {
-            // Set the selected Compte's data to the input fields
-            System.out.println(selectedCompte);
-            compte_type_input.setText(selectedCompte.getType());
-            compte_solde_input.setText(String.valueOf(selectedCompte.getSolde()));
-            compte_etat_input.setText(selectedCompte.getEtat());
-            compte_rib_input.setText(selectedCompte.getRib());
-
-            // Convert java.sql.Date to LocalDate for creation date
-            if (selectedCompte.getDateCreation() != null) {
-                java.util.Date utilDateCreation = new java.util.Date(selectedCompte.getDateCreation().getTime());
-                LocalDate dateCreation = utilDateCreation.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                compte_date_creation_input.setValue(dateCreation);
-            } else {
-                compte_date_creation_input.setValue(null);
-            }
-
-            // Convert java.sql.Date to LocalDate for fermeture date
-            if (selectedCompte.getDateFermeture() != null) {
-                java.util.Date utilDateFermeture = new java.util.Date(selectedCompte.getDateFermeture().getTime());
-                LocalDate dateFermeture = utilDateFermeture.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                compte_date_fermeture_input.setValue(dateFermeture);
-            } else {
-                compte_date_fermeture_input.setValue(null);
-            }
-        }
-    }
-
-    // Method to initialize the selection event for the list view
-    private void initializeCompteListSelection() {
-        comptes_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Call the selectCompteData method when a new item is selected
-            selectCompteData();
-        });
-    }
-    //FIN COMPTES
-
-
-    //CARTES
-
-    @FXML
-    private AnchorPane carte_back_anchorpane;
-
-    @FXML
-    private Label carte_label;
-
-    @FXML
-    private TextField carte_type_input;
-
-    @FXML
-    private DatePicker carte_date_emission_input;
-
-    @FXML
-    private DatePicker carte_date_expiration_input;
-
-    @FXML
-    private TextField carte_cvv_input;
-
-    @FXML
-    private TextField carte_plafond_input;
-
-    @FXML
-    private Button carte_add_button;
-
-    @FXML
-    private TextField carte_etat_input;
-
-    @FXML
-    private Button carte_clear_button;
-
-    @FXML
-    private ListView<Carte> carte_listview;
-    // Method to add Carte data
-    @FXML
-    public void addOrUpdateCarteData() {
-        // Input validation
-        if (carte_type_input.getText().isBlank() || carte_cvv_input.getText().isBlank() || carte_date_emission_input.getValue() == null) {
-            showAlertCarte(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as type, cvv, and date d'émission.");
-            return;
-        }
-
-        // Create Carte object from FXML input fields
-        Carte carte = new Carte();
-        // Set the Carte object with the input data
-        carte.setType(carte_type_input.getText());
-        carte.setCvv(Integer.parseInt(carte_cvv_input.getText()));
-        carte.setDateEmission(java.sql.Date.valueOf(carte_date_emission_input.getValue()));
-        carte.setDateExpiration(carte_date_expiration_input.getValue() != null ? java.sql.Date.valueOf(carte_date_expiration_input.getValue()) : null);
-        carte.setPlafond(carte_plafond_input.getText());
-        carte.setEtat(carte_etat_input.getText());
-
-        // Determine if an existing carte is selected
-        Carte selectedCarte = carte_listview.getSelectionModel().getSelectedItem();
-        if (selectedCarte != null) {
-            // If a carte is selected, update its data
-            carte.setId(selectedCarte.getId()); // Set the ID of the selected carte
-            carte.setNumCompte(selectedCarte.getNumCompte());
-            if (CarteService.getInstance().edit(carte)) {
-                showAlertCarte(Alert.AlertType.INFORMATION, "Message", null, "Carte updated successfully.");
-                showCarteData();
-                clearCarteData();
-            } else {
-                showAlertCarte(Alert.AlertType.ERROR, "Error Message", null, "Failed to update carte data.");
-            }
-        } else {
-            // If no carte is selected, add a new carte
-            if (CarteService.getInstance().add(carte)) {
-                showAlertCarte(Alert.AlertType.INFORMATION, "Message", null, "Carte added successfully.");
-                showCarteData();
-                clearCarteData();
-            } else {
-                showAlertCarte(Alert.AlertType.ERROR, "Error Message", null, "Failed to add carte data.");
-            }
-        }
-    }
-    // Method to show Carte data
-    public void showCarteData() {
-        // Retrieve Carte data from database using CarteService
-        List<Carte> carteList = CarteService.getInstance().getAll();
-
-        ObservableList<Carte> observableCarteList = FXCollections.observableArrayList(carteList);
-
-        // Assuming the listview is properly defined
-        carte_listview.getItems().clear();
-        carte_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(Carte carte, boolean empty) {
-                super.updateItem(carte, empty);
-                if (empty || carte == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView dateEmissionIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
-                    dateEmissionIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    Text dateEmissionText = new Text(" Date Emission: " + carte.getDateEmission());
-
-                    FontAwesomeIconView dateExpirationIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
-                    dateExpirationIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    Text dateExpirationText = new Text(" Date Expiration: " + carte.getDateExpiration());
-
-                    FontAwesomeIconView cvvIcon = new FontAwesomeIconView(FontAwesomeIcon.KEY);
-                    cvvIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    Text cvvText = new Text(" CVV: " + carte.getCvv());
-
-                    FontAwesomeIconView plafondIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-                    plafondIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    Text plafondText = new Text(" Plafond: " + carte.getPlafond());
-
-                    FontAwesomeIconView typeIcon = new FontAwesomeIconView(FontAwesomeIcon.LIST);
-                    typeIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    Text typeText = new Text(" Type: " + carte.getType());
-
-                    FontAwesomeIconView etatIcon = new FontAwesomeIconView(FontAwesomeIcon.ADJUST);
-                    etatIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    Text etatText = new Text(" Etat: " + carte.getEtat());
-
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(dateEmissionIcon, dateEmissionText, dateExpirationIcon, dateExpirationText,
-                            cvvIcon, cvvText, plafondIcon, plafondText, typeIcon, typeText,
-                            etatIcon, etatText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-            carte_listview.setItems(observableCarteList);
-    }
-
-    // Method to delete Carte data
-    public void deleteCarteData() {
-        // Input validation
-        if (carte_listview.getSelectionModel().isEmpty()) {
-            showAlertCarte(Alert.AlertType.INFORMATION, "Message", null, "Please select a carte for deletion.");
-            return;
-        }
-
-        // Confirmation dialog
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText("Are you sure you want to delete this carte?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        // Proceed with deletion if confirmed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Retrieve selected carte from listview
-            Carte selectedCarte = carte_listview.getSelectionModel().getSelectedItem();
-            // Delete Carte data using CarteService
-            if (CarteService.getInstance().delete(selectedCarte.getId())) {
-                showAlertCarte(Alert.AlertType.INFORMATION, "Message", null, "Carte deleted successfully.");
-                showCarteData(); // Refresh Carte data in the listview
-            } else {
-                showAlertCarte(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete carte data.");
-            }
-        }
-    }
-
-    // Method to show alert messages
-    private void showAlertCarte(Alert.AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    // Method to clear Carte data from input fields
-    // Method to clear Carte data from input fields and unset the selected carte
-    @FXML
-    private void clearCarteData() {
-        // Clear input fields
-        carte_type_input.clear();
-        carte_cvv_input.clear();
-        carte_date_emission_input.setValue(null);
-        carte_date_expiration_input.setValue(null);
-        carte_plafond_input.clear();
-        carte_etat_input.clear();
-
-        // Unset the selected carte
-        carte_listview.getSelectionModel().clearSelection();
-    }
-
-    // Method to select Carte data
-    public void selectCarteData() {
-        // Get the selected Carte from the listview
-        Carte selectedCarte = carte_listview.getSelectionModel().getSelectedItem();
-
-        if (selectedCarte != null) {
-            // Set the selected Carte's data to the input fields
-            System.out.println(selectedCarte);
-            carte_type_input.setText(selectedCarte.getType());
-            carte_cvv_input.setText(String.valueOf(selectedCarte.getCvv()));
-            carte_plafond_input.setText(selectedCarte.getPlafond());
-            carte_etat_input.setText(selectedCarte.getEtat());
-
-            // Convert java.sql.Date to LocalDate for emission date
-            if (selectedCarte.getDateEmission() != null) {
-                java.util.Date utilDateEmission = new java.util.Date(selectedCarte.getDateEmission().getTime());
-                LocalDate dateEmission = utilDateEmission.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                carte_date_emission_input.setValue(dateEmission);
-            } else {
-                carte_date_emission_input.setValue(null);
-            }
-
-            // Convert java.sql.Date to LocalDate for expiration date
-            if (selectedCarte.getDateExpiration() != null) {
-                java.util.Date utilDateExpiration = new java.util.Date(selectedCarte.getDateExpiration().getTime());
-                LocalDate dateExpiration = utilDateExpiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                carte_date_expiration_input.setValue(dateExpiration);
-            } else {
-                carte_date_expiration_input.setValue(null);
-            }
-        }
-    }
-
-
-    // Method to initialize the selection event for the list view
-    private void initializeCarteListSelection() {
-        carte_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Call the selectCarteData method when a new item is selected
-            selectCarteData();
-        });
-    }
-
-    //FIN CARTES
-
-    //TYPE_VIREMENT
-    @FXML
-    private AnchorPane typeVirement_anchorpane;
-    @FXML
-    private TextField typeVirement_nom_input;
-
-    @FXML
-    private TextField typeVirement_frais_input;
-
-    @FXML
-    private Button typeVirement_add_button;
-
-    @FXML
-    private Button typeVirement_add_button1;
-
-    @FXML
-    private ListView<TypeVirement> typeVirement_listview;
-@FXML
-public void addOrUpdateTypeVirementData() {
-    // Input validation
-    if (typeVirement_nom_input.getText().isBlank() || typeVirement_frais_input.getText().isBlank()) {
-        showalerttypevirement(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as nom and frais.");
-        return;
-    }
-
-    // Create TypeVirement object from FXML input fields
-    TypeVirement typeVirement = new TypeVirement();
-    typeVirement.setNom(typeVirement_nom_input.getText());
-    typeVirement.setFrais(Double.parseDouble(typeVirement_frais_input.getText()));
-
-    // Determine if an existing type virement is selected
-    TypeVirement selectedTypeVirement = typeVirement_listview.getSelectionModel().getSelectedItem();
-    if (selectedTypeVirement != null) {
-        // If a type virement is selected, update its data
-        typeVirement.setId(selectedTypeVirement.getId()); // Set the ID of the selected type virement
-        if (TypeVirementService.getInstance().edit(typeVirement)) {
-            showalerttypevirement(Alert.AlertType.INFORMATION, "Message", null, "TypeVirement updated successfully.");
-            showTypeVirementData();
-            clearTypeVirementData();
-        } else {
-            showalerttypevirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to update TypeVirement data.");
-        }
-    } else {
-        // If no type virement is selected, add a new type virement
-        if (TypeVirementService.getInstance().add(typeVirement)) {
-            showalerttypevirement(Alert.AlertType.INFORMATION, "Message", null, "TypeVirement added successfully.");
-            showTypeVirementData();
-            clearTypeVirementData();
-        } else {
-            showalerttypevirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to add TypeVirement data.");
-        }
-    }
-}
-
-    // Method to show TypeVirement data
-    public void showTypeVirementData() {
-        // Retrieve TypeVirement data from database using TypeVirementService
-        List<TypeVirement> typeVirementList = TypeVirementService.getInstance().getAll();
-        ObservableList<TypeVirement> observableTypeVirementList = FXCollections.observableArrayList(typeVirementList);
-
-        // Assuming the listview is properly defined
-        // Clear existing items
-
-        typeVirement_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(TypeVirement typeVirement, boolean empty) {
-                super.updateItem(typeVirement, empty);
-                if (empty || typeVirement == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView fraisIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-                    fraisIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    Text fraisText = new Text(" Frais: " + typeVirement.getFrais());
-
-                    FontAwesomeIconView nomIcon = new FontAwesomeIconView(FontAwesomeIcon.TAG);
-                    nomIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    Text nomText = new Text(" Nom: " + typeVirement.getNom());
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(fraisIcon, fraisText, nomIcon, nomText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-        typeVirement_listview.setItems(observableTypeVirementList);
-    }
-
-    // Method to delete TypeVirement data
-    @FXML
-    public void deleteTypeVirementData() {
-        // Input validation
-        if (typeVirement_listview.getSelectionModel().isEmpty()) {
-            showalerttypevirement(Alert.AlertType.INFORMATION, "Message", null, "Please select a TypeVirement for deletion.");
-            return;
-        }
-
-        // Confirmation dialog
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText("Are you sure you want to delete this TypeVirement?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        // Proceed with deletion if confirmed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Retrieve selected TypeVirement
-            TypeVirement selectedTypeVirement = typeVirement_listview.getSelectionModel().getSelectedItem();
-            // Delete TypeVirement data using TypeVirementService
-            if (TypeVirementService.getInstance().delete(selectedTypeVirement.getId())) {
-                showalerttypevirement(Alert.AlertType.INFORMATION, "Message", null, "TypeVirement deleted successfully.");
-                showTypeVirementData(); // Refresh TypeVirement data in the listview
-            } else {
-                showalerttypevirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete TypeVirement data.");
-            }
-        }
-    }
-
-    // Method to show alert messages
-    private void showalerttypevirement(Alert.AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    // Method to clear TypeVirement data from input fields
-    private void clearTypeVirementData() {
-        // Clear input fields
-        typeVirement_nom_input.clear();
-        typeVirement_frais_input.clear();
-    }
-
-    // Method to select TypeVirement data
-    @FXML
-    public void selectTypeVirementData() {
-        // Get the selected TypeVirement from the listview
-        TypeVirement selectedTypeVirement = typeVirement_listview.getSelectionModel().getSelectedItem();
-
-        if (selectedTypeVirement != null) {
-            // Set the selected TypeVirement's data to the input fields
-            typeVirement_nom_input.setText(selectedTypeVirement.getNom());
-            typeVirement_frais_input.setText(String.valueOf(selectedTypeVirement.getFrais()));
-        }
-    }
-
-    // Method to initialize the selection event for the list view
-    private void initializeTypeVirementListSelection() {
-        typeVirement_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Call the selectTypeVirementData method when a new item is selected
-            selectTypeVirementData();
-        });
-    }
-    //FIN type
-    @FXML
-    public void switchvirementtype(){
-
-        if (typeVirement_anchorpane.isVisible()) {
-            typeVirement_anchorpane.setVisible(false);
-            virement_anchorpane.setVisible(true);
-        }
-        else
-        {
-            typeVirement_anchorpane.setVisible(true);
-            virement_anchorpane.setVisible(false);
-        }
-    }
-    //VIREMENT
-
-    @FXML
-    private AnchorPane virement_anchorpane;
-
-    @FXML
-    private TextField virement_cinEmetteur_input;
-
-    @FXML
-    private TextField virement_photoCin_input;
-
-    @FXML
-    private TextField virement_montant_input;
-
-    @FXML
-    private DatePicker virement_dateEmission_input;
-
-    @FXML
-    private DatePicker virement_dateApprobation_input;
-
-    @FXML
-    private TextField virement_etat_input;
-
-    @FXML
-    private ComboBox<?> virement_type_combobox;
-
-    @FXML
-    private Button virement_add_button;
-
-    @FXML
-    private Label label_virement_cinEmetteur;
-
-    @FXML
-    private Label label_virement_photoCin;
-
-    @FXML
-    private Label label_virement_montant;
-
-    @FXML
-    private Label label_virement_dateEmission;
-
-    @FXML
-    private Label label_virement_dateApprobation;
-
-    @FXML
-    private Label label_virement_etat;
-
-    @FXML
-    private Label label_virement_type;
-
-    @FXML
-    private Button virement_add_button1;
-
-    @FXML
-    private JFXListView<Virement> virement_listview;
-
-    @FXML
-    private ToggleSwitch toggle_switch_virement_transaction;
-
-    @FXML
-    public void addOrUpdateVirementData() {
-        // Input validation
-        if (virement_cinEmetteur_input.getText().isBlank() || virement_photoCin_input.getText().isBlank() || virement_montant_input.getText().isBlank() || virement_dateEmission_input.getValue() == null || virement_dateApprobation_input.getValue() == null) {
-            showalertvirement(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as cin emetteur, photo cin, montant, date d'emission, and date d'approbation.");
-            return;
-        }
-
-        // Create Virement object from FXML input fields
-        Virement virement = new Virement();
-        virement.setCinEmetteur(virement_cinEmetteur_input.getText());
-        virement.setPhotoCin(virement_photoCin_input.getText());
-        virement.setMontant(Double.parseDouble(virement_montant_input.getText()));
-        virement.setDateEmission(java.sql.Date.valueOf(virement_dateEmission_input.getValue()));
-        virement.setDateApprobation(java.sql.Date.valueOf(virement_dateApprobation_input.getValue()));
-        virement.setEtat(virement_etat_input.getText());
-
-        // Determine if an existing virement is selected
-        Virement selectedVirement = virement_listview.getSelectionModel().getSelectedItem();
-        if (selectedVirement != null) {
-            // If a virement is selected, update its data
-            virement.setId(selectedVirement.getId()); // Set the ID of the selected virement
-            virement.setIdCompteBeneficiaire(selectedVirement.getIdCompteBeneficiaire());
-            virement.setIdCompteEmetteur(selectedVirement.getIdCompteEmetteur());
-            if (VirementService.getInstance().edit(virement)) {
-                showalertvirement(Alert.AlertType.INFORMATION, "Message", null, "Virement updated successfully.");
-                showVirementData();
-                clearVirementData();
-            } else {
-                showalertvirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to update virement data.");
-            }
-        } else {
-            // If no virement is selected, add a new virement
-            if (VirementService.getInstance().add(virement)) {
-                showalertvirement(Alert.AlertType.INFORMATION, "Message", null, "Virement added successfully.");
-                showVirementData();
-                clearVirementData();
-            } else {
-                showalertvirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to add virement data.");
-            }
-        }
-    }
-
-    // Method to show Virement data
-    public void showVirementData() {
-        // Retrieve Virement data from database using VirementService
-        List<Virement> virementList = VirementService.getInstance().getAll();
-   //     System.out.println(virementList);
-        ObservableList<Virement> observableVirementList = FXCollections.observableArrayList(virementList);
-
-
-        virement_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(Virement virement, boolean empty) {
-                super.updateItem(virement, empty);
-                if (empty || virement == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView idCompteEmetteurIcon = new FontAwesomeIconView(FontAwesomeIcon.USER);
-                    idCompteEmetteurIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    String emetteur_lastname=getEntityProperty("client", Integer.valueOf(getEntityProperty("Compte",virement.getIdCompteEmetteur().getId(),"id_user_id")),"nom");
-                    String emetteur_firstname=getEntityProperty("client", Integer.valueOf(getEntityProperty("Compte",virement.getIdCompteEmetteur().getId(),"id_user_id")),"prenom");
-                    String emetteur_fullname=emetteur_firstname+" "+emetteur_lastname;
-                    Text idCompteEmetteurText = new Text(" Compte Émetteur: " + emetteur_fullname);
-
-                    FontAwesomeIconView idCompteBeneficiaireIcon = new FontAwesomeIconView(FontAwesomeIcon.USER);
-                    idCompteBeneficiaireIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    String benefic_lastname=getEntityProperty("client", Integer.valueOf(getEntityProperty("Compte",virement.getIdCompteBeneficiaire().getId(),"id_user_id")),"nom");
-                    String benefic_firstname=getEntityProperty("client", Integer.valueOf(getEntityProperty("Compte",virement.getIdCompteBeneficiaire().getId(),"id_user_id")),"prenom");
-                    String benefic_fullname=benefic_firstname+" "+benefic_lastname;
-                    Text idCompteBeneficiaireText = new Text(" Compte Bénéficiaire: " +benefic_fullname);
-
-                    FontAwesomeIconView montantIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-                    montantIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    Text montantText = new Text(" Montant: " + virement.getMontant());
-
-                    FontAwesomeIconView dateEmissionIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR_ALT);
-                    dateEmissionIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    Text dateEmissionText = new Text(" Date Emission: " + virement.getDateEmission());
-
-                    FontAwesomeIconView dateApprobationIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
-                    dateApprobationIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    Text dateApprobationText = new Text(" Date Approbation: " + virement.getDateApprobation());
-
-                    FontAwesomeIconView etatIcon = new FontAwesomeIconView(FontAwesomeIcon.ADJUST);
-                    etatIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    Text etatText = new Text(" État: " + virement.getEtat());
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(idCompteEmetteurIcon, idCompteEmetteurText, idCompteBeneficiaireIcon, idCompteBeneficiaireText,
-                            montantIcon, montantText, dateEmissionIcon, dateEmissionText, dateApprobationIcon, dateApprobationText,
-                            etatIcon, etatText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-        virement_listview.setItems(observableVirementList);
-    }
-
-    // Method to delete Virement data
-    @FXML
-    public void deleteVirementData() {
-        // Input validation
-        if (virement_listview.getSelectionModel().isEmpty()) {
-            showalertvirement(Alert.AlertType.INFORMATION, "Message", null, "Please select a virement for deletion.");
-            return;
-        }
-
-        // Confirmation dialog
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText("Are you sure you want to delete this virement?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        // Proceed with deletion if confirmed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Retrieve selected virement information
-            String selectedVirementInfo = virement_listview.getSelectionModel().getSelectedItem().toString();
-            // Extract virement id from selected information (you may need to parse it properly)
-            int virementId = extractVirementId(selectedVirementInfo);
-            // Delete Virement data using VirementService
-            if (VirementService.getInstance().delete(virementId)) {
-                showalertvirement(Alert.AlertType.INFORMATION, "Message", null, "Virement deleted successfully.");
-                showVirementData(); // Refresh Virement data in the listview
-            } else {
-                showalertvirement(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete virement data.");
-            }
-        }
-    }
-
-    // Method to show alert messages
-    private void showalertvirement(Alert.AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    // Method to clear Virement data from input fields
-    private void clearVirementData() {
-        // Clear input fields
-        virement_cinEmetteur_input.clear();
-        virement_photoCin_input.clear();
-        virement_montant_input.clear();
-        virement_dateEmission_input.setValue(null);
-        virement_dateApprobation_input.setValue(null);
-        virement_etat_input.clear();
-    }
-    // Method to select Virement data
-    @FXML
-    public void selectVirementData() {
-        // Get the selected Virement from the listview
-        Virement selectedVirement = virement_listview.getSelectionModel().getSelectedItem();
-
-        if (selectedVirement != null) {
-            // Set the selected Virement's data to the input fields
-            System.out.println("test: "+selectedVirement.getCinEmetteur());
-            virement_cinEmetteur_input.setText(selectedVirement.getCinEmetteur());
-            virement_photoCin_input.setText(selectedVirement.getPhotoCin());
-            virement_montant_input.setText(String.valueOf(selectedVirement.getMontant()));
-            virement_etat_input.setText(selectedVirement.getEtat());
-
-            // Convert java.sql.Date to LocalDate for emission date
-            if (selectedVirement.getDateEmission() != null) {
-                java.util.Date utilDateEmission = new java.util.Date(selectedVirement.getDateEmission().getTime());
-                LocalDate dateEmission = utilDateEmission.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                virement_dateEmission_input.setValue(dateEmission);
-            } else {
-                virement_dateEmission_input.setValue(null);
-            }
-
-            // Convert java.sql.Date to LocalDate for approbation date
-            if (selectedVirement.getDateApprobation() != null) {
-                java.util.Date utilDateApprobation = new java.util.Date(selectedVirement.getDateApprobation().getTime());
-                LocalDate dateApprobation = utilDateApprobation.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                virement_dateApprobation_input.setValue(dateApprobation);
-            } else {
-                virement_dateApprobation_input.setValue(null);
-            }
-        }
-    }
-
-    // Method to initialize the selection event for the list view
-    private void initializeVirementListSelection() {
-        virement_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Call the selectVirementData method when a new item is selected
-            selectVirementData();
-        });
-    }
-
-    // Method to extract Virement id from the selected information
-    private int extractVirementId(String selectedVirementInfo) {
-        // Implement logic to parse the virement id from the selected information
-        // For example:
-        // String[] parts = selectedVirementInfo.split(":");
-        // return Integer.parseInt(parts[0].trim());
-        return 0; // Placeholder, replace with actual logic
-    }
-    // FIN virement
-    //TRANSACTION
-
-        @FXML
-        private AnchorPane transaction_anchorpane;
-
-        @FXML
-        private TextField transaction_type_input;
-
-        @FXML
-        private DatePicker transaction_date_input;
-
-        @FXML
-        private TextField transaction_montant_input;
-
-        @FXML
-        private Button transaction_add_button;
-
-        @FXML
-        private Button transaction_add_button1;
-
-        @FXML
-        private JFXListView<Transaction> transaction_listview;
-
-        @FXML
-        // Method to add or update Transaction data
-        public void addOrUpdateTransactionData() {
-            // Input validation
-            if (transaction_type_input.getText().isBlank() || transaction_date_input.getValue() == null || transaction_montant_input.getText().isBlank()) {
-                showalerttransaction(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as type, date, and montant.");
-                return;
-            }
-
-            // Create Transaction object from FXML input fields
-            Transaction transaction = new Transaction();
-            // Assuming you have methods to properly set these fields
-            transaction.setType(transaction_type_input.getText());
-            transaction.setDateTransaction(java.sql.Date.valueOf(transaction_date_input.getValue()));
-            transaction.setMontant(Double.parseDouble(transaction_montant_input.getText()));
-
-            // Determine if an existing transaction is selected
-            Transaction selectedTransaction = transaction_listview.getSelectionModel().getSelectedItem();
-            if (selectedTransaction != null) {
-                // If a transaction is selected, update its data
-                transaction.setId(selectedTransaction.getId()); // Set the ID of the selected transaction
-                if (TransactionService.getInstance().edit(transaction)) {
-                    showalerttransaction(Alert.AlertType.INFORMATION, "Message", null, "Transaction updated successfully.");
-                    showTransactionData();
-                } else {
-                    showalerttransaction(Alert.AlertType.ERROR, "Error Message", null, "Failed to update transaction data.");
-                }
-            } else {
-                // If no transaction is selected, add a new transaction
-                if (TransactionService.getInstance().add(transaction)) {
-                    showalerttransaction(Alert.AlertType.INFORMATION, "Message", null, "Transaction added successfully.");
-                    showTransactionData();
-                } else {
-                    showalerttransaction(Alert.AlertType.ERROR, "Error Message", null, "Failed to add transaction data.");
-                }
-            }
-        }
-    // Method to show Transaction data
-    public void showTransactionData() {
-        // Retrieve Transaction data from database using TransactionService
-        List<Transaction> transactionList = TransactionService.getInstance().getAll();
-        ObservableList<Transaction> observableTransactionList = FXCollections.observableArrayList(transactionList);
-
-        // Assuming the listview is properly defined
-        // Clear existing items
-        transaction_listview.setCellFactory(param -> new JFXListCell<>() {
-
-            @Override
-            protected void updateItem(Transaction transaction, boolean empty) {
-                super.updateItem(transaction, empty);
-                if (empty || transaction == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView typeIcon = new FontAwesomeIconView(FontAwesomeIcon.LIST);
-                    typeIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    Text typeText = new Text(" Type: " + transaction.getType());
-
-                    FontAwesomeIconView dateIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR_ALT);
-                    dateIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    Text dateText = new Text(" Date: " + transaction.getDateTransaction());
-
-                    FontAwesomeIconView amountIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-                    amountIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    Text amountText = new Text(" Amount: " + transaction.getMontant());
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(typeIcon, typeText, dateIcon, dateText, amountIcon, amountText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-        transaction_listview.setItems(observableTransactionList);
+ArticleService.getInstance().delete(selectedArticles);
+        showArticleData();
+        articles_front_anchorpane.getChildren().clear();
+        addarticlepanes();
+        clearArticleData();
 
     }
 
-    // Method to delete Transaction data
-    @FXML
-    public void deleteTransactionData() {
-        // Input validation
-        if (transaction_listview.getSelectionModel().isEmpty()) {
-            showalerttransaction(Alert.AlertType.INFORMATION, "Message", null, "Please select a transaction for deletion.");
-            return;
-        }
-
-        // Confirmation dialog
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText("Are you sure you want to delete this transaction?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-        // Proceed with deletion if confirmed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Retrieve selected transaction information
-            String selectedTransactionInfo ="13";// transaction_listview.getSelectionModel().getSelectedItem();
-            // Extract transaction id from selected information (you may need to parse it properly)
-            int transactionId = extractTransactionId(selectedTransactionInfo);
-            // Delete Transaction data using TransactionService
-            if (TransactionService.getInstance().delete(transactionId)) {
-                showalerttransaction(Alert.AlertType.INFORMATION, "Message", null, "Transaction deleted successfully.");
-                showTransactionData(); // Refresh Transaction data in the listview
-            } else {
-                showalerttransaction(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete transaction data.");
-            }
-        }
-    }
-
-    // Method to show alert messages
-    private void showalerttransaction(Alert.AlertType alertType, String title, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    // Method to select Transaction data
-    @FXML
-    public void selectTransactionData() {
-        // Retrieve selected transaction information
-        Transaction selectedTransaction = transaction_listview.getSelectionModel().getSelectedItem();
-        if (selectedTransaction != null) {
-            // Populate input fields with selected transaction data
-            transaction_type_input.setText(selectedTransaction.getType());
-            if (selectedTransaction.getDateTransaction() != null) {
-                java.util.Date utilDateTransaction = new java.util.Date(selectedTransaction.getDateTransaction().getTime());
-                LocalDate dateTransaction = utilDateTransaction.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                transaction_date_input.setValue(dateTransaction);
-            } else {
-                transaction_date_input.setValue(null);
-            }
-            transaction_montant_input.setText(String.valueOf(selectedTransaction.getMontant()));
-        }
-    }
-    @FXML
-
-    private void clearTransactionData() {
-        // Clear input fields
-        transaction_type_input.clear();
-        transaction_date_input.setValue(null);
-        transaction_montant_input.clear();
-    }
-
-
-    // Method to initialize the selection event for the list view
-    private void initializeTransactionListSelection() {
-        transaction_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Call the selectTransactionData method when a new item is selected
-            selectTransactionData();
-        });
-    }
-
-    // Method to extract Transaction id from the selected information
-    private int extractTransactionId(String selectedTransactionInfo) {
-        // Implement logic to parse the transaction id from the selected information
-        // For example:
-        // String[] parts = selectedTransactionInfo.split(":");
-        // return Integer.parseInt(parts[0].trim());
-        return 0; // Placeholder, replace with actual logic
-    }
-    //FIN transaction
 
     //RECLAMATION-REPONSES
     @FXML

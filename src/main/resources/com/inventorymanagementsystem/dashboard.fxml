@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import com.jfoenix.controls.JFXTreeView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.web.WebView?>
+<?import org.controlsfx.control.Rating?>
 <?import org.controlsfx.control.ToggleSwitch?>
 
 <AnchorPane prefHeight="851.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashboardController">
@@ -124,7 +123,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="24.0" />
                </graphic>
             </Button>
-            <AnchorPane fx:id="content_pane" layoutX="220.0" layoutY="29.0" prefHeight="831.0" prefWidth="1111.0">
+            <AnchorPane fx:id="content_pane" layoutX="220.0" layoutY="29.0" prefHeight="831.0" prefWidth="1016.0">
                <children>
                   <AnchorPane layoutX="-2.0" prefHeight="47.0" prefWidth="741.0">
                      <children>
@@ -154,138 +153,20 @@
                               </LinearGradient>
                            </textFill>
                         </Label>
-                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="695.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#onExit" onMouseDragged="#onExit" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
+                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="838.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#onExit" onMouseDragged="#onExit" prefHeight="30.0" prefWidth="87.0" styleClass="close" stylesheets="@dashboard.css">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16.0" text="" />
                            </graphic>
                         </Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="clients_pane" layoutX="45.0" layoutY="66.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <children>
-                        <TableView fx:id="client_table" layoutX="13.0" layoutY="317.0" onMouseClicked="#selectClient" prefHeight="316.0" prefWidth="794.0" stylesheets="@dashboard.css">
-                           <columns>
-                              <TableColumn fx:id="table_client_id" prefWidth="62.399993896484375" text="#" />
-                              <TableColumn fx:id="table_client_nom" prefWidth="182.39996337890625" text="Nom &amp; Prenom" />
-                              <TableColumn fx:id="table_client_cin" prefWidth="174.39996337890625" text="C.I.N" />
-                              <TableColumn fx:id="table_client_tel" minWidth="0.0" prefWidth="172.79998779296875" text="N° Tel" />
-                              <TableColumn fx:id="table_client_mail" prefWidth="201.60001220703123" text="E-MAIL" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="add_client_btn" layoutX="736.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#addClient" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="cust_btn_edit1" layoutX="679.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#updateClient" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btn_delete_client" layoutX="620.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#deleteClient" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
-                           </graphic>
-                        </Button>
-                        <TextField fx:id="client_search" layoutX="14.0" layoutY="25.0" onAction="#searchClient" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
-                        <FontAwesomeIconView glyphName="SEARCH" layoutX="21.0" layoutY="46.0" size="16" />
-                        <TextField fx:id="nom_client" layoutX="50.0" layoutY="101.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="prenom_client" layoutX="335.0" layoutY="101.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="6.0" layoutY="101.0" prefHeight="32.0" prefWidth="65.0" text="Nom :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="266.0" layoutY="101.0" prefHeight="32.0" prefWidth="122.0" text="Prenom :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="cust_btn_print1" layoutX="562.0" layoutY="32.0" mnemonicParsing="false" onAction="#printPdfClient" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                           <graphic>
-                              <FontAwesomeIconView fx:id="customer_print21" fill="WHITE" glyphName="PRINT" size="18.0" />
-                           </graphic>
-                        </Button>
-                        <TextField fx:id="mail_client" layoutX="601.0" layoutY="101.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="554.0" layoutY="101.0" prefHeight="32.0" prefWidth="65.0" text="Mail :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="tel_client" layoutX="335.0" layoutY="142.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="266.0" layoutY="142.0" prefHeight="32.0" prefWidth="122.0" text="N° Tel :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="cin_client" layoutX="50.0" layoutY="142.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="6.0" layoutY="142.0" prefHeight="32.0" prefWidth="65.0" text="C.I.N :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="poste_client" layoutX="347.0" layoutY="184.0" prefHeight="32.0" prefWidth="191.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="266.0" layoutY="184.0" prefHeight="32.0" prefWidth="122.0" text=" Profession ">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="genre_client" layoutX="607.0" layoutY="184.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="554.0" layoutY="184.0" prefHeight="32.0" prefWidth="65.0" text="Genre :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="dob_client" layoutX="604.0" layoutY="142.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="554.0" layoutY="142.0" prefHeight="32.0" prefWidth="115.0" text="DOB :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="pays_client" layoutX="50.0" layoutY="184.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="6.0" layoutY="184.0" prefHeight="32.0" prefWidth="65.0" text="Pays :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="adresse_client" layoutX="72.0" layoutY="265.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="10.0" layoutY="265.0" prefHeight="32.0" prefWidth="122.0" text="Adresse :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="piece_client" layoutX="347.0" layoutY="226.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="281.0" layoutY="226.0" prefHeight="32.0" prefWidth="65.0" text="Piece idt :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="signature_client" layoutX="361.0" layoutY="265.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="286.0" layoutY="265.0" prefHeight="32.0" prefWidth="122.0" text="Signature :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="photo_client" layoutX="59.0" layoutY="226.0" prefHeight="32.0" prefWidth="206.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="6.0" layoutY="226.0" prefHeight="32.0" prefWidth="65.0" text="Photo :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="pass_client" layoutX="607.0" layoutY="233.0" prefHeight="32.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <Label layoutX="562.0" layoutY="233.0" prefHeight="32.0" prefWidth="122.0" text="Pass :">
-                           <font>
-                              <Font name="Dubai Bold" size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="clients_pane" layoutX="45.0" layoutY="66.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
                   <AnchorPane fx:id="articles_pane" layoutX="116.0" layoutY="97.0" prefHeight="703.0" prefWidth="929.0" visible="false">
                      <children>
                     <AnchorPane fx:id="articles_front_anchorpane" layoutX="-11.0" layoutY="23.0" minHeight="0.0" minWidth="0.0" onMouseClicked="#list_article_comments" prefHeight="528.0" prefWidth="699.0" visible="false" />
-                    <AnchorPane fx:id="articles_back_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
+                    <AnchorPane fx:id="articles_back_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="810.0">
                            <children>
-                              <Label fx:id="user1" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Gestion des Articles">
+                              <Label fx:id="user1" alignment="CENTER" layoutX="319.0" layoutY="20.0" prefHeight="30.0" prefWidth="354.0" text="Gestion des Articles">
                                  <font>
                                     <Font name="Arial Black" size="20.0" />
                                  </font>
@@ -311,338 +192,48 @@
                                     </LinearGradient>
                                  </textFill>
                               </Label>
-                              <TextArea fx:id="article_contenu_input" layoutX="64.0" layoutY="100.0" prefHeight="157.0" prefWidth="230.0" />
-                              <TextField fx:id="article_titre_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
-                              <Button fx:id="article_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addArticleData" prefHeight="25.0" prefWidth="191.0" text="Add/Update article" />
-                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Titre" />
-                              <Label layoutX="14.0" layoutY="145.0" text="Contenu" />
-                              <Button fx:id="article_upload_button" layoutX="81.0" layoutY="313.0" mnemonicParsing="false" onAction="#uploadImageArticle" prefHeight="25.0" prefWidth="191.0" text="Upload image" />
-                              <Label fx:id="article_upload_status" layoutX="109.0" layoutY="271.0" prefHeight="17.0" prefWidth="117.0" text="Status:" />
-                              <Button fx:id="article_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#addArticleData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                              <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="308.0" layoutY="232.0" mnemonicParsing="false" onAction="#deleteSelectedArticles" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
+                              <TextArea fx:id="article_contenu_input" layoutX="89.0" layoutY="100.0" prefHeight="218.0" prefWidth="658.0" />
+                              <TextField fx:id="article_titre_input" layoutX="86.0" layoutY="57.0" prefHeight="32.0" prefWidth="660.0" />
+                              <Button fx:id="article_add_button" layoutX="111.0" layoutY="387.0" mnemonicParsing="false" onAction="#addOrUpdateArticleData" prefHeight="25.0" prefWidth="191.0" styleClass="close" stylesheets="@dashboard.css" text="Add/Update article" />
+                              <Label layoutX="44.0" layoutY="65.0" prefHeight="18.0" prefWidth="50.0" text="Titre" />
+                              <Label layoutX="32.0" layoutY="142.0" text="Contenu" />
+                              <Button fx:id="article_upload_button" layoutX="110.0" layoutY="349.0" mnemonicParsing="false" onAction="#uploadImageArticle" prefHeight="25.0" prefWidth="191.0" styleClass="delete" stylesheets="@dashboard.css" text="Upload image" />
+                              <Label fx:id="article_upload_status" layoutX="308.0" layoutY="354.0" prefHeight="17.0" prefWidth="117.0" text="Status:" />
+                              <Button fx:id="article_add_button1" layoutX="233.0" layoutY="422.0" mnemonicParsing="false" onAction="#clearArticleData" prefHeight="25.0" prefWidth="62.0" styleClass="add" stylesheets="@dashboard.css" text="Clear" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="152.0" layoutY="419.0" mnemonicParsing="false" onAction="#deleteSelectedArticles" prefHeight="29.0" prefWidth="50.0" styleClass="close" stylesheets="@dashboard.css">
                                  <graphic>
                                     <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="16.0" text="" />
                                  </graphic>
                               </Button>
-                              <JFXListView fx:id="article_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
+                              <JFXListView fx:id="article_listview" layoutX="35.0" layoutY="440.0" prefHeight="33.0" prefWidth="86.0" visible="false" />
+                              <ImageView fx:id="Photoarticle" fitHeight="231.0" fitWidth="383.0" layoutX="385.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </AnchorPane>
                         <ToggleSwitch fx:id="frontbackarticlesswitch" layoutX="387.0" layoutY="3.0" onMousePressed="#switchfrontbackarticles" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="agences_pane" layoutX="22.0" layoutY="47.0" prefHeight="736.0" prefWidth="811.0">
+                  <AnchorPane fx:id="agences_pane" layoutX="22.0" layoutY="47.0" prefHeight="736.0" prefWidth="963.0" />
+                  <AnchorPane fx:id="comments_pane" layoutX="53.0" layoutY="83.0" prefHeight="667.0" prefWidth="741.0" visible="false">
                      <children>
-                        <AnchorPane fx:id="agences_front_anchorpane" prefHeight="617.0" prefWidth="810.0" visible="false">
+                        <AnchorPane fx:id="comment_anchorpane1" prefHeight="559.0" prefWidth="719.0">
                            <children>
-                              <WebView fx:id="webViewClient" layoutY="101.0" prefHeight="508.0" prefWidth="757.0" />
+                              <TextArea fx:id="add_comment_field" prefHeight="58.0" prefWidth="200.0" visible="false" />
+                              <Rating fx:id="article_rating" prefHeight="3.0" prefWidth="176.0" visible="false" />
+                              <Button fx:id="editButton" mnemonicParsing="false" text="Button" visible="false" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="agences_back_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="724.0" prefWidth="794.0">
+                        <AnchorPane fx:id="comment_anchorpane2" prefHeight="553.0" prefWidth="719.0" visible="false">
                            <children>
-                              <TableView fx:id="agence_table" layoutX="639.0" layoutY="196.0" onMouseClicked="#selectAgenceTableData" prefHeight="52.0" prefWidth="76.0" stylesheets="@dashboard.css">
-                                 <columns>
-                                    <TableColumn fx:id="agence_col_id" prefWidth="75.0" text="id" visible="false" />
-                                    <TableColumn fx:id="agence_col_dateajout" prefWidth="80.66665649414062" text="Date_Ajout" />
-                                    <TableColumn fx:id="agence_col_nom" prefWidth="162.66671752929688" text="Nom" />
-                                    <TableColumn fx:id="agence_col_adresse" prefWidth="215.3333740234375" text="Adresse" />
-                                    <TableColumn fx:id="agence_col_etat" minWidth="6.0" prefWidth="90.0" text="Etat" />
-                                    <TableColumn fx:id="agence_col_tel" prefWidth="160.6666259765625" text="Tel" />
-                                    <TableColumn fx:id="agence_col_longitude" prefWidth="67.111083984375" text="longitude" visible="false" />
-                                    <TableColumn fx:id="agence_col_latitude" prefWidth="103.333251953125" text="latitude" visible="false" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="add_agence_button" layoutX="635.0" layoutY="145.0" mnemonicParsing="false" onMouseClicked="#addAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="edit_agence_button" layoutX="633.0" layoutY="67.0" mnemonicParsing="false" onMouseClicked="#updateAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="refresh" stylesheets="@dashboard.css">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="EDIT" onMouseReleased="#updateAgenceData" size="18.0" />
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="delete_agence_button" layoutX="635.0" layoutY="105.0" mnemonicParsing="false" onMouseClicked="#deleteAgenceData" prefHeight="32.0" prefWidth="50.0" styleClass="delete" stylesheets="@dashboard.css">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" wrappingWidth="13.485666275024414" />
-                                 </graphic>
-                              </Button>
-                              <TextField fx:id="customer_search1" layoutX="376.0" layoutY="33.0" prefHeight="32.0" prefWidth="230.0" promptText="Search" styleClass="search-billing" stylesheets="@dashboard.css" />
-                              <FontAwesomeIconView glyphName="SEARCH" layoutX="586.0" layoutY="56.0" size="16" />
-                              <TextField fx:id="lat_input" layoutX="397.0" layoutY="239.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                              <TextField fx:id="lng_input" layoutX="180.0" layoutY="237.0" prefHeight="32.0" prefWidth="66.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                              <Label layoutX="349.0" layoutY="236.0" prefHeight="32.0" prefWidth="65.0" text="Lat">
-                                 <font>
-                                    <Font name="Dubai Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="136.0" layoutY="241.0" prefHeight="28.0" prefWidth="50.0" text="Lng">
-                                 <font>
-                                    <Font name="Dubai Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="translator_button" layoutX="708.0" layoutY="146.0" mnemonicParsing="false" onAction="#openexchangewindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
-                                 <graphic>
-                                    <FontAwesomeIconView fx:id="customer_print2" fill="WHITE" glyphName="EXCHANGE" size="18.0" />
-                                 </graphic>
-                              </Button>
-                              <TextField fx:id="agence_adresse_input" layoutX="85.0" layoutY="175.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                              <Label layoutX="9.0" layoutY="176.0" prefHeight="32.0" prefWidth="65.0" text="Adresse">
-                                 <font>
-                                    <Font name="Dubai Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="agence_nom_input" layoutX="87.0" layoutY="70.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                              <Label layoutX="35.0" layoutY="72.0" prefHeight="32.0" prefWidth="65.0" text="Nom">
-                                 <font>
-                                    <Font name="Dubai Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="agence_tel_input" layoutX="83.0" layoutY="125.0" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                              <Label layoutX="26.0" layoutY="130.0" prefHeight="32.0" prefWidth="65.0" text="Tel">
-                                 <font>
-                                    <Font name="Dubai Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXListView fx:id="agence_listview" layoutX="27.0" layoutY="313.0" prefHeight="274.0" prefWidth="434.0" />
-                              <WebView fx:id="webView" layoutX="479.0" layoutY="316.0" onMouseClicked="#MapClick" prefHeight="274.0" prefWidth="298.0" />
+                              <JFXTreeView fx:id="comment_treeview" layoutX="48.0" layoutY="43.0" prefHeight="441.0" prefWidth="623.0" />
                            </children>
                         </AnchorPane>
-                        <JFXToggleButton layoutX="318.0" layoutY="609.0" onAction="#switchfrontbackagences" onMouseClicked="#show_agences_map" text="Back/Front" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="comments_pane" layoutX="53.0" layoutY="83.0" prefHeight="667.0" prefWidth="741.0" visible="false" />
-                  <AnchorPane fx:id="comptes_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css" visible="false">
-                     <AnchorPane fx:id="compte_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
-                        <children>
-                           <Label fx:id="compte_title" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Compte Details">
-                              <font>
-                                 <Font name="Arial Black" size="20.0" />
-                              </font>
-                              <textFill>
-                                 <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
-                                    <stops>
-                                       <Stop>
-                                          <color>
-                                             <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
-                                          </color>
-                                       </Stop>
-                                       <Stop offset="0.09172259507829979">
-                                          <color>
-                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
-                                          </color>
-                                       </Stop>
-                                       <Stop offset="1.0">
-                                          <color>
-                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
-                                          </color>
-                                       </Stop>
-                                    </stops>
-                                 </LinearGradient>
-                              </textFill>
-                           </Label>
-                           <TextField fx:id="compte_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" promptText="Type" />
-                           <TextField fx:id="compte_solde_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="230.0" promptText="Solde" />
-                           <DatePicker fx:id="compte_date_creation_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="230.0" promptText="Date de création" />
-                           <DatePicker fx:id="compte_date_fermeture_input" layoutX="64.0" layoutY="174.0" prefHeight="25.0" prefWidth="230.0" promptText="Date de fermeture" />
-                           <TextField fx:id="compte_etat_input" layoutX="64.0" layoutY="211.0" prefHeight="25.0" prefWidth="227.0" promptText="État" />
-                           <TextField fx:id="compte_rib_input" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="227.0" promptText="RIB" />
-                           <Button fx:id="compte_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateCompteData" prefHeight="30.0" prefWidth="191.0" text="Add/Update compte" />
-                           <Button fx:id="compte_clear_button" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearCompteData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                           <Button fx:id="compte_add_button1" layoutX="81.0" layoutY="384.0" mnemonicParsing="false" onAction="#deleteCompteData" prefHeight="30.0" prefWidth="122.0" text="Delete compte" />
-                        </children>
-                     </AnchorPane>
-                     <JFXListView fx:id="comptes_listview" layoutX="366.0" layoutY="28.0" onMouseClicked="#selectCompteData" prefHeight="396.0" prefWidth="385.0" />
+                        <JFXSlider fx:id="comments_slider" layoutX="299.0" layoutY="-13.0" onDragDetected="#comment_slider_panes" onMouseClicked="#comment_slider_panes" prefHeight="18.0" prefWidth="188.0" />
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="comptes_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css" visible="false" />
 
-
-                  </AnchorPane>
-
-                  <AnchorPane fx:id="cartes_pane" layoutX="170.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <AnchorPane fx:id="carte_back_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
-                        <children>
-                           <Label fx:id="carte_label" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Carte Information">
-                              <font>
-                                 <Font name="Arial Black" size="20.0" />
-                              </font>
-                              <textFill>
-                                 <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
-                                    <stops>
-                                       <Stop>
-                                          <color>
-                                             <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
-                                          </color>
-                                       </Stop>
-                                       <Stop offset="0.09172259507829979">
-                                          <color>
-                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
-                                          </color>
-                                       </Stop>
-                                       <Stop offset="1.0">
-                                          <color>
-                                             <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
-                                          </color>
-                                       </Stop>
-                                    </stops>
-                                 </LinearGradient>
-                              </textFill>
-                           </Label>
-                           <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
-                           <TextField fx:id="carte_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
-                           <Label layoutX="14.0" layoutY="109.0" prefHeight="18.0" prefWidth="50.0" text="Date Emission" />
-                           <DatePicker fx:id="carte_date_emission_input" layoutX="128.0" layoutY="105.0" prefHeight="25.0" prefWidth="163.0" />
-                           <Label layoutX="14.0" layoutY="151.0" prefHeight="18.0" prefWidth="50.0" text="Date Expiration" />
-                           <DatePicker fx:id="carte_date_expiration_input" layoutX="128.0" layoutY="147.0" prefHeight="25.0" prefWidth="163.0" />
-                           <Label layoutX="14.0" layoutY="193.0" prefHeight="18.0" prefWidth="50.0" text="CVV" />
-                           <TextField fx:id="carte_cvv_input" layoutX="64.0" layoutY="189.0" prefHeight="25.0" prefWidth="163.0" />
-                           <Label layoutX="14.0" layoutY="235.0" prefHeight="18.0" prefWidth="50.0" text="Plafond" />
-                           <TextField fx:id="carte_plafond_input" layoutX="64.0" layoutY="231.0" prefHeight="25.0" prefWidth="163.0" />
-                           <Button fx:id="carte_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateCarteData" prefHeight="25.0" prefWidth="191.0" text="Add/Update carte" />
-                           <Label layoutX="14.0" layoutY="277.0" prefHeight="18.0" prefWidth="50.0" text="Etat" />
-                           <TextField fx:id="carte_etat_input" layoutX="64.0" layoutY="273.0" prefHeight="25.0" prefWidth="163.0" />
-                           <Button fx:id="carte_clear_button" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearCarteData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                           <JFXListView fx:id="carte_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
-                           <Button fx:id="carte_add_button1" layoutX="82.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteCarteData" prefHeight="25.0" prefWidth="117.0" text="Delete carte" />
-                           <ChoiceBox layoutX="53.0" layoutY="317.0" prefWidth="150.0" />
-                           <Label layoutX="-6.0" layoutY="321.0" text="Compte" />
-                        </children>
-                     </AnchorPane>
-                  </AnchorPane>
-                  <AnchorPane fx:id="virements_pane" layoutX="154.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                  <children>
-                        <AnchorPane fx:id="typeVirement_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0" visible="false">
-                           <children>
-                              <Label fx:id="typevirement_label" alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="30.0" prefWidth="267.0" text="Type virement">
-                                 <font>
-                                    <Font name="Arial Black" size="20.0" />
-                                 </font>
-                                 <textFill>
-                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
-                                       <stops>
-                                          <Stop>
-                                             <color>
-                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
-                                             </color>
-                                          </Stop>
-                                          <Stop offset="0.09172259507829979">
-                                             <color>
-                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
-                                             </color>
-                                          </Stop>
-                                          <Stop offset="1.0">
-                                             <color>
-                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
-                                             </color>
-                                          </Stop>
-                                       </stops>
-                                    </LinearGradient>
-                                 </textFill>
-                              </Label>
-                              <TextField fx:id="typeVirement_nom_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
-                              <TextField fx:id="typeVirement_frais_input" layoutX="64.0" layoutY="141.0" prefHeight="25.0" prefWidth="227.0" />
-                              <Button fx:id="typeVirement_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateTypeVirementData" prefHeight="25.0" prefWidth="191.0" text="Add/Update Type Virement" />
-                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Nom" />
-                              <Label layoutX="14.0" layoutY="145.0" text="Frais" />
-                              <Button fx:id="typeVirement_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                              <JFXListView fx:id="typeVirement_listview" layoutX="356.0" layoutY="18.0" prefHeight="396.0" prefWidth="385.0" />
-                              <Button layoutX="99.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteTypeVirementData" prefHeight="25.0" prefWidth="75.0" text="Delete" />
-                           </children>
-                        </AnchorPane>
-                     <AnchorPane fx:id="virement_anchorpane" layoutX="-5.0" layoutY="78.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
-                        <children>
-                           <TextField fx:id="virement_cinEmetteur_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
-                           <TextField fx:id="virement_photoCin_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
-                           <TextField fx:id="virement_montant_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
-                           <!-- Date Picker for dateEmission -->
-                           <DatePicker fx:id="virement_dateEmission_input" layoutX="64.0" layoutY="174.0" prefHeight="25.0" prefWidth="227.0" />
-                           <!-- Date Picker for dateApprobation -->
-                           <DatePicker fx:id="virement_dateApprobation_input" layoutX="64.0" layoutY="211.0" prefHeight="25.0" prefWidth="227.0" />
-                           <TextField fx:id="virement_etat_input" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="227.0" />
-                           <!-- TypeVirement ComboBox -->
-                           <ComboBox fx:id="virement_type_combobox" layoutX="64.0" layoutY="285.0" prefHeight="25.0" prefWidth="227.0" />
-                           <Button fx:id="virement_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateVirementData" prefHeight="25.0" prefWidth="191.0" text="Add/Update Virement" />
-                           <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="CIN Emetteur" />
-                           <Label layoutX="12.0" layoutY="104.0" text="Photo CIN" />
-                           <Label layoutX="11.0" layoutY="141.0" text="Montant" />
-                           <Label layoutX="7.0" layoutY="178.0" text="Date Emission" />
-                           <Label layoutX="-9.0" layoutY="215.0" text="Date Approbation" />
-                           <Label layoutX="28.0" layoutY="252.0" text="Etat" />
-                           <Label layoutY="289.0" text="Type Virement" />
-                           <Button fx:id="virement_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                           <JFXListView fx:id="virement_listview" layoutX="356.0" layoutY="18.0" onMouseClicked="#selectVirementData" prefHeight="365.0" prefWidth="426.0" />
-                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Virements">
-                                 <font>
-                                    <Font name="Arial Black" size="20.0" />
-                                 </font>
-                                 <textFill>
-                                    <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
-                                       <stops>
-                                          <Stop>
-                                             <color>
-                                                <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
-                                             </color>
-                                          </Stop>
-                                          <Stop offset="0.09172259507829979">
-                                             <color>
-                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
-                                             </color>
-                                          </Stop>
-                                          <Stop offset="1.0">
-                                             <color>
-                                                <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
-                                             </color>
-                                          </Stop>
-                                       </stops>
-                                    </LinearGradient>
-                                 </textFill>
-                              </Label>
-                              <Button layoutX="91.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteVirementData" prefHeight="25.0" prefWidth="87.0" text="Delete" />
-                        </children>
-                     </AnchorPane>
-                     <JFXToggleButton fx:id="switchvirementtype" layoutX="339.0" layoutY="24.0" onAction="#switchvirementtype" text="Virement/Type" />
-                  </children></AnchorPane>
-                  <AnchorPane fx:id="transaction_pane" layoutX="27.0" layoutY="95.0" prefHeight="639.0" prefWidth="820.0" visible="false">
-                     <children>
-                        <AnchorPane fx:id="transaction_anchorpane" minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="809.0">
-                           <children>
-                              <TextField fx:id="transaction_type_input" layoutX="64.0" layoutY="63.0" prefHeight="25.0" prefWidth="227.0" />
-                              <DatePicker fx:id="transaction_date_input" layoutX="64.0" layoutY="100.0" prefHeight="25.0" prefWidth="227.0" />
-                              <TextField fx:id="transaction_montant_input" layoutX="64.0" layoutY="137.0" prefHeight="25.0" prefWidth="227.0" />
-                              <Button fx:id="transaction_add_button" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="191.0" text="Add/Update Transaction" />
-                              <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
-                              <Label layoutX="14.0" layoutY="105.0" prefHeight="18.0" prefWidth="50.0" text="Date" />
-                              <Label layoutX="14.0" layoutY="145.0" text="Montant" />
-                              <Button fx:id="transaction_add_button1" layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearTransactionData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
-                              <JFXListView fx:id="transaction_listview" layoutX="356.0" layoutY="18.0" onMouseClicked="#selectTransactionData" prefHeight="396.0" prefWidth="385.0" />
-                              <Button layoutX="91.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteTransactionData" prefHeight="25.0" prefWidth="75.0" text="Delete" />
-                           </children>
-                        </AnchorPane>
-                        <Label alignment="CENTER" layoutX="18.0" layoutY="24.0" prefHeight="30.0" prefWidth="267.0" text="Transaction">
-                           <font>
-                              <Font name="Arial Black" size="20.0" />
-                           </font>
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
-                                 <stops>
-                                    <Stop>
-                                       <color>
-                                          <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="0.09172259507829979">
-                                       <color>
-                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                       <color>
-                                          <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
-                                       </color>
-                                    </Stop>
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                        </Label>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="cartes_pane" layoutX="170.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
+                  <AnchorPane fx:id="virements_pane" layoutX="154.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
+                  <AnchorPane fx:id="transaction_pane" layoutX="27.0" layoutY="95.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
                   <AnchorPane fx:id="dashboard_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false" />
                   <AnchorPane fx:id="reclamation_pane" layoutX="37.0" layoutY="105.0" prefHeight="639.0" prefWidth="820.0" visible="false">
                      <children>

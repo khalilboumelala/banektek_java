@@ -22,6 +22,11 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="panda-repository" />
+      <option name="name" value="panda-repository" />
+      <option name="url" value="https://repo.panda-lang.org/releases" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="gluon-nexus-repository" />
       <option name="name" value="gluon-nexus-repository" />
       <option name="url" value="http://nexus.gluonhq.com/nexus/content/repositories/releases/" />

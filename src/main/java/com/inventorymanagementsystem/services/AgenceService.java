@@ -2,6 +2,7 @@ package com.inventorymanagementsystem.services;
 
 import com.inventorymanagementsystem.config.Database;
 import com.inventorymanagementsystem.entity.Agence;
+
 //import com.inventorymanagementsystem.utils.Database;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class AgenceService {
     PreparedStatement preparedStatement;
 
     public AgenceService() {
-        connection = Database.getInstance().getConnection();
+        connection = Database.getInstance().connectDB();
     }
 
     public static AgenceService getInstance() {
@@ -43,8 +44,8 @@ public class AgenceService {
                         resultSet.getString("nom"),
                         resultSet.getLong("num_tel"),
                         resultSet.getString("etat"),
-                        resultSet.getInt("id_chef"),
-                        resultSet.getDate("date_ajout"),
+                        resultSet.getInt("id_chef_id"),
+                        resultSet.getDate("data_ajout"),
                         resultSet.getString("latitude"),
                         resultSet.getString("longitude")
                 ));
@@ -56,7 +57,7 @@ public class AgenceService {
     }
 
     public boolean add(Agence agence) {
-        String request = "INSERT INTO `agence`(`adresse`, `nom`, `num_tel`, `etat`, `id_chef`, `date_ajout`, `latitude`, `longitude`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String request = "INSERT INTO `agence`(`adresse`, `nom`, `num_tel`, `etat`, `id_chef_id`, `data_ajout`, `latitude`, `longitude`) VALUES(?, ?, ?, ?, null, ?, ?, ?)";
         try {
             preparedStatement = connection.prepareStatement(request);
 
@@ -64,10 +65,10 @@ public class AgenceService {
             preparedStatement.setString(2, agence.getNom());
             preparedStatement.setLong(3, agence.getNumTel());
             preparedStatement.setString(4, agence.getEtat());
-            preparedStatement.setInt(5, agence.getIdChef());
-            preparedStatement.setDate(6, new java.sql.Date(agence.getDateAjout().getTime()));
-            preparedStatement.setString(7, agence.getLatitude());
-            preparedStatement.setString(8, agence.getLongitude());
+           // preparedStatement.setInt(5, 11);
+            preparedStatement.setDate(5, new java.sql.Date(agence.getDateAjout().getTime()));
+            preparedStatement.setString(6, agence.getLatitude());
+            preparedStatement.setString(7, agence.getLongitude());
 
             preparedStatement.executeUpdate();
             System.out.println("Agence added");
@@ -115,4 +116,32 @@ public class AgenceService {
         }
         return false;
     }
+
+    public Agence get(int agenceId) {
+        Agence agence = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM `agence` WHERE `id` = ?");
+            preparedStatement.setInt(1, agenceId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                agence = new Agence(
+                        resultSet.getInt("id"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("nom"),
+                        resultSet.getLong("num_tel"),
+                        resultSet.getString("etat"),
+                        resultSet.getInt("id_chef"),
+                        resultSet.getDate("date_ajout"),
+                        resultSet.getString("latitude"),
+                        resultSet.getString("longitude")
+                );
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (get) agence: " + exception.getMessage());
+        }
+        return agence;
+    }
+
 }

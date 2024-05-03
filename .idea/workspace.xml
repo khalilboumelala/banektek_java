@@ -20,6 +20,7 @@
       <list>
         <option value="HTML File" />
         <option value="Interface" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -57,7 +58,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/khali/Downloads/Projet_java/banektek-java1.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/khali/Downloads/Projet_java/inventory-management-system-main/lib/jfoenix-9.0.10.jar&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -65,20 +66,20 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15527344&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.33793104&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.38310185&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;ff1c0c02e4b95b421f5c0569e8c2b387&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem\utils" />
+      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\lib" />
+      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem\exceptions" />
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\resources\com\inventorymanagementsystem" />
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\resources\com\inventorymanagementsystem\map" />
-      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem" />
-      <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\database" />
-      <recent name="C:\Users\rashi\Documents\gui\inventory-management-system" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem" />
@@ -86,8 +87,11 @@
       <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\src\main\resources\jasper-reports" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.inventorymanagementsystem.entity" />
+      <recent name="com.inventorymanagementsystem.utils" />
+      <recent name="com.inventorymanagementsystem.notifications" />
+      <recent name="com.inventorymanagementsystem.exceptions" />
       <recent name="com.inventorymanagementsystem" />
+      <recent name="com.inventorymanagementsystem.entity" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -168,6 +172,17 @@
       <workItem from="1713551126930" duration="3666000" />
       <workItem from="1713640588512" duration="5073000" />
       <workItem from="1713727047815" duration="746000" />
+      <workItem from="1713782171011" duration="7490000" />
+      <workItem from="1713814728457" duration="3579000" />
+      <workItem from="1713887070424" duration="26111000" />
+      <workItem from="1713943544945" duration="173000" />
+      <workItem from="1713947061473" duration="3736000" />
+      <workItem from="1713953495187" duration="958000" />
+      <workItem from="1714258293739" duration="7345000" />
+      <workItem from="1714377581366" duration="4202000" />
+      <workItem from="1714467437157" duration="5455000" />
+      <workItem from="1714647610727" duration="7696000" />
+      <workItem from="1714763773266" duration="5301000" />
     </task>
     <servers />
   </component>

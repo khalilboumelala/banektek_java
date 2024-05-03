@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 
 //
-import org.cef.browser.CefBrowser;
+
 import org.panda_lang.pandomium.Pandomium;
 import org.panda_lang.pandomium.wrapper.PandomiumClient;
 
@@ -76,6 +76,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
        // Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
+       // Parent root = FXMLLoader.load(getClass().getResource("PlotStocks.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Banektek");

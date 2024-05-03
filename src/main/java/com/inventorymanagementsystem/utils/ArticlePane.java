@@ -4,6 +4,34 @@ import javafx.scene.layout.Pane;
 
 public class ArticlePane extends Pane {
     private Integer articleId;
+    private ArticlePane original;
+    private String Titre;
+    private String Contenu;
+
+    public String getTitre() {
+        return Titre;
+    }
+
+    public void setTitre(String titre) {
+        Titre = titre;
+    }
+
+    public String getContenu() {
+        return Contenu;
+    }
+
+    public void setContenu(String contenu) {
+        Contenu = contenu;
+    }
+
+    public ArticlePane getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(ArticlePane original) {
+        this.original = original;
+    }
+
     public  ArticlePane()
     {super();}
     public ArticlePane(int articleId) {
