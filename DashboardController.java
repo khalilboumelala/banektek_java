@@ -1,36 +1,33 @@
 package com.inventorymanagementsystem;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebHistory;
+import javafx.scene.web.WebView;
 
 //import atlantafx.base.controls.ToggleSwitch;
-import atlantafx.base.controls.Spacer;
-import atlantafx.base.theme.Styles;
 import atlantafx.base.util.Animations;
 import com.inventorymanagementsystem.services.*;
 
-import com.jfoenix.utils.JFXUtilities;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.Event;
 import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
 import javafx.scene.control.cell.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.Callback;
 import javafx.util.Duration;
-import net.sf.jasperreports.engine.export.tabulator.NestedTableCell;
-import org.controlsfx.control.HyperlinkLabel;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.ToggleSwitch;
-import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.kordamp.ikonli.javafx.Icon;
 import org.kordamp.ikonli.material2.Material2AL;
 
 
@@ -55,7 +52,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -71,9 +67,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.Rating;
-import org.controlsfx.control.textfield.TextFields;
 
-import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.File;
 import java.net.URI;
@@ -90,7 +84,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 import com.inventorymanagementsystem.entity.Notification;
 //
 
@@ -104,14 +98,13 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXListCell;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import org.kordamp.ikonli.material2.Material2MZ;
 
 //import com.gluonhq.charm.glisten.control.DropdownButton;
 
-import static java.util.stream.DoubleStream.generate;
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
 
 public class DashboardController implements Initializable {
+
     private double x;
     private double y;
 
@@ -321,6 +314,8 @@ private Button articles_btn;
     private TableView<Client> client_table;
     @FXML
     private TextField client_search;
+
+
 
 
     @FXML
@@ -795,7 +790,72 @@ private Button articles_btn;
         }
 
     }
+    @FXML
+    private WebView webViewReponse;
+    private WebEngine engine;
+    @FXML
+    private TextField textFieldLink;
+    //private WebEngine engine;
+    private WebHistory history;
+    //private String homePage;
+    private double webZoom;
+    private String homePage;
+    /*public DashboardController(TextField textFieldLink) {
+        this.textFieldLink = textFieldLink;
+    }*/
 
+
+    @FXML
+    public void loadPage() {
+        engine.load("http://www.google.com");
+        //engine.load("http://"+textFieldLink.getText());
+    }
+    public void refreshPage() {
+
+        engine.reload();
+    }
+
+    public void zoomIn() {
+
+        webZoom+=0.25;
+        webViewReponse.setZoom(webZoom);
+    }
+
+    public void zoomOut() {
+
+        webZoom-=0.25;
+        webView.setZoom(webZoom);
+    }
+
+    public void displayHistory() {
+
+        history = engine.getHistory();
+        ObservableList<WebHistory.Entry> entries = history.getEntries();
+
+        for(WebHistory.Entry entry : entries) {
+
+            //System.out.println(entry);
+            System.out.println(entry.getUrl()+" "+entry.getLastVisitedDate());
+        }
+    }
+
+    public void back() {
+
+        history = engine.getHistory();
+        ObservableList<WebHistory.Entry> entries = history.getEntries();
+        history.go(-1);
+
+        textFieldLink.setText(entries.get(history.getCurrentIndex()).getUrl());
+    }
+
+    public void next() {
+
+        history = engine.getHistory();
+        ObservableList<WebHistory.Entry> entries = history.getEntries();
+        history.go(1);
+
+        textFieldLink.setText(entries.get(history.getCurrentIndex()).getUrl());
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Exports all modules to other modules
@@ -804,19 +864,22 @@ private Button articles_btn;
         setUsername();
         showTableClient();
 
-
-        //Affichage map
+        // Affichage map
         WebEngine webengine;
         webengine = webView.getEngine();
 
         url = this.getClass().getResource("map/index.html");
         webengine.load(url.toString());
 
-//
+        // Initialisation de engine pour webViewReponse
+        engine = webViewReponse.getEngine();
+
+        // Charge la page dans webViewReponse
+        loadPage();
+
         showAgenceData();
         showArticleData();
         addarticlepanes();
-
 
         showCompteData();
         initializeCompteListSelection();
@@ -838,17 +901,10 @@ private Button articles_btn;
 
         showTransactionData();
 
-/*
-        agence_listview.setExpanded(true);
-        agence_listview.depthProperty().set(1);*/
-/*
-     article_col_datepub = new TableColumn<>("Date Pub");
-       article_col_image = new TableColumn<>("Image");
-        article_col_titre = new TableColumn<>("Titre");
-         article_col_auteur = new TableColumn<>("Auteur");*/
         connection = Database.getInstance().connectDB();
-
     }
+
+
     //ARTICLES-AGENCES
 //agence
 
@@ -3439,6 +3495,11 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
 
     //REPONSE
+    /*@FXML
+    private WebView webViewReponse;*/
+
+
+    //private WebEngine engine;
 
     @FXML
     private DatePicker reponse_date_input;
