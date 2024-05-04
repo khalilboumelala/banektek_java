@@ -26,6 +26,7 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import net.sf.jasperreports.engine.export.tabulator.NestedTableCell;
 import org.controlsfx.control.HyperlinkLabel;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -90,6 +91,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import com.inventorymanagementsystem.entity.Notification;
 //
 
 import java.io.IOException;
@@ -3210,11 +3212,6 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         reclamation.setType(reclamation_type_input.getText());
         reclamation.setDate_reclamation(reclamation_date_input.getValue() != null ? java.sql.Date.valueOf(reclamation_date_input.getValue()) : null);
         reclamation.setDescription(reclamation_description_input.getText());
-        //reclamation.setEmail(reclamation_email_input.getText());
-        //reclamation.setEtat(reclamation_etat_input.getText());
-        //reclamation.setDocument(reclamation_document_input.getText());
-
-
 
         // Determine if an existing reclamation is selected
         Reclamation selectedReclamation = reclamations_listview.getSelectionModel().getSelectedItem();
@@ -3222,15 +3219,15 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
             // If a reclamation is selected, update its data
             reclamation.setId(selectedReclamation.getId());
             reclamation.setId_client_id(selectedReclamation.getId_client_id());
-            reclamation.setEtat(selectedReclamation.getEtat()); // Ajout de la récupération de l'état existant
-            reclamation.setDocument(selectedReclamation.getDocument()); // Ajout de la récupération du document existant
-            reclamation.setEmail(selectedReclamation.getEmail()); // Ajout de la récupération de l'email existant
+            reclamation.setEtat(selectedReclamation.getEtat());
+            reclamation.setDocument(selectedReclamation.getDocument());
+            reclamation.setEmail(selectedReclamation.getEmail());
 
-            //reclamation.setIdUser(selectedCompte.getIdUser());
             if (ReclamationService.getInstance().edit(reclamation)) {
                 showAlertReclamation(Alert.AlertType.INFORMATION, "Message", null, "Reclamation updated successfully.");
                 showReclamationData();
                 clearReclamationData();
+                showNotification("Notification: reclamation updated");
             } else {
                 showAlertReclamation(Alert.AlertType.ERROR, "Error Message", null, "Failed to update reclamation data.");
             }
@@ -3240,11 +3237,26 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                 showAlertReclamation(Alert.AlertType.INFORMATION, "Message", null, "Reclamation added successfully.");
                 showReclamationData();
                 clearReclamationData();
+                showNotification("Notification: reclamation added");
             } else {
                 showAlertReclamation(Alert.AlertType.ERROR, "Error Message", null, "Failed to add reclamation data.");
             }
         }
     }
+
+    private void showNotification(String message) {
+        File file = new File("C:/Users/USER/Desktop/inventory-management-system-main final/src/main/java/com/inventorymanagementsystem/image/notification.png");
+        Image image = new Image(file.toURI().toString());
+        Notifications notifications = Notifications.create();
+        notifications.graphic(new ImageView(image));
+        notifications.text(message);
+        notifications.title("Success Message");
+        notifications.hideAfter(Duration.seconds(4));
+        notifications.show();
+    }
+
+
+
 
 
 
@@ -3297,6 +3309,13 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
         });
         reclamations_listview.setItems(observableReclamationList);
+        Stage primaryStage = Application.getPrimaryStage();
+        Notification notification = new Notification(primaryStage);
+
+        // Notify user about the new publication
+        Reclamation latestReclamation = observableReclamationList.get(observableReclamationList.size() - 1);
+        //Notification notification = new Notification(stage);
+        //notification.showNotification("New Reclamation", "New Reclamation ID: " + latestReclamation.getId() + ", Type: " + latestReclamation.getType());
     }
 
 
@@ -3325,11 +3344,13 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
             if (ReclamationService.getInstance().delete(selectedReclamation.getId())) {
                 showAlertReclamation(Alert.AlertType.INFORMATION, "Message", null, "Reclamation deleted successfully.");
                 showReclamationData(); // Refresh Reclamation data in the listview
+                showNotification("Notification: reclamation deleted"); // Affiche la notification de suppression
             } else {
                 showAlertReclamation(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete reclamation data.");
             }
         }
     }
+
     // Method to show alert messages
     private void showAlertReclamation(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
@@ -3398,6 +3419,21 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         // Définir une option par défaut si nécessaire
         choiceBox_reclamation_type.setValue("Problème de connexion");
     }*/
+
+    //notification reclamation
+    public void showNotification(String title, String message) {
+        Notifications.create()
+                .title(title)
+                .text(message)
+                .owner(stage) // Set the owner window
+                .showInformation();
+    }
+    private Stage stage; // Reference to the stage
+
+    // Method to set the stage
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
     //FIN RECLAMATION
 
 
@@ -3420,7 +3456,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
     public void addOrUpdateReponseData() {
         // Input validation
-        if ( reponse_date_input.getValue() == null || reponse_message.getText().isBlank()) {
+        if (reponse_date_input.getValue() == null || reponse_message.getText().isBlank()) {
             showAlertReponse(Alert.AlertType.INFORMATION, "Message", null, "Please fill all mandatory data such as type, date, and description.");
             return;
         }
@@ -3430,10 +3466,8 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         reponse.setDate_reponse(reponse_date_input.getValue() != null ? java.sql.Date.valueOf(reponse_date_input.getValue()) : null);
         reponse.setMessage(reponse_message.getText());
 
-
-
         // Determine if an existing reponse is selected
-        Reponse selectedReponse= reponses_listview.getSelectionModel().getSelectedItem();
+        Reponse selectedReponse = reponses_listview.getSelectionModel().getSelectedItem();
         if (selectedReponse != null) {
             // If a reponse is selected, update its data
             reponse.setId(selectedReponse.getId()); // Set the ID of the selected reponse
@@ -3445,6 +3479,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                 showAlertReponse(Alert.AlertType.INFORMATION, "Message", null, "Reponse updated successfully.");
                 showReponseData();
                 clearReponseData();
+                showNotification("Notification: reponse updated");
             } else {
                 showAlertReponse(Alert.AlertType.ERROR, "Error Message", null, "Failed to update reponse data.");
             }
@@ -3454,6 +3489,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                 showAlertReponse(Alert.AlertType.INFORMATION, "Message", null, "Reponse added successfully.");
                 showReponseData();
                 clearReponseData();
+                showNotification("Notification: reponse added");
             } else {
                 showAlertReponse(Alert.AlertType.ERROR, "Error Message", null, "Failed to add reponse data.");
             }
@@ -3529,11 +3565,13 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
             if (ReponseService.getInstance().delete(selectedReponse.getId())) {
                 showAlertReponse(Alert.AlertType.INFORMATION, "Message", null, "Reponse deleted successfully.");
                 showReponseData(); // Refresh Reponse data in the listview
+                showNotification("Notification: reponse deleted");
             } else {
                 showAlertReponse(Alert.AlertType.ERROR, "Error Message", null, "Failed to delete reponse data.");
             }
         }
     }
+
     // Method to show alert messages
     private void showAlertReponse(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
