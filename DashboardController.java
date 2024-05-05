@@ -3,6 +3,19 @@ package com.inventorymanagementsystem;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import java.text.SimpleDateFormat;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -3655,6 +3668,29 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
 
     @FXML
     private Button clear_reponse_button;
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    public void searchByDate() {
+        LocalDate date = datePicker.getValue();
+        if (date != null) {
+            Database database = Database.getInstance();
+            List<Reponse> reponses = database.searchByDate(date);
+            if (reponses != null) {
+                // Effacer la listView existante avant d'ajouter de nouveaux éléments
+                reponses_listview.getItems().clear();
+                // Ajouter chaque objet Reponse à la listView
+                reponses_listview.getItems().addAll(reponses);
+
+                // Sélectionner le premier élément de la liste si elle n'est pas vide
+                if (!reponses.isEmpty()) {
+                    MultipleSelectionModel<Reponse> selectionModel = reponses_listview.getSelectionModel();
+                    selectionModel.selectFirst();
+                }
+            }
+        }
+    }
 
     public void addOrUpdateReponseData() {
         // Input validation
@@ -3719,7 +3755,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                     setGraphic(null);
                 } else {
                     // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
+                    VBox container = new VBox();
                     container.setSpacing(5); // Adjust spacing as needed
 
                     // Add FontAwesome icons and text for each attribute
@@ -3728,15 +3764,20 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                     messageIcon.setSize("2em"); // Set icon size
                     Text messageText = new Text(" " + reponse.getMessage());
 
+                    // Add date to the VBox container
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDate = dateFormat.format(reponse.getDate_reponse()); // Assuming getDateReponse() returns a Date object
+                    Text dateText = new Text("Date: " + formattedDate);
 
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(messageIcon, messageText);
+                    // Add icons, text, and date to the VBox container
+                    container.getChildren().addAll(messageIcon, messageText, dateText);
 
                     // Set the VBox container as the graphic for the list cell
                     setText(null); // Clear text
                     setGraphic(container);
                 }
             }
+
 
         });
         reponses_listview.setItems(observableReponseList);
@@ -3793,6 +3834,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         reponse_message.clear();
         // Unset the selected reponse
         reponses_listview.getSelectionModel().clearSelection();
+
     }
 
 
@@ -3827,6 +3869,9 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
             // Call the selectReponseData method when a new item is selected
             selectReponseData();
         });
+        reponses_listview.setCellFactory(new ReponseCellFactory());
+        reponses_listview.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
     }
 
     //FIN REPONSE
