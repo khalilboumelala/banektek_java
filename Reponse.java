@@ -12,6 +12,11 @@ public class Reponse implements Comparable<Reponse>{
 
     private Reclamation reclamation;
 
+    @Override
+    public String toString() {
+        return "Message: " + message + ", Date: " + date_reponse;
+    }
+
     public Reponse(Integer id,Integer id_reclamation_id,Integer id_agent_id,java.util.Date date_reponse,String message)
     {
         this.id=id;
