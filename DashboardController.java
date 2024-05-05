@@ -2,9 +2,17 @@ package com.inventorymanagementsystem;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import java.sql.*;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
@@ -803,6 +811,7 @@ private Button articles_btn;
     /*public DashboardController(TextField textFieldLink) {
         this.textFieldLink = textFieldLink;
     }*/
+    //afficher webView reponse
 
 
     @FXML
@@ -856,8 +865,60 @@ private Button articles_btn;
 
         textFieldLink.setText(entries.get(history.getCurrentIndex()).getUrl());
     }
+
+    // chart reclamation
+    @FXML
+    private BarChart<String, Integer> barChart;
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
+
+    public void chart() {
+        try {
+            Connection connection = Database.getInstance().connectDB();
+            String chartSql = "SELECT date_reclamation, type FROM reclamation";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(chartSql);
+
+            // Créer une structure de données pour stocker le nombre de réclamations par type à une date donnée
+            Map<String, Map<String, Integer>> dataMap = new HashMap<>();
+
+            // Parcourir les résultats de la requête
+            while (resultSet.next()) {
+                String date = resultSet.getString("date_reclamation");
+                String type = resultSet.getString("type");
+
+                // Mettre à jour la structure de données
+                if (!dataMap.containsKey(date)) {
+                    dataMap.put(date, new HashMap<>());
+                }
+                Map<String, Integer> typeCountMap = dataMap.get(date);
+                typeCountMap.put(type, typeCountMap.getOrDefault(type, 0) + 1);
+            }
+
+            // Ajouter les données au graphique
+            for (String date : dataMap.keySet()) {
+                Map<String, Integer> typeCountMap = dataMap.get(date);
+                for (String type : typeCountMap.keySet()) {
+                    int count = typeCountMap.get(type);
+                    XYChart.Series<String, Integer> series = new XYChart.Series<>();
+                    series.setName(date);
+                    series.getData().add(new XYChart.Data<>(type, count));
+                    barChart.getData().add(series);
+                }
+            }
+
+            // Fermer la connexion à la base de données
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //display chart
+        chart();
         // Exports all modules to other modules
         Modules.exportAllToAll();
 
