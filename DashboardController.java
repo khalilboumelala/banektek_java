@@ -1,6 +1,12 @@
 package com.inventorymanagementsystem;
+//import okhttp3.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -915,6 +921,9 @@ private Button articles_btn;
             ex.printStackTrace();
         }
     }
+
+    //whatapp msg
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //display chart
@@ -3299,6 +3308,32 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
    private  TextField reclamation_email_input;
 
 
+   /* @FXML
+    private TextArea textInput;*/
+
+    @FXML
+    private TextField morseOutput;
+
+    MorseCodeTranslator morseCodeTranslator = new MorseCodeTranslator();
+
+    boolean morseToText = false;
+
+    @FXML
+    void updateMorseCode(KeyEvent event) {
+        if(morseToText){
+            morseOutput.setText(morseCodeTranslator.translateToText(reclamation_description_input.getText()));
+        }else {
+            morseOutput.setText(morseCodeTranslator.translateToMorse(reclamation_description_input.getText()));
+        }
+    }
+
+    @FXML
+    void switchStyle(ActionEvent event) {
+        morseToText = !morseToText;
+    }
+
+
+
     @FXML
     public void switchreclamationreponse(){
 
@@ -3345,6 +3380,8 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                 showReclamationData();
                 clearReclamationData();
                 showNotification("Notification: reclamation updated");
+                // Envoyer un message WhatsApp après la mise à jour de la réclamation
+                //envoyerMessageWhatsApp(reclamation.getDescription());
             } else {
                 showAlertReclamation(Alert.AlertType.ERROR, "Error Message", null, "Failed to update reclamation data.");
             }
@@ -3355,11 +3392,54 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
                 showReclamationData();
                 clearReclamationData();
                 showNotification("Notification: reclamation added");
+                // Envoyer un message WhatsApp après l'ajout de la réclamation
+                //envoyerMessageWhatsApp(reclamation.getDescription());
             } else {
                 showAlertReclamation(Alert.AlertType.ERROR, "Error Message", null, "Failed to add reclamation data.");
             }
         }
     }
+
+    // Méthode pour envoyer un message WhatsApp
+    /*private void envoyerMessageWhatsApp(String messageContent) {
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        MediaType mediaType = MediaType.parse("application/json");
+
+        // Remplacez les valeurs suivantes par les informations appropriées
+        String fromNumber = "447860099299"; // Votre numéro WhatsApp
+        String toNumber = "21696417944"; // Le numéro WhatsApp de destination
+        String templateName = "message_test"; // Le nom de votre modèle de message WhatsApp
+
+        // Construction du corps de la requête
+        String requestBody = String.format("{\"messages\":[{\"from\":\"%s\",\"to\":\"%s\",\"content\":{\"templateName\":\"%s\",\"templateData\":{\"body\":{\"placeholders\":[\"%s\"]}}}}]}",
+                fromNumber, toNumber, templateName, messageContent);
+        RequestBody body = RequestBody.create(mediaType, requestBody);
+
+        // Création de la requête
+        Request request = new Request.Builder()
+                .url("https://6g5nj5.api.infobip.com/whatsapp/1/message/template")
+                .method("POST", body)
+                .addHeader("Authorization", "App e3622c051d218c8aa375d599e1772741-41529839-4c3a-4d65-ba0c-4064778b1bea")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+
+        // Envoi de la requête
+        try {
+            Response response = client.newCall(request).execute();
+            // Gérer la réponse si nécessaire
+            if (response.isSuccessful()) {
+                // Le message a été envoyé avec succès
+                System.out.println("Message WhatsApp envoyé avec succès !");
+            } else {
+                // Gérer les erreurs de l'API
+                System.out.println("Erreur lors de l'envoi du message WhatsApp : " + response.code());
+            }
+        } catch (Exception e) {
+            // Gérer les exceptions
+            e.printStackTrace();
+        }
+    }*/
 
     private void showNotification(String message) {
         File file = new File("C:/Users/USER/Desktop/inventory-management-system-main final/src/main/java/com/inventorymanagementsystem/image/notification.png");
