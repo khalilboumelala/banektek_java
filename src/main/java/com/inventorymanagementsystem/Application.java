@@ -77,7 +77,7 @@ public class Application extends javafx.application.Application {
        // Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
        // Parent root = FXMLLoader.load(getClass().getResource("PlotStocks.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Loansimulator.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Banektek");
         root.setOnMousePressed((event)->{

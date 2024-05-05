@@ -1165,6 +1165,10 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         shake.play();
     }
 
+    @FXML
+    private AnchorPane client_pane;
+    @FXML
+
     private void shakeTextArea(TextArea textField) {
         TranslateTransition shake = new TranslateTransition(Duration.millis(100), textField);
         shake.setByX(10f);
