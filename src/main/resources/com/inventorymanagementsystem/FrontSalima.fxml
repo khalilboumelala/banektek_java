@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.ControllerFrontSalima">
+   <children>
+      <AnchorPane fx:id="reclamation_anchorpane" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="1034.0">
+         <children>
+            <DatePicker fx:id="reclamation_date_input" layoutX="82.0" layoutY="101.0" prefHeight="25.0" prefWidth="227.0" />
+            <TextField fx:id="reclamation_description_input" layoutX="82.0" layoutY="137.0" onAction="#updateMorseCode" onKeyTyped="#updateMorseCode" prefHeight="25.0" prefWidth="227.0" />
+            <Button fx:id="Add_Update_reclamation" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOrUpdateReclamationData" prefHeight="25.0" prefWidth="191.0" text="Add/Update Reclamation" />
+            <Label layoutX="14.0" layoutY="67.0" prefHeight="18.0" prefWidth="50.0" text="Type" />
+            <Label layoutX="14.0" layoutY="105.0" prefHeight="18.0" prefWidth="50.0" text="Date" />
+            <Label layoutX="14.0" layoutY="141.0" text="Description" />
+            <Button layoutX="204.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearReclamationData" prefHeight="25.0" prefWidth="62.0" text="Clear" />
+            <JFXListView fx:id="reclamations_listview" layoutX="407.0" layoutY="13.0" prefHeight="261.0" prefWidth="460.0" />
+            <Label alignment="CENTER" layoutY="3.0" prefHeight="30.0" prefWidth="267.0" text="Reclamation">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.09172259507829979">
+                           <color>
+                              <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <ChoiceBox fx:id="choiceBox_reclamation_type" layoutX="82.0" layoutY="63.0" prefHeight="26.0" prefWidth="227.0" visible="false" />
+            <Button fx:id="reclamation_button_upload" layoutX="82.0" layoutY="313.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="191.0" text="Upload image" />
+            <TextField fx:id="reclamation_type_input" layoutX="82.0" layoutY="63.0" prefHeight="26.0" prefWidth="227.0" />
+            <Label layoutX="14.0" layoutY="183.0" text="Email" visible="false" />
+            <TextField fx:id="reclamation_email_input" layoutX="82.0" layoutY="176.0" prefHeight="26.0" prefWidth="227.0" visible="false" />
+            <Label layoutX="14.0" layoutY="224.0" text="Etat" visible="false" />
+            <TextField fx:id="reclamation_etat_input" layoutX="82.0" layoutY="212.0" prefHeight="26.0" prefWidth="230.0" visible="false" />
+            <TextField fx:id="reclamation_document_input" layoutX="82.0" layoutY="255.0" prefHeight="26.0" prefWidth="230.0" visible="false" />
+            <Label layoutX="14.0" layoutY="260.0" text="Document" visible="false" />
+            <Button fx:id="reclamation_delete_button" layoutX="82.0" layoutY="386.0" mnemonicParsing="false" onAction="#deleteReclamationData" prefHeight="26.0" prefWidth="115.0" text="Delete" />
+            <TextField fx:id="morseOutput" layoutX="86.0" layoutY="177.0" prefHeight="53.0" prefWidth="222.0" />
+            <Button layoutX="152.0" layoutY="243.0" mnemonicParsing="false" onAction="#switchStyle" onKeyTyped="#switchStyle" text="switch" />
+            <JFXListView fx:id="reponses_listview" layoutX="407.0" layoutY="294.0" prefHeight="209.0" prefWidth="460.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,101 +1,88 @@
 package com.inventorymanagementsystem;
 
 //import atlantafx.base.controls.ToggleSwitch;
-import atlantafx.base.util.Animations;
-import com.inventorymanagementsystem.services.*;
-
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXTreeView;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
-import javafx.collections.transformation.FilteredList;
-
-import javafx.event.Event;
-import javafx.geometry.Orientation;
-import javafx.scene.Cursor;
-import javafx.scene.control.cell.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
-import javafx.util.StringConverter;
-import org.controlsfx.control.ToggleSwitch;
-import org.kordamp.ikonli.javafx.FontIcon;
-import org.kordamp.ikonli.material2.Material2AL;
-
 
 import atlantafx.base.controls.Card;
-import com.inventorymanagementsystem.entity.*;
+import atlantafx.base.util.Animations;
 import com.inventorymanagementsystem.config.Database;
 import com.inventorymanagementsystem.utils.*;
+import com.inventorymanagementsystem.entity.*;
+import com.inventorymanagementsystem.services.*;
+import com.jfoenix.controls.JFXListCell;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXTreeView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
+import javafx.util.Duration;
+import javafx.util.StringConverter;
 import org.controlsfx.control.Rating;
+import org.controlsfx.control.TaskProgressView;
+import org.controlsfx.control.ToggleSwitch;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material2.Material2AL;
+import org.kordamp.ikonli.material2.Material2MZ;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.net.URI;
+
+import java.io.*;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-//
-
-import java.io.IOException;
-
-//
-
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXListCell;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-
-//import com.gluonhq.charm.glisten.control.DropdownButton;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
 
 public class DashboardController implements Initializable {
+
+    public AnchorPane credit_pane;
+    public Button credits_btn;
     private double x;
     private double y;
+
+    public Client getClient_connecte() {
+        return client_connecte;
+    }
+
+    public void setClient_connecte(Client client_connecte) {
+        this.client_connecte = client_connecte;
+        nom_agent_session.setText(client_connecte.getNom()+" "+client_connecte.getPrenom());
+
+    }
+
+    public Client client_connecte;
+
 
 
 
@@ -116,8 +103,7 @@ public class DashboardController implements Initializable {
 //AGENCE
 
 
-    @FXML
-    private Button dashboard_btn;
+
 
 
     @FXML
@@ -173,68 +159,21 @@ private Button articles_btn;
     private AnchorPane articles_front_anchorpane;
     @FXML
     private AnchorPane articles_back_anchorpane;
-    @FXML
-    private ToggleSwitch frontbackarticlesswitch;
 
 
-    @FXML
-    private TableView<Article> article_table;
-    @FXML
-    private JFXListView<Article> article_listview;
-    @FXML
-    private Button article_add_button;
 
-    @FXML
-    private Button article_upload_button;
-    @FXML
-    private TextField article_titre_input;
-    @FXML
-    private TextArea article_contenu_input;
 
-    @FXML
-    private Label article_upload_status;
+
+
+
+
+
     @FXML
     private Button agences_btn;
+    @FXML
+    private AnchorPane comptes_pane;
 
 
-    /////////::client //////:
-    @FXML
-    private TextField nom_client;
-    @FXML
-    private TextField prenom_client;
-    @FXML
-    private TextField mail_client;
-    @FXML
-    private TextField cin_client;
-    @FXML
-    private TextField genre_client;
-    @FXML
-    private TextField pays_client;
-    @FXML
-    private TextField piece_client;
-    @FXML
-    private TextField photo_client;
-
-    @FXML
-    private TextField tel_client;
-    @FXML
-    private TextField poste_client;
-    @FXML
-    private TextField dob_client;
-    @FXML
-    private TextField adresse_client;
-    @FXML
-    private TextField signature_client;
-    @FXML
-    private TextField pass_client;
-
-
-
-
-
-    ///////fin client ////////:
-
-    //
 
     @FXML
     private Button signout_btn;
@@ -263,75 +202,98 @@ private Button articles_btn;
         comments_pane.setVisible(false);
         transaction_pane.setVisible(false);
         reclamation_pane.setVisible(false);
+        credit_pane.setVisible(false);
         //Button color to default
-        dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         comptes_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         clients_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         cartes_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         virements_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-
         agences_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         articles_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         comments_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         transaction_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
         reclamation_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+        credits_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
 
     }
   public void  ActivateThisAnchor(AnchorPane AnchorTest,Button ButtonTest){
+
         disactivateAllPanes();
       Animations.fadeIn(AnchorTest, Duration.millis(1000)).playFromStart();
       AnchorTest.setVisible(true);
       ButtonTest.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-  }
+      AnchorTest.toFront();
+      AnchorTest.toFront();
+      AnchorTest.toFront();
+      AnchorTest.toFront();
+
+    }
+    String oldStyle ;
     public void activateAnchorPane(){
-        dashboard_btn.setOnMouseClicked(mouseEvent -> {
-            ActivateThisAnchor(dashboard_pane,dashboard_btn);
-        });
+
+
         comptes_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(comptes_pane,comptes_btn);
         });
+        credits_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
+            ActivateThisAnchor(credit_pane,credits_btn);
+        });
         clients_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(clients_pane,clients_btn);
         });
         cartes_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(cartes_pane,cartes_btn);
         });
         virements_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(virements_pane,virements_btn);
         });
 
         agences_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(agences_pane,agences_btn);
+            AgenceFront AgenceFront = loaderAgence.getController();
+            AgenceFront.showAgenceData();
 
 
         });
         articles_btn.setOnMouseClicked(mouseEvent -> {
 
+            content_pane.setStyle("-fx-background-color: lightgray; -fx-background-radius: 15;");
+
             ActivateThisAnchor(articles_pane,articles_btn);
         });
         comments_btn.setOnMouseClicked(mouseEvent -> {
+            content_pane.setStyle("-fx-background-color: lightgray; -fx-background-radius: 15;");
 
             ActivateThisAnchor(comments_pane,comments_btn);
         });
         transaction_btn.setOnMouseClicked(mouseEvent -> {
-
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(transaction_pane,transaction_btn);
         });
         reclamation_btn.setOnMouseClicked(mouseEvent -> {
-
+            content_pane.setStyle("-fx-background-color:   #1f375e; -fx-background-radius:  0 0;");
             ActivateThisAnchor(reclamation_pane,reclamation_btn);
         });
+
+
     }
 
     public void setUsername(){
         //user.setText(User.name.toUpperCase());
        // user.setText("banektek");
     }
-@FXML
-private AnchorPane comptes_pane;
+
     public void activateDashboard(){
         dashboard_pane.setVisible(true);
         comptes_pane.setVisible(false);
+
+
         clients_pane.setVisible(false);
         cartes_pane.setVisible(false);
         virements_pane.setVisible(false);
@@ -367,55 +329,176 @@ private AnchorPane comptes_pane;
 
     }
 
-    FXMLLoader loaderAgence= new FXMLLoader(getClass().getResource("Agence.fxml"));
+    FXMLLoader loaderAgence= new FXMLLoader(getClass().getResource("AgenceFront.fxml"));
     Pane AgenceLoadedPane;
-    public void initializeAllFxml(){
+    /*FXMLLoader loaderAgent= new FXMLLoader(getClass().getResource("AgentFX.fxml"));
+    Pane AgentLoadedPane;*/
 
+    FXMLLoader loaderClient= new FXMLLoader(getClass().getResource("MonCompte.fxml"));
+    Pane ClientLoadedPane;
+
+    FXMLLoader loaderCompte= new FXMLLoader(getClass().getResource("CompteFrontFX.fxml"));
+    Pane CompteLoadedPane;
+
+    FXMLLoader loaderCarte= new FXMLLoader(getClass().getResource("CarteFrontFX.fxml"));
+    Pane CarteLoadedPane;
+    FXMLLoader loaderVirement= new FXMLLoader(getClass().getResource("VirementFrontFX.fxml"));
+    Pane VirementLoadedPane;
+    FXMLLoader loaderTransaction= new FXMLLoader(getClass().getResource("TransactionFrontFX.fxml"));
+    Pane TransactionLoadedPane;
+
+    FXMLLoader loaderCredit= new FXMLLoader(getClass().getResource("CreditFrontFX.fxml"));
+    Pane CreditLoadedPane;
+
+    FXMLLoader loaderReclamation= new FXMLLoader(getClass().getResource("FrontSalima.fxml"));
+    Pane ReclamationLoadedPane;
+
+    List<Compte> comptelist;
+
+    public List<Compte> getComptelist() {
+        return comptelist;
+    }
+
+    public void setComptelist(List<Compte> comptelist) {
+        this.comptelist = comptelist;
+    }
+
+    public void initializeAllFxml() {
         try {
-            // Load the FXML file
-           AgenceLoadedPane = loaderAgence.load();
-            // Add the loaded Pane to secPane
+            AgenceLoadedPane = loaderAgence.load();
+            //  adjustPaneSize(AgenceLoadedPane);
             agences_pane.getChildren().add(AgenceLoadedPane);
             agences_pane.toFront();
+
+
+
+            // For Client loader
+            Task<Void> clientTask = new LoadFxmlTask(loaderClient);
+           clientTask.setOnSucceeded(event -> {
+                clients_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+                clients_pane.toFront();
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(clientTask).start();
+
+// For Compte loader
+
+           // CompteFrontController compteController = loaderCompte.getController();
+          //  compteController.setClient_connecte(client_connecte);
+            Task<Void> compteTask = new LoadFxmlTask(loaderCompte);
+            compteTask.setOnSucceeded(event -> {
+
+                comptes_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+
+            comptes_pane.toFront();
+            CompteFrontController cl=((LoadFxmlTask) event.getSource()).getLoader().getController();
+            cl.setComptes(comptelist);
+            cl.displayCompte();
+
+
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(compteTask).start();
+
+// For Carte loader
+            Task<Void> carteTask = new LoadFxmlTask(loaderCarte);
+            carteTask.setOnSucceeded(event -> {
+                cartes_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+             cartes_pane.toFront();
+                CarteFrontController crl=((LoadFxmlTask) event.getSource()).getLoader().getController();
+
+                crl.setComptes(comptelist);
+
+                crl.movetoShow();
+                crl.displayCarte();
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(carteTask).start();
+
+// For Virement loader
+            Task<Void> virementTask = new LoadFxmlTask(loaderVirement);
+            virementTask.setOnSucceeded(event -> {
+                virements_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+               virements_pane.toFront();
+                VirementFrontController vrl=((LoadFxmlTask) event.getSource()).getLoader().getController();
+
+                vrl.setComptes(comptelist);
+
+                vrl.movetoShow();
+                //vrl.displayCarte();
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(virementTask).start();
+
+// For Transaction loader
+            Task<Void> transactionTask = new LoadFxmlTask(loaderTransaction);
+            transactionTask.setOnSucceeded(event -> {
+                transaction_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+              transaction_pane.toFront();
+                TransactionFrontController tcl=((LoadFxmlTask) event.getSource()).getLoader().getController();
+
+                tcl.setComptes(comptelist);
+
+                tcl.movetoShow();
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(transactionTask).start();
+
+// For Credit loader
+            Task<Void> creditTask = new LoadFxmlTask(loaderCredit);
+            creditTask.setOnSucceeded(event -> {
+                credit_pane.getChildren().add(((LoadFxmlTask) event.getSource()).getLoadedPane());
+               credit_pane.toFront();
+                CreditFrontController tcl=((LoadFxmlTask) event.getSource()).getLoader().getController();
+
+                tcl.setComptes(comptelist);
+
+                tcl.movetoShow();
+                // adjustPaneSize is not shown in the provided code, make sure to adjust the size if needed
+            });
+            new Thread(creditTask).start();
+
+            ReclamationLoadedPane = loaderReclamation.load();
+            //  adjustPaneSize(AgenceLoadedPane);
+            reclamation_pane.getChildren().add(ReclamationLoadedPane);
+            reclamation_pane.toFront();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
+    private void adjustPaneSize(Pane pane) {
+        double width = pane.getPrefWidth() * 0.01;
+        double height = pane.getPrefHeight() * 0.01;
+        pane.setPrefWidth(width);
+        pane.setPrefHeight(height);
+    }
+
+
+@FXML
+Label nom_agent_session;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Exports all modules to other modules
         Modules.exportAllToAll();
-
-        setUsername();
+        disactivateAllPanes();
+      //  setUsername();
         //showTableClient();
 
 
-initializeAllFxml();
+        initializeAllFxml();
 
-        showArticleData();
+
         addarticlepanes();
+        ActivateThisAnchor(clients_pane,clients_btn);
 
-    /*    showCompteData();
-        initializeCompteListSelection();
-
-        showCarteData();
-        initializeCarteListSelection();
-
-        showVirementData();
-        initializeVirementListSelection();
-
-        showTypeVirementData();
-        initializeTypeVirementListSelection();
-
-        showTransactionData();
-        initializeTransactionListSelection();
-*/
+       // nom_agent_session.setText(client_connecte.getNom()+" "+client_connecte.getPrenom());
 
 
-        populateTreeView(comment_treeview);
+
+
 
 /*
         agence_listview.setExpanded(true);
@@ -423,8 +506,23 @@ initializeAllFxml();
 
         connection = Database.getInstance().connectDB();
 
+
+
+        String[] command = {"wsl", "bash", "-c", "ollama run llama2-uncensored"};
+         builder = new ProcessBuilder(command);
+        builder.redirectErrorStream(true);
+        try {
+            process=builder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
+
+
+    ProcessBuilder builder;
+    Process process;
 //Articles
 
     public ObservableList<Article> listArticles()
@@ -507,10 +605,16 @@ VBox articlesContainer;
             ImageView imageView = new ImageView(new Image("file:C:/" + article.getImage()));
             imageView.setFitWidth(articleWidth-0);
             imageView.setFitHeight(articleHeight-0);
-            imageView.setOpacity(0.35);
+            imageView.setOpacity(0.75);
 
             Text titleLabel = new Text(article.getTitre());
-            Text contentText = new Text(article.getContenu());
+            Text contentText;
+            String contenu = article.getContenu();
+            if (contenu.length() > 300) {
+                contentText = new Text(contenu.substring(0, 300));
+            } else {
+                contentText = new Text(contenu);
+            }
 
                 // Adjust layout positions and wrapping width
             titleLabel.setLayoutY(20);
@@ -547,6 +651,11 @@ VBox articlesContainer;
 
         // Set the container as the content of the Tab
         articles_front_anchorpane.getChildren().add(articlesContainer);
+        articles_front_anchorpane.toFront();
+        articles_pane.toFront();
+        articlesContainer.toFront();
+       // articlesContainer.toFront();
+       // articles_pane.toFront();
 
     }
 
@@ -560,23 +669,21 @@ private     Rating article_rating;
     @FXML
     private void list_article_comments() {
         for (Node node : articlesContainer.getChildren()) {
+
             if (node instanceof HBox) {
+
                 HBox row = (HBox) node;
                 for (Node articleNode : row.getChildren()) {
+
                     if (articleNode instanceof ArticlePane) {
                         ArticlePane articlePane = (ArticlePane) articleNode;
 
                         articlePane.setOnMouseClicked(event -> {
                             int articleId = articlePane.getArticleId();
-                            String titre=articlePane.getTitre();
-                            String Contenu= articlePane.getContenu();
-                            article_titre_input.setText(titre);
-                            //
-                            article_contenu_input.setPrefRowCount(10);
-                            article_contenu_input.setWrapText(true);
-                            article_contenu_input.setText(Contenu);
+                            String Contenu= getEntityProperty("article",articleId,"contenu");
 
-                           addcommentpane(articlePane);
+                            articlePane.setContenu(Contenu);
+                            addcommentpane(articlePane);
                         });
                     }
                 }
@@ -586,46 +693,22 @@ private     Rating article_rating;
 
     @FXML
     JFXSlider comments_slider;
-    @FXML
-    public void comment_slider_panes(){
 
-        double position = comments_slider.getValue();
-
-        if (position >= 0 && position < 50) {
-            comment_anchorpane1.setVisible(false);
-            comment_anchorpane2.setVisible(true);
-        } else if (position >= 51 && position < 100) {
-            comment_anchorpane2.setVisible(false);
-            comment_anchorpane1.setVisible(true);
-        }
-
-    }
 
 
 
 @FXML
 AnchorPane comment_anchorpane1;
-    @FXML
-    AnchorPane comment_anchorpane2;
 
-    @FXML
-    public void switchfrontbackcomments(){
 
-        if (comment_anchorpane1.isVisible()) {
-            comment_anchorpane1.setVisible(false);
-            comment_anchorpane2.setVisible(true);
-        }
-        else
-        {
-            comment_anchorpane2.setVisible(false);
-            comment_anchorpane1.setVisible(true);
-        }
-    }
-@FXML
-private    Button editButton ;
+
  public void   addcommentpane(ArticlePane articlePane)
  {
+
+     //comments_pane.getChildren().clear();
+
      comment_anchorpane1.getChildren().clear();
+    clonedPane.getChildren().clear();
      clonedPane = cloneArticlePane(articlePane);
 
 
@@ -637,27 +720,17 @@ private    Button editButton ;
      // Rating rating = new Rating();
      createCommentField();
      Button addButton = new Button("POST");
-     editButton.setText("EDIT");
+
 
      addButton.setStyle("-fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);\n" +
              "-fx-background-radius:3px;\n" +
              "-fx-cursor:hand;\n" +
              "-fx-text-fill:#fff;");
-     editButton.setStyle("-fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);\n" +
-             "-fx-background-radius:3px;\n" +
-             "-fx-cursor:hand;\n" +
-             "-fx-text-fill:#fff;");
+
      addButton.setLayoutX(467);
      addButton.setLayoutY(141);
      addButton.setOnAction(eventt -> addComment(articlePane.getArticleId()) );
-     editButton.setLayoutX(467);
-     editButton.setLayoutY(190);
-     editButton.setOnAction(eventt -> {
-         ActivateThisAnchor(articles_pane,articles_btn) ;
-         articles_back_anchorpane.setVisible(true);articles_front_anchorpane.setVisible(false);
 
-
-     });
      // Layout for adding comments and existing comments
      HBox addCommentAndCommentsHBox = new HBox(100);
      addCommentAndCommentsHBox.getChildren().addAll(add_comment_field,addButton);
@@ -672,11 +745,9 @@ private    Button editButton ;
      //  AnchorPane.setTopAnchor(article_rating, 500.0); // Set the top margin of article_rating
      AnchorPane.setLeftAnchor(article_rating, 30.0); // Set the right margin of article_rating
      AnchorPane.setBottomAnchor(article_rating,5.0);
-     AnchorPane.setLeftAnchor(editButton, 320.0); // Set the right margin of article_rating
-     AnchorPane.setBottomAnchor(editButton,10.0);
-     editButton.setVisible(true);
+
      article_rating.setVisible(true);
-     comment_anchorpane1.getChildren().addAll(vBox,article_rating,editButton);
+     comment_anchorpane1.getChildren().addAll(vBox,article_rating);
 
      // Activate the comments_pane
      ActivateThisAnchor(comments_pane, comments_btn);
@@ -705,7 +776,7 @@ private    Button editButton ;
         commentaire.setContenu(add_comment_field.getText()); // Assuming commentContent is the content of the comment
         commentaire.setDate(new java.util.Date()); // Set the current date for the comment
         commentaire.setNote((int) article_rating.getRating()); // Set the rating
-
+        commentaire.setUserId(client_connecte.getId());
         // Call the service to add the comment to the database
         boolean result = CommentaireService.getInstance().add(commentaire);
 
@@ -729,14 +800,14 @@ private    Button editButton ;
       //  ObservableList<Commentaire> comments = listCommentsById(article_id);
 
        addcommentpane(clonedPane.getOriginal());
-        populateTreeView(comment_treeview);
+
     }
 
     VBox commentContainer;
 
     // Helper method to clone the article pane
     private ArticlePane cloneArticlePane(ArticlePane articlePane) {
-        ArticlePane clonedPane = new ArticlePane();
+      //  ArticlePane clonedPane = new ArticlePane();
         clonedPane.setStyle("-fx-border-width: 0;");
         clonedPane.setPrefSize(articlePane.getPrefWidth() + 100, articlePane.getPrefHeight() + 100);
         clonedPane.setArticleId(articlePane.getArticleId());
@@ -757,21 +828,31 @@ private    Button editButton ;
                 text.setWrappingWidth(((Text) child).getWrappingWidth());
                 textcounter++;
 
-                if (textcounter==2) {
+                if (textcounter == 2) {
+                    ScrollPane scrollPane = new ScrollPane();
+                    TextArea Content= new TextArea(articlePane.getContenu());
+                    Content.setEditable(false);
+                    Content.setPrefColumnCount(30);
+                    Content.setPrefRowCount(30);
+                    Content.setWrapText(true);
+                    scrollPane.setContent(Content);
+                    scrollPane.setPrefSize(350, 250); // Adjust size as needed
+                    scrollPane.setLayoutX(((Text) child).getLayoutX() + 400);
+                    scrollPane.setLayoutY(((Text) child).getLayoutY() );
                     ObservableList<Commentaire> comments = listCommentsById(clonedPane.getArticleId()); // Replace with actual comments list
-                     commentContainer = createCommentContainer(comments);
+                    commentContainer = createCommentContainer(comments);
 
                     commentContainer.setLayoutX(((Text) child).getLayoutX() + 400);
                     commentContainer.setLayoutY(((Text) child).getLayoutY() + 350);
-                    Label commentslabel=new Label("Comments:");
-                    commentslabel.setLabelFor(commentContainer);
+                    Label commentslabel = new Label("Comments:");
+                    commentslabel.setLabelFor(scrollPane);
                     commentslabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
                     commentslabel.setLayoutX(((Text) child).getLayoutX() + 400);
-                    commentslabel.setLayoutY(((Text) child).getLayoutY() + 300);
-                    clonedPane.getChildren().addAll(text,commentslabel,commentContainer);
-
+                    commentslabel.setLayoutY(((Text) child).getLayoutY() + 250);
+                    clonedPane.getChildren().addAll( scrollPane,commentslabel,commentContainer);
+                } else {
+                    clonedPane.getChildren().add(text);
                 }
-                else clonedPane.getChildren().add(text);
             }
         }
 
@@ -784,6 +865,18 @@ private    Button editButton ;
         return clonedPane;
     }
 
+    private Node createRatingStars(int rating) {
+        HBox stars = new HBox(5); // Adjust spacing as needed
+
+        // Add star icons based on the rating
+        for (int i = 0; i < rating; i++) {
+            FontIcon starIcon = new FontIcon(Material2MZ.STAR);
+            starIcon.getStyleClass().add("star-icon");
+            stars.getChildren().add(starIcon);
+        }
+
+        return stars;
+    }
     private VBox createCommentContainer(ObservableList<Commentaire> comments) {
         if (comments.isEmpty()) {
             // If no comments are found, return an empty VBox
@@ -826,12 +919,13 @@ private    Button editButton ;
                 imageView.setFitHeight(20);
 
 
-
+                int rating = comment.getNote();
+                Node ratingStars = createRatingStars(rating);
 
 
                // header.getStyleClass().add("comment-title");
 
-            //    System.out.println("fullname: "+fullname+"foncition="+fonction);
+
                 // Create a new Card for each comment
                 Card commentCard = new Card();
                 commentCard.getStyleClass().add("comment-card");
@@ -842,7 +936,7 @@ private    Button editButton ;
                 Label descriptionLabel = new Label(fonction);
                 descriptionLabel.getStyleClass().add("comment-description");
 
-                HBox headerBox = new HBox(10, imageView, titleLabel, descriptionLabel);
+                HBox headerBox = new HBox(10, imageView, titleLabel, descriptionLabel,ratingStars);
                 headerBox.setMaxHeight(0);
                 headerBox.setPrefHeight(0);
 
@@ -855,22 +949,31 @@ private    Button editButton ;
                 separator.setPadding(new Insets(0, 10, 0, 10));
 
                 // X icon for deleting comments
-                FontIcon deleteIcon = new FontIcon(Material2AL.CLOSE);
-                deleteIcon.getStyleClass().add("delete-icon");
-                deleteIcon.setCursor(Cursor.HAND);
+                HBox footer;
+                //Integration User
+                if (comment.getUserId()==0) {
+                    FontIcon deleteIcon = new FontIcon(Material2AL.CLOSE);
+                    deleteIcon.getStyleClass().add("delete-icon");
+                    deleteIcon.setCursor(Cursor.HAND);
 
-                // Event listener for deleting comments (to be added later)
-                deleteIcon.setOnMouseClicked(event -> {
-                    // Empty event listener for deleting comments
-                    CommentaireService.getInstance().delete(comment.getId());
-                    addcommentpane(clonedPane.getOriginal());
-                    showAlertArticle(Alert.AlertType.INFORMATION, "Success", null, "Commentaire supprime avec succes.");
-                });
+                    // Event listener for deleting comments (to be added later)
+                    deleteIcon.setOnMouseClicked(event -> {
+                        // Empty event listener for deleting comments
+                        CommentaireService.getInstance().delete(comment.getId());
+                        addcommentpane(clonedPane.getOriginal());
+                        showAlertArticle(Alert.AlertType.INFORMATION, "Success", null, "Commentaire supprime avec succes.");
+                    });
 
-                // Footer containing the X icon
-                HBox footer = new HBox(10, deleteIcon);
-                footer.setAlignment(Pos.CENTER_LEFT);
+                    // Footer containing the X icon
+                     footer = new HBox(10, deleteIcon);
 
+                    footer.setAlignment(Pos.CENTER_LEFT);
+                }
+                else {
+                     footer = new HBox(10);
+
+                    footer.setAlignment(Pos.CENTER_LEFT);
+                }
                 commentCard.setHeader(headerBox);
                // commentCard.setHeader(header);
                 commentCard.setBody(text);
@@ -897,52 +1000,7 @@ add_comment_field.setVisible(true);
 
     }
     //
-@FXML
-    JFXTreeView<Object> comment_treeview=new JFXTreeView<>();
 
-    public void populateTreeView(JFXTreeView<Object> treeView) {
-        // Clear existing items
-      // treeView.getRoot().getChildren().clear();
-
-        // Get articles from the database or wherever they are stored
-        List<Article> articles = ArticleService.getInstance().getAll();
-
-        // Create root node
-        FontAwesomeIconView commentIcon = new FontAwesomeIconView(FontAwesomeIcon.COMMENT);
-        commentIcon.setSize("24");
-        commentIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
-
-        TreeItem<Object> rootItem = new TreeItem<>("Commentaires", commentIcon);
-        treeView.setRoot(rootItem);
-        rootItem.setExpanded(true);
-
-        // Populate tree with articles and their comments
-        for (Article article : articles) {
-            FontAwesomeIconView articleIcon = new FontAwesomeIconView(FontAwesomeIcon.BOOK);
-            articleIcon.setSize("24");
-            articleIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
-
-           TreeItem articleItem = new TreeItem(article.getTitre(),articleIcon);
-
-            // Get comments for this article
-            List<Commentaire> comments = listCommentsById(article.getId());
-
-            // Add comments as child nodes
-            for (Commentaire comment : comments) {
-               String nomuser=getEntityProperty("client",comment.getUserId(),"nom");
-               String prenomuser=getEntityProperty("client",comment.getUserId(),"prenom");
-                FontAwesomeIconView CommentIcon = new FontAwesomeIconView(FontAwesomeIcon.COMMENT);
-                CommentIcon.setSize("12");
-                CommentIcon.setFill(Color.web("#FFA500")); // Set custom color for the icon (in this case, orange)
-
-                TreeItem commentItem = new TreeItem(comment.getContenu()+" By user " +nomuser+" "+prenomuser,CommentIcon);
-                articleItem.getChildren().add(commentItem);
-            }
-
-            // Add article node to root
-            rootItem.getChildren().add(articleItem);
-        }
-    }
     public ObservableList<Commentaire> listCommentsById(Integer id) {
         ObservableList<Commentaire> commentList = FXCollections.observableArrayList();
         Connection connection = null;
@@ -1047,22 +1105,21 @@ add_comment_field.setVisible(true);
         isDrawerOpen=left_pane.isVisible();
         if (isDrawerOpen) {
             // If drawer is open, close it
-TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), content_pane);
-            transition.setToX(0); // Move content pane to original position
-            transition.play();
+
             closeDrawer();
-            closeDrawer();
+        //    closeDrawer();
   //   content_pane.setLayoutX(content_pane.getLayoutX()-100);
         } else {
             // If drawer is closed, open it
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), content_pane);
-            transition.setToX(left_pane.getWidth()-80); // Move content pane to the right by the width of the left pane
-            transition.play();
+
             openDrawer();
 
            // content_pane.setLayoutX(content_pane.getLayoutX()+100);
         }
     }
+@FXML
+
+    private TaskProgressView articlegenerationtaskprogressview;
 
     private void openDrawer() {
         Animations.slideInLeft(left_pane, Duration.millis(1000)).playFromStart();
@@ -1081,80 +1138,11 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         });
         pause.play();
     }
-@FXML
-    public void switchfrontbackarticles(){
-
-        if (articles_front_anchorpane.isVisible()) {
-            articles_front_anchorpane.setVisible(false);
-            articles_back_anchorpane.setVisible(true);
-        }
-        else
-        {
-            articles_back_anchorpane.setVisible(false);
-            articles_front_anchorpane.setVisible(true);
-        }
-}
 
 
 
 
-    // Global variable to store the path of the uploaded image
-    private String imagePath = "";
-    @FXML
-    private ImageView Photoarticle;
 
-    @FXML
-    private void uploadImageArticle(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose a File to Upload");
-        fileChooser.setInitialDirectory(new File("C:/Users/khali/Downloads")); // Set initial directory to C:/Users/Downloads
-
-        // Set file extension filters if needed
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
-        );
-
-        // Show open file dialog
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-
-        if (selectedFile != null) {
-            try {
-                // Generate a UUID to use as the filename
-                String uniqueFileName = UUID.randomUUID().toString().substring(0, 8);;
-                // Get the file extension from the selected file
-                String fileExtension = selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
-                // Construct the filename with the UUID and file extension
-                String fileName = uniqueFileName + fileExtension;
-                // Define the destination directory
-                File destinationDirectory = new File("C:/uploads/");
-                // If the directory doesn't exist, create it
-                if (!destinationDirectory.exists()) {
-                    destinationDirectory.mkdirs();
-                }
-                // Construct the destination file path
-                File destination = new File(destinationDirectory, fileName);
-                // Copy the selected file to the destination
-                Files.copy(selectedFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-                // Update the global variable with the image path
-                imagePath = "uploads/" + fileName;
-
-                // Load the image into the ImageView
-                Image image = new Image(destination.toURI().toString());
-                Photoarticle.setImage(image);
-
-                // Update the image path in the database or store it temporarily to be used when adding an article
-                // For now, you can just print the path
-                article_upload_status.setText(article_upload_status.getText() + " Success");
-                article_upload_status.setStyle("-fx-text-fill: green;");
-                System.out.println("Image uploaded and saved to: " + destination.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("No file selected.");
-        }
-    }
 
     int selectedArticle=0;
     private void shakeTextField(TextField textField) {
@@ -1165,10 +1153,6 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         shake.play();
     }
 
-    @FXML
-    private AnchorPane client_pane;
-    @FXML
-
     private void shakeTextArea(TextArea textField) {
         TranslateTransition shake = new TranslateTransition(Duration.millis(100), textField);
         shake.setByX(10f);
@@ -1176,103 +1160,7 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         shake.setAutoReverse(true);
         shake.play();
     }
-    @FXML
-    public void addOrUpdateArticleData() {
-        // Input validation
-        boolean isAnyArticleFieldEmpty = false;
 
-        if (article_titre_input.getText().isBlank()) {
-            shakeTextField(article_titre_input);
-            article_titre_input.setStyle("-fx-border-color: red;");
-            isAnyArticleFieldEmpty = true;
-        }
-
-        if (article_contenu_input.getText().isBlank()) {
-            shakeTextArea(article_contenu_input);
-            article_contenu_input.setStyle("-fx-border-color: red;");
-            isAnyArticleFieldEmpty = true;
-        }
-
-// Show overall alert if any article field is empty
-        if (isAnyArticleFieldEmpty) {
-            showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Veuillez remplir tous les champs.");
-            return;
-        }
-
-
-        // Create Article object from FXML input fields
-        Article article = new Article();
-        article.setContenu(article_contenu_input.getText());
-        article.setImage(imagePath); // Use the global variable for the image path
-        article.setTitre(article_titre_input.getText());
-        article.setDatePub(java.sql.Date.valueOf(LocalDate.now())); // Current date for date_pub
-
-
-        // Determine if an existing article is selected
-        selectedArticle = clonedPane.getArticleId();//article_listview.getSelectionModel().getSelectedItem();
-        if (selectedArticle != 0) {
-            // If an article is selected, update its data
-            article.setId(selectedArticle); // Set the ID of the selected article
-            article.setIdAgent(Integer.parseInt(getEntityProperty("article",selectedArticle,"id_agent_id")));
-            if (Objects.equals(imagePath, ""))  article.setImage(getEntityProperty("article",selectedArticle,"image"));
-
-
-            if (ArticleService.getInstance().edit(article)) {
-                showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Article updated successfully.");
-                showArticleData();
-                clearArticleData();
-                articles_front_anchorpane.getChildren().clear();
-                addarticlepanes();
-            } else {
-                showAlertArticle(Alert.AlertType.ERROR, "Error Message", null, "Failed to update article data.");
-            }
-        } else {
-            // If no article is selected, add a new article
-            if (ArticleService.getInstance().add(article)) {
-                showAlertArticle(Alert.AlertType.INFORMATION, "Message", null, "Article added successfully.");
-                showArticleData();
-                clearArticleData();
-            } else {
-                showAlertArticle(Alert.AlertType.ERROR, "Error Message", null, "Failed to add article data.");
-            }
-        }
-        addarticlepanes();
-    }
-    private void initializeslider(){
-
-        // Set the formatter for the indicator text
-
-        comments_slider.setLabelFormatter(new StringConverter<Double>() {
-            @Override
-            public String toString(Double value) {
-                // Customize the format of the indicator text
-                if (value >= 0 && value < 50) {
-                    // Return the first string when the value is between 0 and 33
-                    return "Back";
-                } else if (value >= 51 && value <= 100) {
-                    // Return the second string when the value is between 68 and 100
-                    return "Front";
-                } else {
-                    // Return an empty string for other values
-                    return "";
-                }
-            }
-
-            @Override
-            public Double fromString(String string) {
-                // Not needed for this example
-                return null;
-            }
-        });
-    }
-
-
-    public void clearArticleData() {
-        article_contenu_input.clear();
-        article_titre_input.clear();
-        article_listview.getSelectionModel().clearSelection();
-        selectedArticle=0;
-    }
     private void showAlertArticle(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -1293,117 +1181,19 @@ TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), 
         checkBox.setSelected(!checkBox.isSelected());
         a.setSelected(true);
     }
-    public void showArticleData() {
-
-     List<Article> listart=   ArticleService.getInstance().getAll();
-       ObservableList<Article> articleList = FXCollections.observableArrayList(listart);
 
 
-        article_listview.setCellFactory(param -> new JFXListCell<>() {
 
-            @Override
-            protected void updateItem(Article article, boolean empty) {
-                super.updateItem(article, empty);
-                if (empty || article == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Create a VBox to hold the icons and text for each attribute
-                    HBox container = new HBox();
-                    container.setSpacing(5); // Adjust spacing as needed
-
-                    // Add FontAwesome icons and text for each attribute
-                    FontAwesomeIconView titleIcon = new FontAwesomeIconView(FontAwesomeIcon.BOOK);
-                    titleIcon.setFill(Color.web("#e74c3c")); // Adjust icon color as needed
-                    titleIcon.setSize("2em"); // Set icon size
-                    Text titleText = new Text(" " + article.getTitre());
-
-                    FontAwesomeIconView imageIcon = new FontAwesomeIconView(FontAwesomeIcon.IMAGE);
-                    imageIcon.setFill(Color.web("#3498db")); // Adjust icon color as needed
-                    imageIcon.setSize("2em"); // Set icon size
-                    Text imageText = new Text(" " + article.getImage());
-
-                    FontAwesomeIconView dateIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR_ALT);
-                    dateIcon.setFill(Color.web("#2ecc71")); // Adjust icon color as needed
-                    dateIcon.setSize("2em"); // Set icon size
-                    Text dateText = new Text(" " + article.getDatePub());
-
-                    // Add icons and text to the VBox container
-                    container.getChildren().addAll(titleIcon, titleText, imageIcon, imageText, dateIcon, dateText);
-
-                    // Set the VBox container as the graphic for the list cell
-                    setText(null); // Clear text
-                    setGraphic(container);
-                }
-            }
-
-        });
-
-        /*  Styles.toggleStyleClass(article_listview, Styles.BORDERED);
-        Styles.toggleStyleClass(article_listview, Styles.STRIPED);
-        article_listview.setEditable(true);*/
-        article_listview.setItems(articleList);
-
-    }
-
-    /*public void selectArticleTableData(){
-      int num=article_listview.getSelectionModel().getSelectedIndex();
-        Article articleData=article_listview.getSelectionModel().getSelectedItem();
-        if(num-1 < -1){
-            return;
-        }
-
-        article_titre_input.setText(articleData.getTitre());
-      //
-        article_contenu_input.setPrefRowCount(10);
-        article_contenu_input.setWrapText(true);
-        article_contenu_input.setText(articleData.getContenu());
-
-    }*/
-
-    public void deleteSelectedArticles() {
-        System.out.println("hello");
-       int selectedArticles = selectedArticle;//article_listview.getSelectionModel().getSelectedItem();
-        if (selectedArticles!=0) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select articles for deletion.");
-            alert.showAndWait();
-            return;
-        }
-ArticleService.getInstance().delete(selectedArticles);
-        showArticleData();
-        articles_front_anchorpane.getChildren().clear();
-        addarticlepanes();
-        clearArticleData();
-
-    }
 
 
     //RECLAMATION-REPONSES
     @FXML
     private AnchorPane reclamation_pane;
-    @FXML
-    private AnchorPane reclamation_anchorpane;
-    @FXML
-    private AnchorPane reponse_anchorpane;
+
     @FXML
     private Button reclamation_btn;
 
-    @FXML
-    public void switchreclamationreponse(){
 
-        if (reclamation_anchorpane.isVisible()) {
-            reclamation_anchorpane.setVisible(false);
-            reponse_anchorpane.setVisible(true);
-        }
-        else
-        {
-            reclamation_anchorpane.setVisible(true);
-            reponse_anchorpane.setVisible(false);
-        }
-    }
     //
 
 

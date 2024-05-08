@@ -3,7 +3,6 @@ package com.inventorymanagementsystem.utils;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import com.inventorymanagementsystem.utils.Record;
 
 import java.io.IOException;
 import java.time.LocalDate;

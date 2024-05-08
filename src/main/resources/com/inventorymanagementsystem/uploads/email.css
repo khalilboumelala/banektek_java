@@ -1,0 +1,5 @@
+.table-view .table-cell:filled {
+    -fx-text-fill: blue; /* Couleur du texte */
+    -fx-font-style: italic; /* Style de police */
+    -fx-underline: true; /* Souligner le texte */
+}

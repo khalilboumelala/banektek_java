@@ -1,4 +1,4 @@
-//Compte:
+package com.inventorymanagementsystem.utils;//Compte:
 /*
 compte_listview.setCellFactory(param -> new JFXListCell<>() {
 

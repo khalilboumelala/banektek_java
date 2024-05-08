@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Virement implements Comparable<Virement> {
 
     private Integer id;
-    private Compte idCompteEmetteur;
+     private Compte idCompteEmetteur;
     private Compte idCompteBeneficiaire;
     private String cinEmetteur;
     private String photoCin;
@@ -23,10 +23,21 @@ public class Virement implements Comparable<Virement> {
         this.etat = "Succès";
     }
 
-    public Virement(Integer id, Compte idCompteEmetteur, Compte idCompteBeneficiaire, String cinEmetteur, String photoCin, Double montant, java.util.Date dateEmission, java.util.Date dateApprobation, String etat, TypeVirement type) {
+     public Virement(Integer id, Compte idCompteEmetteur, Compte idCompteBeneficiaire, String cinEmetteur, String photoCin, Double montant, java.util.Date dateEmission, java.util.Date dateApprobation, String etat, TypeVirement type) {
+         this.id = id;
+         this.idCompteEmetteur = idCompteEmetteur;
+         this.idCompteBeneficiaire = idCompteBeneficiaire;
+         this.cinEmetteur = cinEmetteur;
+         this.photoCin = photoCin;
+         this.montant = montant;
+         this.dateEmission = dateEmission;
+         this.dateApprobation = dateApprobation;
+         this.etat = etat;
+         this.type = type;
+     }
+    public Virement(Integer id,  String cinEmetteur, String photoCin, Double montant, java.util.Date dateEmission, java.util.Date dateApprobation, String etat, TypeVirement type) {
         this.id = id;
-        this.idCompteEmetteur = idCompteEmetteur;
-        this.idCompteBeneficiaire = idCompteBeneficiaire;
+
         this.cinEmetteur = cinEmetteur;
         this.photoCin = photoCin;
         this.montant = montant;
@@ -45,7 +56,7 @@ public class Virement implements Comparable<Virement> {
         this.id = id;
     }
 
-    public Compte getIdCompteEmetteur() {
+   /* public Compte getIdCompteEmetteur() {
         return idCompteEmetteur;
     }
 
@@ -59,7 +70,7 @@ public class Virement implements Comparable<Virement> {
 
     public void setIdCompteBeneficiaire(Compte idCompteBeneficiaire) {
         this.idCompteBeneficiaire = idCompteBeneficiaire;
-    }
+    }*/
 
     public String getCinEmetteur() {
         return cinEmetteur;

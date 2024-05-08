@@ -80,7 +80,7 @@ public class CommentaireService {
         try {
             preparedStatement = connection.prepareStatement(request);
 
-            preparedStatement.setInt(1, 6);
+            preparedStatement.setInt(1, commentaire.getUserId());
             preparedStatement.setInt(2, commentaire.getArticleId());
             preparedStatement.setString(3, commentaire.getContenu());
             preparedStatement.setInt(4, commentaire.getNote());

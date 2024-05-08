@@ -2,7 +2,6 @@ package com.inventorymanagementsystem.utils;
 
 import javafx.scene.chart.XYChart;
 
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

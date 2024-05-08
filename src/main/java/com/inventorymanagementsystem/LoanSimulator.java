@@ -5,8 +5,6 @@
  */
 package com.inventorymanagementsystem;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +14,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Gurjit
@@ -23,6 +24,8 @@ import javafx.scene.input.KeyEvent;
 public class LoanSimulator implements Initializable {
     
     private Label label;
+    @FXML
+    private Button close;
     @FXML
     private TextField downpayment_id;
     @FXML
@@ -63,7 +66,11 @@ public class LoanSimulator implements Initializable {
 //        event.consume();
 //    }
 //    }
-//            
+//
+    @FXML
+public void onExit(){
+    close.getScene().getWindow().hide();
+}
 
     @FXML
     private void calculate(ActionEvent event) {

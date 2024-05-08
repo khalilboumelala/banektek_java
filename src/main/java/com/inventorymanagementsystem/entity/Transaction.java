@@ -7,24 +7,16 @@ import java.util.Objects;
 public class Transaction implements Comparable<Transaction> {
 
     private Integer id;
-    private Compte idCompte;
     private String type;
     private java.util.Date dateTransaction;
     private Double montant;
+    private int compte;
 
     // New property for selection
     private final SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
     // Constructors
     public Transaction() {
-    }
-
-    public Transaction(Integer id, Compte idCompte, String type, java.util.Date dateTransaction, Double montant) {
-        this.id = id;
-        this.idCompte = idCompte;
-        this.type = type;
-        this.dateTransaction = dateTransaction;
-        this.montant = montant;
     }
 
     public Transaction(Integer id, String type, java.util.Date dateTransaction, Double montant) {
@@ -34,12 +26,14 @@ public class Transaction implements Comparable<Transaction> {
         this.montant = montant;
     }
 
-    public Transaction(Compte idCompte, String type, java.util.Date dateTransaction, Double montant) {
-        this.idCompte = idCompte;
+    public Transaction(Integer id, String type, java.util.Date dateTransaction, Double montant,int compte) {
+        this.id = id;
         this.type = type;
         this.dateTransaction = dateTransaction;
         this.montant = montant;
+        this.compte=compte;
     }
+
 
     // Getters and Setters
     public Integer getId() {
@@ -48,14 +42,6 @@ public class Transaction implements Comparable<Transaction> {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Compte getIdCompte() {
-        return idCompte;
-    }
-
-    public void setIdCompte(Compte idCompte) {
-        this.idCompte = idCompte;
     }
 
     public String getType() {

@@ -21,7 +21,7 @@
 
 
 .splitdropdown {
-    
+
     -fx-color: linear-gradient(to bottom right, #2f466b, #662d60);
     -fx-border-radius: 8px;
     -fx-padding: 0px;
@@ -37,32 +37,6 @@
 -fx-background-radius:30px;
 }
 
-
-.list-view{
--fx-background-color:transparent;
--fx-border-color:linear-gradient(to bottom right , #2f466b, #662d60);
--fx-border-radius:8px;
--fx-padding:0px
-}
-
-.list-view .list-column{
--fx-alignment:CENTER;
-}
-.list-view .column-header-background{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
--fx-background-insets:0 0 0 0;
--fx-background-radius: 8px 8px 0px 0px;
-}
-
-.list-view .column-header,.filter{
--fx-background-color:transparent;
--fx-size:40;
-}
-
-.table-view .column-header .label{
- -fx-text-fill:#fff;
- -fx-font-family:"Arial"
-}
 
 /* Billing Pane */
 .table-view{
@@ -106,6 +80,7 @@
 
 .search-billing{
 -fx-background-color:transparent;
+    -fx-text-fill: white;
 -fx-border-color:linear-gradient(to bottom right, #2f466b, #662d60);
 -fx-border-radius:4px;
 -fx-font-size:13px;
@@ -137,12 +112,27 @@
 .TabPane .tab-header-area .tab-header-background {
     -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.7), rgba(255, 106, 239, 0.7));
 }
+.text-field {
+    -fx-border-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.7), rgba(255, 106, 239, 0.7));
+    -fx-border-radius: 5px;
+}
 
 /* Style for the horizontal buttons */
 .TabPane .tab-header-area .tab .tab-container .arrow-button {
     -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.2), rgba(255, 106, 239, 0.2));
 }
+/* Style uniquement la colonne "E-MAIL" */
+.table-view .email-column .table-cell:filled {
+    -fx-text-fill: blue; /* Couleur du texte */
+    -fx-font-style: italic; /* Style de police */
+    -fx-underline: true; /* Souligner le texte */
+}
 
+
+.red-border {
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+}
 .TabPane .tab-header-area .tab .tab-container .arrow-button:hover {
     -fx-background-color: linear-gradient(to bottom right, rgba(121, 172, 255, 0.7), rgba(255, 106, 239, 0.7));
 }

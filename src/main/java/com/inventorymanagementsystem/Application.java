@@ -3,6 +3,7 @@ package com.inventorymanagementsystem;
 
 import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
+import com.inventorymanagementsystem.services.PasswordHasher;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 
 
 //
-
+//import org.cef.browser.CefBrowser;
 import org.panda_lang.pandomium.Pandomium;
 import org.panda_lang.pandomium.wrapper.PandomiumClient;
 
@@ -43,42 +44,18 @@ public class Application extends javafx.application.Application {
 
     private double x;
     private double y;
-/*
-    public void start(Stage stage) throws MalformedURLException {
-        // Create web engine and view
-         WebView webView = new WebView();
-         WebEngine webEngine = webView.getEngine();
-            String script= getClass().getResource("map.js").toString();
-        //webEngine.executeScript(script);
-        // Load the HTML file
-        URL htmlFileUrl = new URL("http://localhost/map.html");//getClass().getResource("map.html");
-        if (htmlFileUrl != null) {
-            webEngine.load(htmlFileUrl.toExternalForm());
-            webEngine.executeScript(script);
-        } else {
-            System.err.println("Failed to load map.html");
-            // Handle the case where the HTML file is not found
-            // You can show an error message or take appropriate action here
-        }
-
-        // Create scene
-        stage.setTitle("Web Map");
-        Scene scene = new Scene(webView, 500, 500);
-        stage.setScene(scene);
-
-        // Show stage
-        stage.show();
-    }
-
-*/
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws IOException {
-       // Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
-       // Parent root = FXMLLoader.load(getClass().getResource("PlotStocks.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("Loansimulator.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+        //
         Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(getClass().getResource("/com/inventorymanagementsystem/css/fullpackstyling.css").toExternalForm());
+
+
         stage.setTitle("Banektek");
         root.setOnMousePressed((event)->{
             x=event.getSceneX();
@@ -88,8 +65,9 @@ public class Application extends javafx.application.Application {
             stage.setX(event.getScreenX()-x);
             stage.setY(event.getScreenY()-y);
         });
-     /*       stage.setHeight(670);
-        stage.setWidth(1200);*/
+     //       stage.setHeight(670);
+        stage.setWidth(1200);
+       // stage.setFullScreen(true);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
@@ -99,6 +77,10 @@ public class Application extends javafx.application.Application {
 
     }
 
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
 
     public static void main(String[] args) {

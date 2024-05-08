@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane fx:id="agences_pane" cacheShape="false" centerShape="false" prefHeight="347.0" prefWidth="576.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.AgenceFront">
+   <children>
+      <Label fx:id="user11" alignment="CENTER" prefHeight="30.0" prefWidth="267.0" text="Liste des agences">
+         <font>
+            <Font name="Arial Black" size="20.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="0.07886432473215776" startX="0.5078864744409026" startY="0.8675078623678406">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.4000000059604645" green="0.1764705926179886" blue="0.3764705955982208" opacity="0.800000011920929" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.09172259507829979">
+                     <color>
+                        <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.18431372940540314" green="0.27450981736183167" blue="0.41960784792900085" opacity="0.800000011920929" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button fx:id="translator_button1" layoutX="397.0" layoutY="16.0" mnemonicParsing="false" onAction="#openepltwindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+         <graphic>
+            <FontAwesomeIconView fx:id="customer_print22" fill="WHITE" glyphName="LINE_CHART" size="18.0" />
+         </graphic>
+      </Button>
+      <Button fx:id="translator_button" layoutX="457.0" layoutY="16.0" mnemonicParsing="false" onAction="#openexchangewindow" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+         <graphic>
+            <FontAwesomeIconView fx:id="customer_print2" fill="WHITE" glyphName="EXCHANGE" size="18.0" />
+         </graphic>
+      </Button>
+      <AnchorPane fx:id="agences_front_anchorpane" layoutX="24.0" layoutY="75.0" prefHeight="375.0" prefWidth="616.0">
+         <children>
+            <WebView fx:id="webViewClient" layoutY="31.0" prefHeight="331.0" prefWidth="612.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

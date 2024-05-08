@@ -56,6 +56,62 @@ CompteService compteService=CompteService.getInstance();
         return listCarte;
     }
 
+    public List<Carte> getByCompteId(int compte_id) {
+        List<Carte> listCarte = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM `carte` WHERE `num_compte_id` = ?");
+            preparedStatement.setInt(1, compte_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            CompteService compteService=CompteService.getInstance();
+            while (resultSet.next()) {
+                listCarte.add(new Carte(
+                        resultSet.getInt("id"),
+                        compteService.get( resultSet.getInt("num_compte_id"))
+                        ,
+                        resultSet.getDate("date_emission"),
+                        resultSet.getDate("date_expiration"),
+                        resultSet.getInt("cvv"),
+                        resultSet.getString("plafond"),
+                        resultSet.getString("type"),
+                        resultSet.getString("etat")
+                ));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (getAll) carte : " + exception.getMessage());
+        }
+        return listCarte;
+    }
+
+    public List<Carte> getByComptes(List<Compte> comptes) {
+        List<Carte> listCarte = new ArrayList<>();
+        try {
+            for (Compte c : comptes) {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `carte` WHERE `num_compte_id` = ?");
+                preparedStatement.setInt(1, c.getId());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                //System.out.println("query: "+preparedStatement.toString());
+
+                while (resultSet.next()) {
+                    Carte carte = new Carte(
+                            resultSet.getInt("id"),
+                            c,
+                            resultSet.getDate("date_emission"),
+                            resultSet.getDate("date_expiration"),
+                            resultSet.getInt("cvv"),
+                            resultSet.getString("plafond"),
+                            resultSet.getString("type"),
+                            resultSet.getString("etat")
+                    );
+                    listCarte.add(carte);
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (getAll) carte : " + exception.getMessage());
+        }
+        return listCarte;
+    }
+
 
     public boolean add(Carte carte) {
         String request = "INSERT INTO `carte`( `date_emission`, `date_expiration`, `cvv`, `plafond`, `type`, `etat`) VALUES( ?, ?, ?, ?, ?, ?)";

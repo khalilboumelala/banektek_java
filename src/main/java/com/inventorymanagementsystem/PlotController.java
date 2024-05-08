@@ -1,8 +1,8 @@
 package com.inventorymanagementsystem;
 
 
-import com.inventorymanagementsystem.utils.*;
-import com.inventorymanagementsystem.utils.Record;
+import com.inventorymanagementsystem.utils.MovingAvg;
+import com.inventorymanagementsystem.utils.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,20 +17,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import com.inventorymanagementsystem.exceptions.JavaFXException;
-import com.inventorymanagementsystem.utils.MovingAvg;
 import org.controlsfx.control.SearchableComboBox;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
-//import com.inventorymanagementsystem.utils.User;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 public class PlotController {
 

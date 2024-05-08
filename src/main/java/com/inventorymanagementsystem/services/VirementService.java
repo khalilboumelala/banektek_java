@@ -1,6 +1,8 @@
 package com.inventorymanagementsystem.services;
 
 import com.inventorymanagementsystem.config.Database;
+//import com.inventorymanagementsystem.entity.Compte;
+import com.inventorymanagementsystem.entity.Carte;
 import com.inventorymanagementsystem.entity.Compte;
 import com.inventorymanagementsystem.entity.Virement;
 
@@ -32,7 +34,11 @@ public class VirementService {
 
     public List<Virement> getAll() {
         List<Virement> listVirement = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
         try {
+            connection = Database.getInstance().connectDB();
             preparedStatement = connection.prepareStatement("SELECT * FROM `virement`");
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -41,7 +47,7 @@ public class VirementService {
                 System.out.println("data: "+ resultSet.getString("cin_emetteur")+ resultSet.getString("photo_cin"));
                 listVirement.add(new Virement(
                         resultSet.getInt("id"),
-                        new Compte(
+                       /* new Compte(
                                 resultSet.getInt("id_compte_emetteur_id"),
                                 null, // You may need to fetch the Compte object separately
                                 null,
@@ -62,7 +68,7 @@ public class VirementService {
                                 null,
                                 null,
                                 null
-                        ),
+                        ),*/
                         resultSet.getString("cin_emetteur"),
                         resultSet.getString("photo_cin"),
                         resultSet.getDouble("montant"),
@@ -77,6 +83,41 @@ public class VirementService {
         }
         return listVirement;
     }
+
+    public List<Virement> getByComptes(List<Compte> comptes) {
+        List<Virement> listCarte = new ArrayList<>();
+        try {
+            for (Compte c : comptes) {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `virement` WHERE (`id_compte_emetteur_id` = ? ||  `id_compte_beneficiaire_id` = ?)");
+                preparedStatement.setInt(1, c.getId());
+                preparedStatement.setInt(2, c.getId());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                //System.out.println("query: "+preparedStatement.toString());
+
+                while (resultSet.next()) {
+                    Virement virement = new Virement(
+                            resultSet.getInt("id"),
+
+                       CompteService.getInstance().get(resultSet.getInt("id_compte_emetteur_id")),
+                            CompteService.getInstance().get(resultSet.getInt("id_compte_beneficiaire_id")),
+
+                            resultSet.getString("cin_emetteur"),
+                            resultSet.getString("photo_cin"),
+                            resultSet.getDouble("montant"),
+                            resultSet.getDate("date_emission"),
+                            resultSet.getDate("date_approbation"),
+                            resultSet.getString("etat"),
+                            null // You may need to fetch the TypeVirement object separately
+                    );
+                    listCarte.add(virement);
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (getAll) carte : " + exception.getMessage());
+        }
+        return listCarte;
+    }
+
 
 
     public boolean add(Virement virement) {

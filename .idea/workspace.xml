@@ -20,7 +20,6 @@
       <list>
         <option value="HTML File" />
         <option value="Interface" />
-        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -45,41 +44,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/khali/Downloads/Projet_java/inventory-management-system-main/lib/jfoenix-9.0.10.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15527344&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.38310185&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;ff1c0c02e4b95b421f5c0569e8c2b387&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "11",
+    "last_opened_file_path": "C:/Users/Mega-PC/Desktop/secours/amounee",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15527344",
+    "project.structure.side.proportion": "0.33793104",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "spring.configuration.checksum": "ff1c0c02e4b95b421f5c0569e8c2b387",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem\utils" />
-      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\lib" />
-      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem\exceptions" />
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\resources\com\inventorymanagementsystem" />
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\resources\com\inventorymanagementsystem\map" />
+      <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem" />
+      <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\database" />
+      <recent name="C:\Users\rashi\Documents\gui\inventory-management-system" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\khali\Downloads\Projet_java\inventory-management-system-main\src\main\java\com\inventorymanagementsystem" />
@@ -87,11 +86,8 @@
       <recent name="C:\Users\rashi\Documents\gui\inventory-management-system\src\main\resources\jasper-reports" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.inventorymanagementsystem.utils" />
-      <recent name="com.inventorymanagementsystem.notifications" />
-      <recent name="com.inventorymanagementsystem.exceptions" />
-      <recent name="com.inventorymanagementsystem" />
       <recent name="com.inventorymanagementsystem.entity" />
+      <recent name="com.inventorymanagementsystem" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -171,19 +167,10 @@
       <workItem from="1713541734907" duration="2880000" />
       <workItem from="1713551126930" duration="3666000" />
       <workItem from="1713640588512" duration="5073000" />
-      <workItem from="1713727047815" duration="746000" />
-      <workItem from="1713782171011" duration="7490000" />
-      <workItem from="1713814728457" duration="3579000" />
-      <workItem from="1713887070424" duration="26111000" />
-      <workItem from="1713943544945" duration="173000" />
-      <workItem from="1713947061473" duration="3736000" />
-      <workItem from="1713953495187" duration="958000" />
-      <workItem from="1714258293739" duration="7345000" />
-      <workItem from="1714377581366" duration="4202000" />
-      <workItem from="1714467437157" duration="5455000" />
-      <workItem from="1714647610727" duration="7696000" />
-      <workItem from="1714763773266" duration="7987000" />
-      <workItem from="1714857504199" duration="3379000" />
+      <workItem from="1713727047815" duration="604000" />
+      <workItem from="1713944991435" duration="849000" />
+      <workItem from="1713948433204" duration="3502000" />
+      <workItem from="1713951974946" duration="31000" />
     </task>
     <servers />
   </component>

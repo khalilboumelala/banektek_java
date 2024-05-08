@@ -173,4 +173,34 @@ public class CompteService {
         }
         return compte;
     }
+
+
+    public List<Compte> getCompteByUserId(int UserId) {
+        List<Compte> listCompte = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM `compte` WHERE `id_user_id` = ?");
+            preparedStatement.setInt(1, UserId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                listCompte.add(new Compte(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("id_user_id"),
+                        resultSet.getInt("id_agence_id"),
+                        resultSet.getString("type"),
+                        resultSet.getDouble("solde"),
+                        resultSet.getDate("date_creation"),
+
+                        resultSet.getDate("date_fermeture"),
+                        resultSet.getString("etat"),
+                        resultSet.getString("rib")
+                ));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (getAll) compte : " + exception.getMessage());
+        }
+        return listCompte;
+    }
+
 }

@@ -3,8 +3,6 @@ package com.inventorymanagementsystem.services;
 import com.inventorymanagementsystem.config.Database;
 import com.inventorymanagementsystem.entity.Agence;
 
-//import com.inventorymanagementsystem.utils.Database;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
